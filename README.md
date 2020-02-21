@@ -4,7 +4,9 @@ I semesteroppgaven skal du implementere et spill inspirert av [Rogue](informatio
 
 Oppgaven skal leveres inn via GitLab innen **fredag 6. mars kl. 23:59**. 
 
-*Hvis du ikke har brukt GitLab enda, bør du gå gjennom lab 0 og lab 2*
+*Hvis du ikke har brukt GitLab enda, bør du gå gjennom lab 0 og lab 2.*
+
+Hvis du får mindre enn 40 poeng på én eller begge av semesteroppgaven **får du ikke ta eksamen**.  
 
 Spillet er delvis skrevet; du skal endre eksisterende kode, legge til ny kode, og skrive tekst-svar. 
 
