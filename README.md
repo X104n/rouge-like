@@ -111,7 +111,7 @@ Se på `Rabbit.java`. Hvordan bestemmer Rabbit hvilken vei den skal gå i `doTur
 
 ### 2.3) getPossibleMoves()
 
-Et naturlig spørsmål en `IActor` kan stille kartet (via `IGame`) er “Hvilke muligheter har jeg til å bevege meg?”. Metoden `GameMap::getPossibleMoves` gir svar på dette ved å returnere en liste med de retningene som en rolle har *lov* til å gå. Se eksempel på bruk av denne i `Rabbit::performMove()`. Per nå så returnerer `getPossibleMoves` bare en tom liste.
+Et naturlig spørsmål en `IActor` kan stille kartet (via `IGame`) er “Hvilke muligheter har jeg til å bevege meg?”. Metoden `GameMap::getPossibleMoves` gir svar på dette ved å returnere en liste med de retningene som en rolle har *lov* til å gå. Se eksempel på bruk av denne i `Rabbit::performMove()`. Per nå så returnerer `getPossibleMoves` bare en liste med retningen 'EAST'.
 
 👉 Implementer metoden `GameMap::getPossibleMoves`.
 
