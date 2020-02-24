@@ -170,8 +170,6 @@ Når vi må endre flere klasser for å gjøre én endring betyr at vi har brutt 
 I denne oppgaven skal du legge til støtte for spillobjekter av typen Gold. 
 Du må ha gjort oppgave 1 og tidligere deler av oppgave 3 for å kunne løse denne oppgaven. 
 
-👉 Legg til støtte i fabrikken for å lage Gold-objekter. 
-
 Åpne IItemTest i pakken `inf101.v20.rogue101.objects`.
 
 👉 Legg til et nytt objekt av typen Gold i `IItemTest::getTestObjectData()`-metoden etter samme mønster som for de andre objektene. Kjør testene. 
