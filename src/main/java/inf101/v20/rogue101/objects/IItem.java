@@ -87,7 +87,11 @@ public interface IItem extends Comparable<IItem> {
 	 * @return Health, in the range 0.0 to 1.0
 	 */
 	default double getHealthStatus() {
-		return getMaxHealth() > 0 ? getCurrentHealth() / getMaxHealth() : 0;
+		if(getCurrentHealth() <= 0)
+			return 0;
+		double current = getCurrentHealth();
+		double max = getMaxHealth();
+		return current / max;
 	}
 
 	/**

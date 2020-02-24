@@ -4,7 +4,10 @@ I semesteroppgaven skal du implementere et spill inspirert av [Rogue](informatio
 
 Oppgaven skal leveres inn via GitLab innen **fredag 6. mars kl. 23:59**. 
 
-*Hvis du ikke har brukt GitLab enda, bør du gå gjennom lab 0 og lab 2*
+*Hvis du ikke har brukt GitLab enda, bør du gå gjennom lab 0 og lab 2*.
+
+
+Hvis du får mindre enn 40 poeng på én eller begge av semesteroppgaven **får du ikke ta eksamen**.  
 
 Spillet er delvis skrevet; du skal endre eksisterende kode, legge til ny kode, og skrive tekst-svar. 
 
@@ -48,8 +51,6 @@ Klassen `Carrot` implementerer interfacet `IItem` og representerer en Gulrot-“
 
 ✅ `ItemTest:testHandleDamage`
 
-✅ `ItemTest:testHandleDamage`
-
 Hvilke egenskaper ved en _ekte_ gulrot finnes i den abstrakte `Carrot`-klassen, og hvilke egenskaper har en gulrot som _ikke_ finnes i `Carrot`-klassen? 
 
 👉 List opp 3 egenskaper fra oppgave 1.2 som `Carrot`-klassen implementerer, og beskriv hvordan den implementerer dem. Skriv svaret i [Svar.md](Svar.md).
@@ -76,14 +77,11 @@ _Tips: høyreklikk på IItem og velg Open Type Hierarchy for å få opp en liste
 ### 1.5) Gold.java
 Nå skal du utvide støtten for spill-objekter til å også kunne representere gull. 
 
-✅ `IItemTest::testAddedItem()`  
-✅ `IItemTest::testAddedGold()`  
-
 👉 Opprett en klasse `Gold.java` som implementerer interfacet `IItem` i samme mappe som `Carrot.java`. 
 
-For å implementere metodene kan det være nyttig for deg å se på hvordan de andre klassene for spill-objekter fra 1.4 implementerer dem. 
+Det finnes ingen tester for gull enda. 
 
-_Tips: Hvis du oppretter filen i feil mappe, eller gir den feil navn, vil du få kompileringsfeil. Den må ligge i samme navigerings-path som Carrot.java og navnet på java-filen må være det samme som navnet på klasse-deklarasjonen inni filen._
+For å implementere metodene kan det være nyttig for deg å se på hvordan de andre klassene for spill-objekter fra 1.4 implementerer dem. 
 
 `add-commit-push`
 
@@ -148,9 +146,11 @@ Factory Pattern går ut på å ha en metode i en “Factory”-klasse som vet ve
 
 Fabrikken mangler et valg for å legge til `Dust`. 
 
-✅ `IItemTest::testItemFactoryCreatesDust()` 
+✅ `IItemTest::testItemFactoryCreatesDust()`  
+✅ `IItemTest::testItemFactoryCreatesGold()`  (fjern `//`)
 
 👉 Legg til støtte i fabrikken for å opprette Dust-objekter. 
+👉 Legg til støtte i fabrikken for å opprette Gull-objekter. 
 
 ### 3.2 S.O.L.I.D.
 [SOLID](https://en.wikipedia.org/wiki/SOLID) er en forkortelse for fem prinsipper som gjør objektorientert kode forståelig, fleksibel og lett å vedlikeholde. Det første prinsippet – prinsippet om _Single Responsibility_ – sier at:

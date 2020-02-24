@@ -42,11 +42,6 @@ public class Carrot implements IItem {
 	}
 
 	@Override
-	public double getHealthStatus() {
-		return getCurrentHealth() / getMaxHealth();
-	}
-
-	@Override
 	public int getMaxHealth() {
 		return 5;
 	}

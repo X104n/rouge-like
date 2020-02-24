@@ -16,12 +16,12 @@ public class Wall implements IItem {
 
 	@Override
 	public int getDefence() {
-		return Integer.MAX_VALUE;
+		return 10000;
 	}
 
 	@Override
 	public int getMaxHealth() {
-		return Integer.MAX_VALUE;
+		return 10000;
 	}
 	
 	@Override
@@ -36,7 +36,7 @@ public class Wall implements IItem {
 
 	@Override
 	public int getSize() {
-		return Integer.MAX_VALUE;
+		return 10000;
 	}
 
 	@Override
