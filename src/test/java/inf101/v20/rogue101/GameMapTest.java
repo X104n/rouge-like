@@ -1,4 +1,4 @@
-package inf101.v20.rogue101;
+    package inf101.v20.rogue101;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -200,7 +200,7 @@ class GameMapTest {
 			map.add(map.getLocation(x, 11), new Wall());
 		}
 		ILocation loc = map.getLocation(10, 10);
-		List<ILocation> neighbourhood = map.getNeighbourhood(loc, 3);
+		List<ILocation> neighbourhood = map.getReachable(loc, 3);
 		assertEquals(7*4-1, neighbourhood.size());
 		
 	}
