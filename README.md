@@ -167,14 +167,14 @@ Når vi må endre flere klasser for å gjøre én endring betyr at vi har brutt 
 👉 Hvorfor er problemet med _Single Responsibility_ nå fikset? Skriv en kort forklaring i `Svar.md`.
 
 ### 3.3 Gold.java
-I denne oppgaven skal du legge til støtte spillobjekter av typen Gold. 
+I denne oppgaven skal du legge til støtte for spillobjekter av typen Gold. 
 Du må ha gjort oppgave 1 og tidligere deler av oppgave 3 for å kunne løse denne oppgaven. 
 
 👉 Legg til støtte i fabrikken for å lage Gold-objekter. 
 
 Åpne IItemTest i pakken `inf101.v20.rogue101.objects`.
 
-👉 Legg til et nytt objekt av typen Gold i `getInstance()`-metoden etter samme mønster som for de andre objektene. Kjør testene. `IItemTest::testAddedItem` og `IItemTest::testAddedGold` skal bli grønne. 
+👉 Legg til et nytt objekt av typen Gold i `IItemTest::getTestObjectData()`-metoden etter samme mønster som for de andre objektene. Kjør testene. 
 
 👉 Finn filen `level1.txt` i `inf101.v20.rouge101.map.maps`, åpne den og erstatt noen av symbolene med gull-symbolet du valgte i Oppgave 1. Lagre filen. Kjør programmet. Gull-symbolene skal vises på skjermen der du la dem inn i kartet. 
 
