@@ -174,7 +174,7 @@ Du må ha gjort oppgave 1 og tidligere deler av oppgave 3 for å kunne løse den
 
 Åpne IItemTest i pakken `inf101.v20.rogue101.objects`.
 
-👉 Legg til et nytt objekt av typen Gold i `IItemTest::getTestObjectData()`-metoden etter samme mønster som for de andre objektene. Kjør testene. 
+👉 Legg til et nytt objekt av typen Gold i `IItemTest::getTestData()`-metoden etter samme mønster som for de andre objektene. Kjør testene. 
 
 👉 Finn filen `level1.txt` i `inf101.v20.rouge101.map.maps`, åpne den og erstatt noen av symbolene med gull-symbolet du valgte i Oppgave 1. Lagre filen. Kjør programmet. Gull-symbolene skal vises på skjermen der du la dem inn i kartet. 
 
