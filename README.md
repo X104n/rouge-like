@@ -223,7 +223,7 @@ Kjør testene til prosjektet, og sjekk hvor mange nivåer kaninen din klarer seg
 Vi ønsker å gjøre kaninen enda smartere ved å lukte etter gullrøtter i nærheten ved å bruke metodene fra oppgave 4  gir alle lokasjonene som er synlig fra en lokasjon med rekkevidde 3.
 
 ### 5.2 Get direction
-Bruk `IGame::getNeighbourhood` eller `IGame::getReachable` fra oppgave 4  til å hente alle synlig lokasjoner fra kaninen sin posisjon, og sjekk om det ligger noe gullrøtter i nærheten. Beveg Rabbit i retning av gulroten dersom den kan se noen. Dette kan erstatte at kaninen ser etter en gulrot ved siden av seg.
+Bruk `IGameMap::getNeighbourhood` eller `IGameMap::getReachable` fra oppgave 4  til å hente alle synlig lokasjoner fra kaninen sin posisjon, og sjekk om det ligger noe gullrøtter i nærheten. Beveg Rabbit i retning av gulroten dersom den kan se noen. Dette kan erstatte at kaninen ser etter en gulrot ved siden av seg.
 
 _Tips: Her kan det være lurt med en hjelpemetode som tar to lokasjoner og returnerer retningen du må gå for å komme deg fra den ene til den andre. Hvis du vil, kan du legge denne funksjonaliteten inn i `ILocation` ettersom “retning fra en lokasjon til en annen” ikke er spesifikt for Rabbit._
 
