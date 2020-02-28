@@ -209,7 +209,7 @@ Du kan gjøre resten av oppgavene selv om denne oppgaven ikke er ferdig.
 _Tips: Kan du bruke noe lignende det du lærte i forelesningen om rekursjon?_  
 Er det lurt med en helpemetode `ILocation go(ILocation from, List<GridDirection> steps)` som forteller deg hvor du ender opp hvis du følger en sekvens med steg?
 
-✅ `GameMapTest::testGetNeighbourhoodDoesNotWalkPastWalls`
+✅ `GameMapTest::testGetReachableDoesNotWalkPastWalls`
 
 ## Oppgave 5 - Smartere kaniner 20%
 

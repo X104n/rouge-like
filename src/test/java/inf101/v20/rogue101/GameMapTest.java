@@ -193,7 +193,7 @@ class GameMapTest {
 	}
 	
 	@Test
-	void testGetNeighbourhoodDoesNotWalkPastWalls() {
+	void testGetReachableDoesNotWalkPastWalls() {
 		final int WIDTH = 20;
 		GameMap map = new GameMap(WIDTH, 20);
 		for (int x=0; x<WIDTH; x++) {
