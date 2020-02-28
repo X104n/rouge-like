@@ -202,7 +202,7 @@ Når en rolle lurer på hvilke lokasjoner som befinner seg i nærheten, så er d
 
 ### 4.3 getReachable
 Noen ganger kan en lokasjon være nært men vanskelig å nå fordi andre IItem er i veien. Du skal finne de lokasjonene som er mulig å nå på `dist` antall steg. (Dette kan være vanskelig og vi regner ikke med at alle får til denne oppgaven.)
-Du kan gjøre resten av oppgavene selv om degulrotnne oppgaven ikke er ferdig.
+Du kan gjøre resten av oppgavene selv om denne oppgaven ikke er ferdig.
 
 👉 Implementer metoden `GameMap:getReachable` slik at den returnerer de lokasjoner som er mulig å gå til på `dist` antall steg.
 
