@@ -228,7 +228,7 @@ Bruk `IGameMap::getNeighbourhood` eller `IGameMap::getReachable` fra oppgave 4  
 _Tips: Her kan det være lurt med en hjelpemetode som tar to lokasjoner og returnerer retningen du må gå for å komme deg fra den ene til den andre. Hvis du vil, kan du legge denne funksjonaliteten inn i `ILocation` ettersom “retning fra en lokasjon til en annen” ikke er spesifikt for Rabbit._
 
 ### 5.3 Sort Neighbourhood
-Gå til `IGame::getNeighbourhood` og `IGame::getReachable` og sorter listen med lokasjoner før den returneres. `IList::sort` trenger en `Comparator<ILocation>`, her kan du bruke `ILocationComparator` som tar en lokasjon og sammenligner distansene til to andre lokasjoner.
+Gå til `IGameMap::getNeighbourhood` og `IGameMap::getReachable` og sorter listen med lokasjoner før den returneres. `IList::sort` trenger en `Comparator<ILocation>`, her kan du bruke `ILocationComparator` som tar en lokasjon og sammenligner distansene til to andre lokasjoner.
 
 ### 5.4 Rabbit AI
 Kjør testene på nytt, og se om kaninen klarer seg bedre nå.
