@@ -1,7 +1,6 @@
 package inf101.v20.grid;
 
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 public interface IGrid<T> extends Iterable<T> {
 

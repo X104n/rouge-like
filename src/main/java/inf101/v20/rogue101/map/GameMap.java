@@ -10,7 +10,6 @@ import java.util.Set;
 
 import inf101.v20.grid.GridDirection;
 import inf101.v20.grid.IGrid;
-import inf101.v20.grid.ILocationComparator;
 import inf101.v20.grid.IMultiGrid;
 import inf101.v20.grid.Location;
 import inf101.v20.grid.MultiGrid;

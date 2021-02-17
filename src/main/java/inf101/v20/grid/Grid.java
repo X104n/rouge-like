@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 /** A Grid contains a values in a 2D rectangular layout. */
 public class Grid<T> implements IGrid<T> {

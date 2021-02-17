@@ -1,8 +1,5 @@
 package inf101.v20.rogue101.objects;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import inf101.v20.grid.GridDirection;
 import inf101.v20.rogue101.RogueApplication;
 import inf101.v20.rogue101.game.IGame;

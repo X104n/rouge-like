@@ -1,6 +1,5 @@
 package inf101.v20.rogue101.objects;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
