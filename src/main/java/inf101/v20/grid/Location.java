@@ -1,5 +1,6 @@
 package inf101.v20.grid;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -30,14 +31,15 @@ public class Location {
 		return dir.getNeighbor(this);
 	}
 
-	public int gridDistanceTo(Location loc1) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int gridDistanceTo(Location loc) {
+		return Math.abs(row-loc.row)+Math.abs(col-loc.col);
 	}
 
 	public Collection<Location> allNeighbours() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Location> neighbours = new ArrayList<Location>();
+		for(GridDirection dir : GridDirection.EIGHT_DIRECTIONS)
+			neighbours.add(this.getNeighbor(dir));
+		return neighbours;
 	}
 	
 	public boolean equals(Location loc) {
