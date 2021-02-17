@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import inf101.v20.grid.GridDirection;
-import inf101.v20.grid.ILocation;
+import inf101.v20.grid.Location;
 import inf101.v20.rogue101.game.Game;
 import inf101.v20.rogue101.game.IllegalMoveException;
 import inf101.v20.rogue101.map.MapReader;
@@ -87,13 +87,13 @@ class IActorTest {
 	 */
 	void testDoTurn(IActor actor) {
 		Game game = new Game(MapReader.BUILTIN_MAP);
-		ILocation loc = game.getMap().getLocation(5, 5);
+		Location loc = game.getMap().getLocation(5, 5);
 		game.getMap().add(loc, actor);
 		game.setCurrent(5,5);
 		List<GridDirection> moves = game.getPossibleMoves();
-		ArrayList<ILocation> locations = new ArrayList<ILocation>();
+		ArrayList<Location> locations = new ArrayList<Location>();
 		for(GridDirection dir : moves) {
-			locations.add(loc.go(dir));
+			locations.add(loc.getNeighbor(dir));
 		}
 		try {
 			actor.doTurn(game);			
@@ -117,7 +117,7 @@ class IActorTest {
 	 */
 	void testDoTurn_NoMove(Character symbol) {
 		Game game = new Game(MapReader.mapTrap(symbol));
-		ILocation loc = game.getMap().getLocation(1, 1);
+		Location loc = game.getMap().getLocation(1, 1);
 		IActor actor = game.setCurrent(loc);
 		assertTrue(game.containsActor(loc, actor.getClass()));
 		assertNotEquals(null, game.getLocation());

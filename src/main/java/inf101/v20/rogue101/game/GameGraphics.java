@@ -7,7 +7,7 @@ import java.util.Set;
 import inf101.v20.gfx.gfxmode.BrushPainter;
 import inf101.v20.gfx.gfxmode.IBrush;
 import inf101.v20.gfx.textmode.Printer;
-import inf101.v20.grid.ILocation;
+import inf101.v20.grid.Location;
 import inf101.v20.rogue101.RogueApplication;
 import inf101.v20.rogue101.map.IGameMap;
 import inf101.v20.rogue101.map.IMapView;
@@ -80,7 +80,7 @@ public class GameGraphics implements IGameGraphics {
 		draw(map.getDirtyLocs());
 	}
 
-	public void draw(Set<ILocation> dirtyLocs) {
+	public void draw(Set<Location> dirtyLocs) {
 		if (dirtyLocs.isEmpty())
 			return;
 		GraphicsContext ctx = painter.as(GraphicsContext.class);
@@ -92,24 +92,24 @@ public class GameGraphics implements IGameGraphics {
 			w = h;
 		}
 		try {
-			for (ILocation loc : map.getArea()) {
-				ctx.clearRect(loc.getX() * w, loc.getY() * h, w, h);
+			for (Location loc : map.locations()) {
+				ctx.clearRect(loc.col * w, loc.row * h, w, h);
 				List<IItem> list = map.getAll(loc);
 				String sym = " ";
 				if (!list.isEmpty()) {
 					if (RogueApplication.MAP_DRAW_ONLY_DIRTY_CELLS) {
-						ctx.clearRect(loc.getX() * w, loc.getY() * h, w, h);
+						ctx.clearRect(loc.col * w, loc.row * h, w, h);
 						// ctx.fillRect(loc.getX() * w, loc.getY() * h, w, h);
 					}
 					painter.save();
-					painter.jumpTo((loc.getX() + 0.5) * w, (loc.getY() + 0.5) * h);
+					painter.jumpTo((loc.col + 0.5) * w, (loc.row + 0.5) * h);
 					boolean dontPrint = list.get(0).draw(painter, w, h);
 					painter.restore();
 					if (!dontPrint) {
 						sym = list.get(0).getGraphicTextSymbol();
 					}
 				}
-				printer.printAt(loc.getX() + 1, loc.getY() + 1, sym);
+				printer.printAt(loc.col + 1, loc.row + 1, sym);
 			}
 		} finally {
 			if (RogueApplication.MAP_AUTO_SCALE_ITEM_DRAW) {

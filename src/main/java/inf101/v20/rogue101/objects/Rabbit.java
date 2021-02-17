@@ -6,7 +6,6 @@ import java.util.List;
 
 import inf101.v20.gfx.textmode.Printer;
 import inf101.v20.grid.GridDirection;
-import inf101.v20.grid.ILocation;
 import inf101.v20.rogue101.game.IGame;
 import javafx.scene.paint.Color;
 

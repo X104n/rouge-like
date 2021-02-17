@@ -2,16 +2,16 @@ package inf101.v20.grid;
 
 import java.util.Comparator;
 
-public class ILocationComparator implements Comparator<ILocation> {
+public class ILocationComparator implements Comparator<Location> {
 	
-	private ILocation loc;
+	private Location loc;
 
-	public ILocationComparator(ILocation loc) {
+	public ILocationComparator(Location loc) {
 		this.loc = loc;
 	}
 
 	@Override
-	public int compare(ILocation loc1, ILocation loc2) {
+	public int compare(Location loc1, Location loc2) {
 		int dist1 = loc.gridDistanceTo(loc1);
 		int dist2 = loc.gridDistanceTo(loc2);
 		return dist1 - dist2;

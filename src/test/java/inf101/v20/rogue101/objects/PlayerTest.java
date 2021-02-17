@@ -1,7 +1,7 @@
 package inf101.v20.rogue101.objects;
 
 import inf101.v20.grid.GridDirection;
-import inf101.v20.grid.ILocation;
+import inf101.v20.grid.Location;
 import inf101.v20.rogue101.game.Game;
 import inf101.v20.rogue101.game.ItemFactory;
 import inf101.v20.rogue101.map.MapReader;
@@ -20,7 +20,7 @@ class PlayerTest {
 
     private Game board;
     private IPlayer player;
-    private ILocation loc;
+    private Location loc;
 
     @BeforeEach
     void beforeEach() {
@@ -32,7 +32,7 @@ class PlayerTest {
     @Test
     void PlayerDoesMoves() {
         player.keyPressed(board, KeyCode.UP);
-        assertEquals(loc.go(GridDirection.NORTH), board.getLocation());
+        assertEquals(loc.getNeighbor(GridDirection.NORTH), board.getLocation());
     }
 
     @Test

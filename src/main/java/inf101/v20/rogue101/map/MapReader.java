@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 import inf101.v20.grid.IGrid;
+import inf101.v20.grid.Location;
 import inf101.v20.grid.Grid;
 
 /**
@@ -107,8 +108,8 @@ public class MapReader {
 		while (in.hasNextLine()) {
 			xy[0] = 0;
 			in.nextLine().codePoints().forEach((codePoint) -> {
-				if (xy[0] < symbolMap.getWidth())
-					symbolMap.set(xy[0]++, xy[1], String.valueOf(Character.toChars(codePoint)));
+				if (xy[0] < symbolMap.numColumns())
+					symbolMap.set(new Location(xy[0]++, xy[1]), String.valueOf(Character.toChars(codePoint)));
 			});
 			xy[1]++;
 		}

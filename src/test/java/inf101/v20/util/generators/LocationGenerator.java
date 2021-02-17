@@ -2,22 +2,22 @@ package inf101.v20.util.generators;
 
 import java.util.Random;
 
-import inf101.v20.grid.IArea;
-import inf101.v20.grid.ILocation;
+import inf101.v20.grid.IGrid;
+import inf101.v20.grid.Location;
 
-public class LocationGenerator extends AbstractGenerator<ILocation> {
-	private final IArea area;
+public class LocationGenerator extends AbstractGenerator<Location> {
+	private final IGrid<?> area;
 
 	/**
 	 * New LocationGenerator, will generate locations within the area
 	 */
-	public LocationGenerator(IArea area) {
+	public LocationGenerator(IGrid<?> area) {
 		this.area = area;
 	}
 
 	@Override
-	public ILocation generate(Random r) {
-		return area.location(r.nextInt(area.getWidth()), r.nextInt(area.getHeight()));
+	public Location generate(Random r) {
+		return new Location(r.nextInt(area.numRows()), r.nextInt(area.numColumns()));
 	}
 
 }

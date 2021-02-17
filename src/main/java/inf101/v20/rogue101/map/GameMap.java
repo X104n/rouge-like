@@ -9,10 +9,10 @@ import java.util.Map;
 import java.util.Set;
 
 import inf101.v20.grid.GridDirection;
-import inf101.v20.grid.IArea;
-import inf101.v20.grid.ILocation;
+import inf101.v20.grid.IGrid;
 import inf101.v20.grid.ILocationComparator;
 import inf101.v20.grid.IMultiGrid;
+import inf101.v20.grid.Location;
 import inf101.v20.grid.MultiGrid;
 import inf101.v20.rogue101.game.IllegalMoveException;
 import inf101.v20.rogue101.objects.IActor;
@@ -28,20 +28,20 @@ public class GameMap implements IGameMap {
 	 * These locations have changed since last time graphics drew the screen,
 	 * and need to be redrawn soon.
 	 */
-	private final Set<ILocation> dirtyLocs = new HashSet<>();
+	private final Set<Location> dirtyLocs = new HashSet<>();
 	/**
 	 * An index of all the items in the map and their locations.
 	 */
 	// an IdentityHashMap uses object identity as a lookup key, so items are
 	// considered equal if they are the same object (a == b)
-	private final Map<IItem, ILocation> items = new IdentityHashMap<>();
+	private final Map<IItem, Location> items = new IdentityHashMap<>();
 
-	public GameMap(IArea area) {
-		grid = new MultiGrid<>(area);
+	public GameMap(int rows, int columns) {
+		grid = new MultiGrid<>(rows, columns);
 	}
 
-	public GameMap(int width, int height) {
-		grid = new MultiGrid<>(width, height);
+	public GameMap(IGrid<String> inputGrid) {
+		this(inputGrid.numRows(),inputGrid.numColumns());
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class GameMap implements IGameMap {
 	 * 
 	 */
 	@Override
-	public void add(ILocation loc, IItem item) {
+	public void add(Location loc, IItem item) {
 		// keep track of location of all items
 		items.put(item, loc);
 		// also keep track of whether we need to redraw this cell
@@ -70,20 +70,20 @@ public class GameMap implements IGameMap {
 	 * and only one IActor can be at each cell
 	 */
 	@Override
-	public boolean canGo(ILocation to) {
+	public boolean canGo(Location to) {
 		return !grid.contains(to, (i) -> (i instanceof Wall || i instanceof IActor));
 	}
 
 	@Override
-	public boolean hasNeighbour(ILocation from, GridDirection dir) {
-		return from.canGo(dir);
+	public boolean hasNeighbour(Location from, GridDirection dir) {
+		return grid.canGo(from,dir);
 	}
 
 	@Override
-	public boolean canGo(ILocation from, GridDirection dir) {
-		if (!from.canGo(dir))
+	public boolean canGo(Location from, GridDirection dir) {
+		if (!grid.canGo(from,dir))
 			return false;
-		ILocation loc = from.go(dir);
+		Location loc = from.getNeighbor(dir);
 		return canGo(loc);
 	}
 
@@ -91,7 +91,7 @@ public class GameMap implements IGameMap {
 	 * Returns the ILocation's that needs to be redrawn due to some change
 	 * that could lead to a different image being displayed at that ILocation
 	 */
-	public Set<ILocation> getDirtyLocs() {
+	public Set<Location> getDirtyLocs() {
 		return dirtyLocs;
 	}
 
@@ -100,7 +100,7 @@ public class GameMap implements IGameMap {
 	 *  hence the size() of the list returned is at most 1.
 	 */
 	@Override
-	public List<IActor> getActors(ILocation loc) {
+	public List<IActor> getActors(Location loc) {
 		List<IActor> items = new ArrayList<>();
 		for (IItem item : grid.get(loc)) {
 			if (item instanceof IActor)
@@ -111,18 +111,18 @@ public class GameMap implements IGameMap {
 	}
 
 	@Override
-	public List<IItem> getAll(ILocation loc) {
+	public List<IItem> getAll(Location loc) {
 		return Collections.unmodifiableList(grid.get(loc));
 	}
 
 	@Override
-	public List<IItem> getAllModifiable(ILocation loc) {
+	public List<IItem> getAllModifiable(Location loc) {
 		dirtyLocs.add(loc);
 		return grid.get(loc);
 	}
 
 	@Override
-	public void clean(ILocation loc) {
+	public void clean(Location loc) {
 		// remove any items that have health < 0:
 		if (grid.get(loc).removeIf((item) -> {
 			if (item.isDestroyed()) {
@@ -137,85 +137,75 @@ public class GameMap implements IGameMap {
 	}
 
 	@Override
-	public IArea getArea() {
-		return grid.getArea();
-	}
-
-	@Override
 	public int getHeight() {
-		return grid.getHeight();
+		return grid.numRows();
 	}
 
 	@Override
-	public List<IItem> getItems(ILocation loc) {
+	public List<IItem> getItems(Location loc) {
 		List<IItem> items = new ArrayList<>(grid.get(loc));
 		items.removeIf((i) -> i instanceof IActor);
 		return items;
 	}
 
 	@Override
-	public ILocation getLocation(IItem item) {
+	public Location getLocation(IItem item) {
 		return items.get(item);
 	}
 
 	@Override
-	public ILocation getLocation(int x, int y) {
-		return grid.getArea().location(x, y);
-	}
-
-	@Override
-	public ILocation getNeighbour(ILocation from, GridDirection dir) {
+	public Location getNeighbour(Location from, GridDirection dir) {
 		if (!hasNeighbour(from, dir))
 			return null;
 		else
-			return from.go(dir);
+			return from.getNeighbor(dir);
 	}
 
 	@Override
 	public int getWidth() {
-		return grid.getWidth();
+		return grid.numColumns();
 	}
 
 	@Override
-	public ILocation go(ILocation from, GridDirection dir) throws IllegalMoveException {
-		if (!from.canGo(dir))
+	public Location go(Location from, GridDirection dir) throws IllegalMoveException {
+		if (!grid.canGo(from,dir))
 			throw new IllegalMoveException("Cannot move outside map!");
-		ILocation loc = from.go(dir);
+		Location loc = from.getNeighbor(dir);
 		if (!canGo(loc))
 			throw new IllegalMoveException("Occupied!");
 		return loc;
 	}
 
 	@Override
-	public boolean has(ILocation loc, IItem target) {
+	public boolean has(Location loc, IItem target) {
 		return grid.contains(loc, target);
 	}
 
 	@Override
-	public boolean hasActors(ILocation loc) {
+	public boolean hasActors(Location loc) {
 		return grid.contains(loc, (i) -> i instanceof IActor);
 	}
 
 	@Override
-	public boolean hasItems(ILocation loc) {
+	public boolean hasItems(Location loc) {
 		// true if grid cell contains an item which is not an IActor
 		return grid.contains(loc, (i) -> !(i instanceof IActor));
 	}
 
 	@Override
-	public boolean hasWall(ILocation loc) {
+	public boolean hasWall(Location loc) {
 		return grid.contains(loc, (i) -> i instanceof Wall);
 	}
 
 	@Override
-	public void remove(ILocation loc, IItem item) {
+	public void remove(Location loc, IItem item) {
 		grid.remove(loc, item);
 		items.remove(item);
 		dirtyLocs.add(loc);
 	}
 
 	@Override
-	public List<ILocation> getNeighbourhood(ILocation loc, int dist) {
+	public List<Location> getNeighbourhood(Location loc, int dist) {
 		if (dist < 0 || loc == null)
 			throw new IllegalArgumentException();
 		else if (dist == 0)
@@ -226,12 +216,23 @@ public class GameMap implements IGameMap {
 	
 
 	@Override
-	public List<GridDirection> getPossibleMoves(ILocation currentLocation) {
+	public List<GridDirection> getPossibleMoves(Location currentLocation) {
 		return List.of(GridDirection.EAST); // <- Remove this
 	}
 
 	@Override
-	public List<ILocation> getReachable(ILocation loc, int dist) {
+	public List<Location> getReachable(Location loc, int dist) {
 		return new ArrayList<>();
+	}
+
+	@Override
+	public Location getLocation(int x, int y) {
+		return new Location(y, x);
+	}
+
+	@Override
+	public Iterable<Location> locations() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

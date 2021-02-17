@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
-import inf101.v20.grid.ILocation;
+import inf101.v20.grid.Location;
 import inf101.v20.rogue101.game.Game;
 import inf101.v20.rogue101.map.MapReader;
 import inf101.v20.rogue101.objects.Carrot;
@@ -36,18 +36,18 @@ class RabbitTest {
 	@Test
 	void testDoTurn() {
 		Game game = new Game(MapReader.BUILTIN_MAP);
-		ILocation loc = game.getMap().getLocation(5, 5);
+		Location loc = game.getMap().getLocation(5, 5);
 		Rabbit rabbit = new Rabbit();
 		game.getMap().add(loc, rabbit);
 		game.setCurrent(5,5);
 		game.addItem(rabbit);
 
 		int hp = rabbit.getCurrentHealth();
-		ILocation before = game.getLocation();		
+		Location before = game.getLocation();		
 		boolean hasCarrot = game.containsItem(Carrot.class);
 
 		game.doTurn();
-		ILocation after = game.getLocation();
+		Location after = game.getLocation();
 		
 		if(hasCarrot) {
 			assertEquals(before, after);

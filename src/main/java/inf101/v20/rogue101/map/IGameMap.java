@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import inf101.v20.grid.GridDirection;
-import inf101.v20.grid.ILocation;
+import inf101.v20.grid.Location;
 import inf101.v20.rogue101.objects.IItem;
 
 /**
@@ -21,7 +21,7 @@ public interface IGameMap extends IMapView {
 	 * @param loc
 	 * @return
 	 */
-	List<IItem> getAllModifiable(ILocation loc);
+	List<IItem> getAllModifiable(Location loc);
 
 	/**
 	 * Remove any destroyed items at the given location (items where
@@ -29,7 +29,7 @@ public interface IGameMap extends IMapView {
 	 *
 	 * @param loc
 	 */
-	void clean(ILocation loc);
+	void clean(Location loc);
 
 	/**
 	 * Remove an item
@@ -37,15 +37,17 @@ public interface IGameMap extends IMapView {
 	 * @param loc
 	 * @param item
 	 */
-	void remove(ILocation loc, IItem item);
+	void remove(Location loc, IItem item);
 
-	Set<ILocation> getDirtyLocs();
+	Set<Location> getDirtyLocs();
 
 	/**
 	 * Gets all values of GridDirection that is a valid move from currentLocation
 	 * @param currentLocation
 	 * @return
 	 */
-	List<GridDirection> getPossibleMoves(ILocation currentLocation);
+	List<GridDirection> getPossibleMoves(Location currentLocation);
+
+	Iterable<Location> locations();
 
 }

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
-import inf101.v20.grid.ILocation;
+import inf101.v20.grid.Location;
 import inf101.v20.rogue101.game.Game;
 import inf101.v20.rogue101.map.MapReader;
 import inf101.v20.rogue101.objects.Carrot;
@@ -40,7 +40,7 @@ class TestRabbitStrategy {
 		Game game = new Game(MapReader.CARROT_HUNT);
 		game.doTurn();
 		Rabbit rabbit = (Rabbit) game.getActor();
-		ILocation previous = game.getLocation();
+		Location previous = game.getLocation();
 		int carrots = 0;
 		while (rabbit.getCurrentHealth() > 0) {
 			game.doTurn();

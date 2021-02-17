@@ -13,21 +13,6 @@ public interface IGrid<T> extends Iterable<T> {
 	IGrid<T> copy();
 
 	/**
-	 * Create a parallel {@link Stream} with all the elements in this grid.
-	 *
-	 * @return A stream
-	 * @see {@link java.util.Collection#parallelStream()}
-	 */
-	Stream<T> elementParallelStream();
-
-	/**
-	 * Create a {@link Stream} with all the elements in this grid.
-	 *
-	 * @return A stream
-	 */
-	Stream<T> elementStream();
-
-	/**
 	 * Initialise the contents of all cells using an initialiser function.
 	 *
 	 * The function will be called with the (x,y) position of an element, and is
@@ -40,7 +25,7 @@ public interface IGrid<T> extends Iterable<T> {
 	 *
 	 * @param initialiser The initialiser function
 	 */
-	void fill(Function<ILocation, T> initialiser);
+	void fill(Function<Location, T> initialiser);
 
 	/**
 	 * Set the contents of all cells to <code>element</code>
@@ -65,24 +50,11 @@ public interface IGrid<T> extends Iterable<T> {
 	 * @param pos The (x,y) position of the grid cell to get the contents of.
 	 * @throws IndexOutOfBoundsException if !isValid(pos)
 	 */
-	T get(ILocation pos);
+	T get(Location pos);
 
-	/**
-	 * Get the contents of the cell in the given x,y location.
-	 *
-	 * y must be greater than or equal to 0 and less than getHeight(). x must be
-	 * greater than or equal to 0 and less than getWidth().
-	 *
-	 * @param x The column of the cell to get the contents of.
-	 * @param y The row of the cell to get contents of.
-	 * @throws IndexOutOfBoundsException if !isValid(x,y)
-	 */
-	T get(int x, int y);
-
-	IArea getArea();
 
 	/** @return The height of the grid. */
-	int getHeight();
+	int numRows();
 
 	/**
 	 * Get the contents of the cell in the given x,y location.
@@ -95,23 +67,11 @@ public interface IGrid<T> extends Iterable<T> {
 	 * @param defaultResult A default value to be substituted if the (x,y) is out of
 	 *                      bounds or contents == null.
 	 */
-	T getOrDefault(ILocation pos, T defaultResult);
+	T getOrDefault(Location pos, T defaultResult);
 
-	/**
-	 * Get the contents of the cell in the given x,y location.
-	 *
-	 * y must be greater than or equal to 0 and less than getHeight(). x must be
-	 * greater than or equal to 0 and less than getWidth().
-	 *
-	 * @param x             The column of the cell to get the contents of.
-	 * @param y             The row of the cell to get contents of.
-	 * @param defaultResult A default value to be substituted if the (x,y) is out of
-	 *                      bounds or contents == null.
-	 */
-	T getOrDefault(int x, int y, T defaultResult);
 
 	/** @return The width of the grid. */
-	int getWidth();
+	int numColumns();
 
 	/**
 	 * Check if coordinates are valid.
@@ -122,29 +82,8 @@ public interface IGrid<T> extends Iterable<T> {
 	 * @param pos A position
 	 * @return true if the position is within the grid
 	 */
-	boolean isValid(ILocation pos);
+	boolean isOnGrid(Location pos);
 
-	/**
-	 * Check if coordinates are valid.
-	 *
-	 * Valid coordinates are 0 <= x < getWidth(), 0 <= y < getHeight().
-	 *
-	 * @param x an x coordinate
-	 * @param y an y coordinate
-	 * @return true if the (x,y) position is within the grid
-	 */
-	boolean isValid(int x, int y);
-
-	/**
-	 * Create a parallel {@link Stream} with all the locations in this grid.
-	 * <p>
-	 * All locations obtained through the stream are guaranteed to be valid
-	 * according to {@link #isValid(ILocation)}.
-	 *
-	 * @return A stream
-	 * @see {@link java.util.Collection#parallelStream()}
-	 */
-	Stream<ILocation> locationParallelStream();
 
 	/**
 	 * Iterate over all grid locations
@@ -157,17 +96,8 @@ public interface IGrid<T> extends Iterable<T> {
 	 *
 	 * @return An iterable for iterating over all the locations in the grid
 	 */
-	Iterable<ILocation> locations();
+	Iterable<Location> locations();
 
-	/**
-	 * Create a {@link Stream} with all the locations in this grid.
-	 * <p>
-	 * All locations obtained through the stream are guaranteed to be valid
-	 * according to {@link #isValid(ILocation)}.
-	 *
-	 * @return A stream
-	 */
-	Stream<ILocation> locationStream();
 
 	/**
 	 * Set the contents of the cell in the given x,y location.
@@ -179,18 +109,8 @@ public interface IGrid<T> extends Iterable<T> {
 	 * @param element The contents the cell is to have.
 	 * @throws IndexOutOfBoundsException if !isValid(pos)
 	 */
-	void set(ILocation pos, T element);
+	void set(Location pos, T element);
 
-	/**
-	 * Set the contents of the cell in the given x,y location.
-	 *
-	 * y must be greater than or equal to 0 and less than getHeight(). x must be
-	 * greater than or equal to 0 and less than getWidth().
-	 *
-	 * @param pos     The (x,y) position of the grid cell to get the contents of.
-	 * @param element The contents the cell is to have.
-	 * @throws IndexOutOfBoundsException if !isValid(x,y)
-	 */
-	void set(int x, int y, T element);
-
+	boolean canGo(Location from, GridDirection dir);
+	
 }

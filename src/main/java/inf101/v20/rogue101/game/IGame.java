@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import inf101.v20.grid.GridDirection;
-import inf101.v20.grid.ILocation;
+import inf101.v20.grid.Location;
 import inf101.v20.rogue101.map.IMapView;
 import inf101.v20.rogue101.objects.IActor;
 import inf101.v20.rogue101.objects.IItem;
@@ -76,7 +76,7 @@ public interface IGame {
 	 * @return the attacker's new location, or the previous location if the attack
 	 *         failed
 	 */
-	ILocation attack(GridDirection dir, IItem target) throws IllegalMoveException;
+	Location attack(GridDirection dir, IItem target) throws IllegalMoveException;
 
 	/**
 	 * @return A random generator
@@ -192,7 +192,7 @@ public interface IGame {
 	 *
 	 * @return Location of the current actor
 	 */
-	ILocation getLocation();
+	Location getLocation();
 
 	/**
 	 * Get the current actor
@@ -213,7 +213,7 @@ public interface IGame {
 	 * @return A location, or <code>null</code> if the location would be outside the
 	 *         map
 	 */
-	ILocation getLocation(GridDirection dir);
+	Location getLocation(GridDirection dir);
 
 	/**
 	 * @return The map
@@ -235,7 +235,7 @@ public interface IGame {
 	 *
 	 * @return A list of grid cells visible from the {@link #getLocation()}
 	 */
-	List<ILocation> getReachable();
+	List<Location> getReachable();
 
 	/**
 	 * @return Width of the map
@@ -251,7 +251,7 @@ public interface IGame {
 	 * @return A new location
 	 * @throws IllegalMoveException if moving in that direction is illegal
 	 */
-	ILocation move(GridDirection dir);
+	Location move(GridDirection dir);
 
 	/**
 	 * Perform a ranged attack on the target.
@@ -263,7 +263,7 @@ public interface IGame {
 	 *               direction
 	 * @return Your new location if the attack resulted in you moving (unlikely)
 	 */
-	ILocation rangedAttack(GridDirection dir, IItem target);
+	Location rangedAttack(GridDirection dir, IItem target);
 
 	/**
 	 * Checks if a location contains an actor of a specific class
@@ -272,7 +272,7 @@ public interface IGame {
 	 * @param c class of the actor
 	 * @return true if location contains an actor of that class 
 	 */
-	<T extends IActor> boolean containsActor(ILocation loc, Class<T> c);
+	<T extends IActor> boolean containsActor(Location loc, Class<T> c);
 
 	/**
 	 * Checks if a location contains an item of a specific class
@@ -281,6 +281,6 @@ public interface IGame {
 	 * @param c class of the item
 	 * @return true if location contains an item of that class 
 	 */
-	<T extends IItem> boolean containsItem(ILocation loc, Class<T> c);
+	<T extends IItem> boolean containsItem(Location loc, Class<T> c);
 
 }
