@@ -2,11 +2,11 @@ package inf101.v20.grid;
 
 import java.util.Comparator;
 
-public class ILocationComparator implements Comparator<Location> {
+public class LocationComparator implements Comparator<Location> {
 	
 	private Location loc;
 
-	public ILocationComparator(Location loc) {
+	public LocationComparator(Location loc) {
 		this.loc = loc;
 	}
 
