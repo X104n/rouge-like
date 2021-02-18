@@ -1,14 +1,6 @@
 package inf101.v20.rogue101.game;
 
-import inf101.v20.rogue101.objects.Amulet;
-import inf101.v20.rogue101.objects.Carrot;
-import inf101.v20.rogue101.objects.Dust;
-import inf101.v20.rogue101.objects.IItem;
-import inf101.v20.rogue101.objects.Player;
-import inf101.v20.rogue101.objects.Portal;
-import inf101.v20.rogue101.objects.Rabbit;
-import inf101.v20.rogue101.objects.Spider;
-import inf101.v20.rogue101.objects.Wall;
+import inf101.v20.rogue101.objects.*;
 
 public class ItemFactory {
 
