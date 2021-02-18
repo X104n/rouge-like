@@ -231,7 +231,6 @@ public class GameMap implements IGameMap {
 
 	@Override
 	public Iterable<Location> locations() {
-		// TODO Auto-generated method stub
-		return null;
+		return grid.locations();
 	}
 }
