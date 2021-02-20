@@ -1,16 +1,13 @@
 package inf101.rogue101.objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
 import inf101.grid.Location;
 import inf101.rogue101.game.Game;
+import inf101.rogue101.map.IMapView;
 import inf101.rogue101.map.MapReader;
-import inf101.rogue101.objects.Carrot;
-import inf101.rogue101.objects.IPlayer;
-import inf101.rogue101.objects.Rabbit;
 
 /**
  * @author Martin Vatshelle
@@ -34,26 +31,27 @@ class RabbitTest {
 		assertEquals(100, player.getCurrentHealth());
 	}
 	
+	public String testDoTurnMap = "6 5\n" //
+			+ "######\n" //
+			+ "#    #\n" //
+			+ "# RC #\n" //
+			+ "#    #\n" //
+			+ "######\n";
 	@Test
-	void testDoTurn() {
-		Game game = new Game(MapReader.BUILTIN_MAP);
-		Location loc = game.getMap().getLocation(5, 5);
-		Rabbit rabbit = new Rabbit();
-		game.getMap().add(loc, rabbit);
-		game.setCurrent(5,5);
-		game.addItem(rabbit);
-
-		int hp = rabbit.getCurrentHealth();
-		Location before = game.getLocation();		
-		boolean hasCarrot = game.containsItem(Carrot.class);
-
-		game.doTurn();
-		Location after = game.getLocation();
+	void testMakesMove() {
+		Game game = new Game(testDoTurnMap);
+		IActor rabbit = game.getMap().getActors(new Location(2,2)).get(0);
 		
-		if(hasCarrot) {
-			assertEquals(before, after);
-		}else {
-			assertNotEquals(before, after);
-		}
+		itemMoved(game, rabbit);
+	}
+
+	private boolean itemMoved(Game game, IItem rabbit) {
+		IMapView map = game.getMap();
+		Location before = map.getLocation(rabbit);
+		assertEquals(new Location(2,2), before);
+		game.doTurn();
+		Location after = game.getMap().getLocation(rabbit);
+		
+		return before.equals(after);
 	}
 }
