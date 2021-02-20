@@ -24,7 +24,7 @@ class RabbitTest {
 	@Test
 	void CuteRabbitIsHarmless() {
 		Game game = new Game(MapReader.playerTrapWith('R'));
-		IPlayer player = (IPlayer) game.setCurrent(2, 2);
+		IPlayer player = (IPlayer) game.setCurrent(new Location(2, 2));
 
 		for (int i = 0; i < 1000; i++) game.doTurn();
 

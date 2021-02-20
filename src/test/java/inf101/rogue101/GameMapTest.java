@@ -26,7 +26,7 @@ class GameMapTest {
 	@Test
 	void testAddThenGet() {
 		GameMap map = new GameMap(20, 20);
-		Location loc = map.getLocation(7, 4);
+		Location loc = new Location(7, 4);
 		IItem item = new Dust();
 		map.add(loc, item);
 		assertTrue(map.getAll(loc).contains(item));
@@ -41,7 +41,7 @@ class GameMapTest {
 	void testSortedAdd() {
 		Comparator<IItem> comp = new IItemComparator();
 		GameMap gameMap = new GameMap(20, 20);
-		Location location = gameMap.getLocation(10, 10);
+		Location location = new Location(10, 10);
 		gameMap.add(location, new Rabbit());
 		gameMap.add(location, new Dust());
 		gameMap.add(location, new Carrot());
@@ -57,7 +57,7 @@ class GameMapTest {
 	@Test
 	void testCanGo() {
 		GameMap map = new GameMap(20, 20);
-		Location location = map.getLocation(10, 10);
+		Location location = new Location(10, 10);
 		Collection<Location> locations = location.allNeighbours();
 		for(Location loc : locations) {
 			assertTrue(map.canGo(loc));
@@ -72,7 +72,7 @@ class GameMapTest {
 	@Test
 	void testCanNotGoActor() {
 		GameMap map = new GameMap(20, 20);
-		Location location = map.getLocation(10, 10);
+		Location location = new Location(10, 10);
 		Collection<Location> locations = location.allNeighbours();
 		assertEquals(8,locations.size());
 		for(Location loc : locations) {
@@ -87,7 +87,7 @@ class GameMapTest {
 	@Test
 	void testCanNotGoWall() {
 		GameMap map = new GameMap(20, 20);
-		Location location = map.getLocation(10, 10);
+		Location location = new Location(10, 10);
 		Collection<Location> locations = location.allNeighbours();
 		assertEquals(8,locations.size());
 		for(Location loc : locations) {
@@ -104,7 +104,7 @@ class GameMapTest {
 		for(GridDirection dir : GridDirection.values()) {
 			if(dir == GridDirection.CENTER)
 				continue;
-			Location location = map.getLocation(10, 10);
+			Location location = new Location(10, 10);
 			for(int i=0;i<10;i++) {
 				location = location.getNeighbor(dir);
 			}
@@ -124,7 +124,7 @@ class GameMapTest {
 	@Test
 	void testRemove() {
 		GameMap map = new GameMap(20, 20);
-		Location loc = map.getLocation(3,3);
+		Location loc = new Location(3,3);
 		IItem item = new Dust();
 		map.add(loc, new Carrot());
 		map.add(loc, item);
@@ -141,10 +141,10 @@ class GameMapTest {
 	@Test
 	void testGetPossibleMoves() {
 		GameMap map = new GameMap(20, 20);
-		Location loc = map.getLocation(3,3);
-		map.add(map.getLocation(3,4), new Wall());
-		map.add(map.getLocation(4,3), new Wall());
-		map.add(map.getLocation(2,3), new Spider());
+		Location loc = new Location(3,3);
+		map.add(new Location(3,4), new Wall());
+		map.add(new Location(4,3), new Wall());
+		map.add(new Location(2,3), new Spider());
 
 		List<GridDirection> moves = map.getPossibleMoves(loc);
 		for(GridDirection dir : GridDirection.values()) {
@@ -158,7 +158,7 @@ class GameMapTest {
 	@Test
 	void testGetNeighbourhoodDumb() {
 		GameMap map = new GameMap(20, 20);
-		Location loc = map.getLocation(10, 10);
+		Location loc = new Location(10, 10);
 		List<Location> neighbourhood = map.getNeighbourhood(loc, 3);
 		assertTrue(neighbourhood.size() >= 20);
 	}
@@ -169,7 +169,7 @@ class GameMapTest {
 	@Test
 	void testGetNeighbourhoodCardinality() {
 		GameMap map = new GameMap(20, 20);
-		Location loc = map.getLocation(10, 10);
+		Location loc = new Location(10, 10);
 		List<Location> neighbourhood = map.getNeighbourhood(loc, 3);
 		assertEquals(7*7-1, neighbourhood.size());
 	}
@@ -181,7 +181,7 @@ class GameMapTest {
 	@Test
 	void testGetNeighbourhoodEdgeCardinality() {
 		GameMap map = new GameMap(20, 20);
-		Location loc = map.getLocation(1, 2);
+		Location loc = new Location(1, 2);
 		List<Location> neighbourhood = map.getNeighbourhood(loc, 3);
 		assertEquals(6*5-1, neighbourhood.size());
 	}
@@ -189,8 +189,8 @@ class GameMapTest {
 	@Test
 	void testGetNeighbourhoodDoesNotReturnWalls() {
 		GameMap map = new GameMap(20, 20);
-		map.add(map.getLocation(10, 11), new Wall());
-		Location loc = map.getLocation(10, 10);
+		map.add(new Location(10, 11), new Wall());
+		Location loc = new Location(10, 10);
 		List<Location> neighbourhood = map.getNeighbourhood(loc, 3);
 		assertEquals((7*7-1)-1, neighbourhood.size());
 	}
@@ -200,9 +200,9 @@ class GameMapTest {
 		final int WIDTH = 20;
 		GameMap map = new GameMap(WIDTH, 20);
 		for (int x=0; x<WIDTH; x++) {
-			map.add(map.getLocation(x, 11), new Wall());
+			map.add(new Location(x, 11), new Wall());
 		}
-		Location loc = map.getLocation(10, 10);
+		Location loc = new Location(10, 10);
 		List<Location> neighbourhood = map.getReachable(loc, 3);
 		assertEquals(7*4-1, neighbourhood.size());
 		
@@ -211,7 +211,7 @@ class GameMapTest {
 	@Test
 	void testGetNeighbourhoodSorted() {
 		GameMap map = new GameMap(20, 20);
-		Location loc = map.getLocation(10, 10);
+		Location loc = new Location(10, 10);
 		List<Location> neighbourhood = map.getNeighbourhood(loc, 3);
 		Location current = neighbourhood.get(0);
 		for (int i=1; i<neighbourhood.size(); i++) {

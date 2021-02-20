@@ -1,5 +1,6 @@
 package inf101.rogue101.objects;
 
+import inf101.grid.Location;
 import inf101.rogue101.game.Game;
 import inf101.rogue101.map.MapReader;
 import inf101.rogue101.objects.IPlayer;
@@ -20,7 +21,7 @@ public class SpiderTest {
     @Test
     void SpiderKillsPlayer() {
         Game game = new Game(MapReader.playerTrapWith('S'));
-        IPlayer player = (IPlayer) game.setCurrent(2, 2);
+        IPlayer player = (IPlayer) game.setCurrent(new Location(2, 2));
 
         for (int i = 0; i < 1000; i++) game.doTurn();
 
@@ -30,7 +31,7 @@ public class SpiderTest {
     @Test
     void SpiderHasShield() {
         Game game = new Game(MapReader.mapTrap('S'));
-        Spider spider = (Spider) game.setCurrent(1, 1);
+        Spider spider = (Spider) game.setCurrent(new Location(1, 1));
         assertEquals(10, spider.getCurrentHealth());
         spider.handleDamage(5);
         assertEquals(6, spider.getCurrentHealth());

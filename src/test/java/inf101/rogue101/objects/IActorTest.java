@@ -90,9 +90,9 @@ class IActorTest {
 	 */
 	void testDoTurn(IActor actor) {
 		Game game = new Game(MapReader.BUILTIN_MAP);
-		Location loc = game.getMap().getLocation(5, 5);
+		Location loc = new Location(5, 5);
 		game.getMap().add(loc, actor);
-		game.setCurrent(5,5);
+		game.setCurrent(loc);
 		List<GridDirection> moves = game.getPossibleMoves();
 		ArrayList<Location> locations = new ArrayList<Location>();
 		for(GridDirection dir : moves) {
@@ -120,7 +120,7 @@ class IActorTest {
 	 */
 	void testDoTurn_NoMove(Character symbol) {
 		Game game = new Game(MapReader.mapTrap(symbol));
-		Location loc = game.getMap().getLocation(1, 1);
+		Location loc = new Location(1, 1);
 		IActor actor = game.setCurrent(loc);
 		assertTrue(game.containsActor(loc, actor.getClass()));
 		assertNotEquals(null, game.getLocation());

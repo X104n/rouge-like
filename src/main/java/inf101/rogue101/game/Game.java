@@ -450,10 +450,6 @@ public class Game implements IGame {
 		return currentActor;
 	}
 
-	public IActor setCurrent(int x, int y) {
-		return setCurrent(map.getLocation(x, y));
-	}
-
 	@Override
 	public Random getRandom() {
 		return random;

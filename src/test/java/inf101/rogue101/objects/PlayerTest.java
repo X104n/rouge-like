@@ -27,7 +27,7 @@ class PlayerTest {
     @BeforeEach
     void beforeEach() {
         board = new Game(MapReader.TEST_MAP);
-        player = (IPlayer) board.setCurrent(3, 2);
+        player = (IPlayer) board.setCurrent(new Location(3, 2));
         loc = board.getLocation();
     }
 
@@ -46,7 +46,7 @@ class PlayerTest {
 
     @Test
     void PlayerCanPickUpAndDropItem() {
-        loc = board.getMap().getLocation(3, 1);
+        loc = new Location(3, 1);
         assertEquals(1, board.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.UP);
@@ -61,7 +61,7 @@ class PlayerTest {
     
     @Test
     void PlayerPickUpHasItem() {
-        loc = board.getMap().getLocation(3, 1);
+        loc = new Location(3, 1);
         assertEquals(1, board.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.UP);
@@ -78,7 +78,7 @@ class PlayerTest {
 
     @Test
     void PlayerPickUpDropHasItem() {
-        loc = board.getMap().getLocation(3, 1);
+        loc = new Location(3, 1);
         assertEquals(1, board.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.UP);
@@ -97,7 +97,7 @@ class PlayerTest {
     
     @Test
     void PlayerPickUpHasItemReferenceEqualityItem() {
-        loc = board.getMap().getLocation(3, 1);
+        loc = new Location(3, 1);
         assertEquals(1, board.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.UP);
@@ -115,7 +115,7 @@ class PlayerTest {
     
     @Test
     void PlayerCanPickUpAndDropMoreItems() {
-        loc = board.getMap().getLocation(3, 1);
+        loc = new Location(3, 1);
 
         assertEquals(1, board.getMap().getAll(loc).size());
 

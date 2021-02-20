@@ -88,15 +88,6 @@ public interface IMapView {
 	 */
 	Location getLocation(IItem item);
 
-	/**
-	 * Translate (x,y)-coordinates to ILocation
-	 *
-	 * @param x
-	 * @param y
-	 * @return an ILocation
-	 * @throws IndexOutOfBoundsException if (x,y) is outside {@link #getArea()}
-	 */
-	Location getLocation(int x, int y);
 
 	/**
 	 * Get the neighbouring location in the given direction
@@ -179,4 +170,5 @@ public interface IMapView {
 	 */
 	List<Location> getReachable(Location centre, int dist);
 
+	public Iterable<Location> locations();
 }

@@ -239,12 +239,8 @@ public class GameMap implements IGameMap {
 	}
 
 	@Override
-	public Location getLocation(int x, int y) {
-		return new Location(y, x);
-	}
-
-	@Override
 	public Iterable<Location> locations() {
 		return grid.locations();
 	}
+
 }
