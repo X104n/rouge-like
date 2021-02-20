@@ -9,6 +9,7 @@ import inf101.gfx.textmode.Printer;
 import inf101.gfx.textmode.TextMode;
 import inf101.rogue101.game.EmojiFactory;
 import inf101.rogue101.game.Game;
+import inf101.rogue101.game.GameGraphics;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -54,7 +55,8 @@ public class RogueApplication extends Application {
 
 	private void setup() {
 		//
-		game = new Game(screen, painter, printer);
+		GameGraphics graphics = new GameGraphics(painter, printer);
+		game = new Game(graphics);
 		game.draw();
 
 		//

@@ -39,12 +39,12 @@ public class GameGraphics implements IGameGraphics {
 	 */
 	private final Set<Location> dirtyLocs = new HashSet<>();
 
-	public GameGraphics(IBrush painter, Printer printer, IGameMap map2) {
+	public GameGraphics(IBrush painter, Printer printer) {
 		this.painter = painter;
 		this.printer = printer;
 	}
 
-	public GameGraphics(IGameMap map) {
+	public GameGraphics() {
 		printer = new Printer(1280, 720);
 		painter = new BrushPainter(1280, 720);
 	}

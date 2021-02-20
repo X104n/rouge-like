@@ -62,46 +62,64 @@ public class Game implements IGame {
 	private int numPlayers = 0;
 	GameGraphics graphics;
 
-	public Game(Screen screen, IBrush painter, Printer printer) {
+	public Game() {
+		this(getDefaultMap());
+	}
 
+	public Game(String mapString) {
+		this(MapReader.loadString(mapString));
+	}
+
+	public Game(IGrid<IItem> inputGrid) {
+		this.map = new GameMap(inputGrid);
+		this.graphics = new GameGraphics();
+	}
+	
+	public Game(GameGraphics graphics) {
+		this.graphics = graphics;
+		this.map = new GameMap(getDefaultMap());
+	}
+
+
+	static IGrid<IItem> getDefaultMap() {
 		// NOTE: in a more realistic situation, we will have multiple levels (one map
 		// per level), and (at least for a Roguelike game) the levels should be
 		// generated
 		//
 		// inputGrid will be filled with characters indicating what (if anything)
 		// should be placed at that map square
-		IGrid<IItem> inputGrid;
+
+		IGrid<IItem> grid;
 		try {
-			inputGrid = MapReader.loadFile("maps/level1.txt");
+			grid = MapReader.loadFile("maps/level1.txt");
 		} catch (Exception e) {
 			System.err.println("Map not found – falling back to builtin map");
-			inputGrid = MapReader.loadString(MapReader.BUILTIN_MAP);
+			grid = MapReader.loadString(MapReader.BUILTIN_MAP);
 		} 
-		this.map = new GameMap(inputGrid);
-
-		graphics = new GameGraphics(painter, printer, map);
-	}
-
-	public Game(String mapString) {
-		this.map = new GameMap(MapReader.loadString(mapString));
-
-		graphics = new GameGraphics(map);
+		return grid;
 	}
 
 	@Override
 	public void addItem(IItem item) {
 		map.add(currentLocation, item);
+		// also keep track of whether we need to redraw this cell
+		graphics.reportChange(currentLocation);
 	}
 
 	@Override
 	public void addItem(char symbol) {
 		IItem item = ItemFactory.createItem(symbol);
-		if (item != null)
+		if (item != null) {
 			map.add(currentLocation, item);
+			// also keep track of whether we need to redraw this cell
+			graphics.reportChange(currentLocation);
+		}
 	}
 
 	public boolean attack(GridDirection dir) {
 		Location loc = map.getNeighbour(getLocation(), dir);
+		graphics.reportChange(loc);
+		graphics.reportChange(currentLocation);
 		List<IActor> actorsOnTargetLoc = map.getActors(loc);
 		if (actorsOnTargetLoc.isEmpty())
 			return true;
@@ -117,6 +135,9 @@ public class Game implements IGame {
 		Location loc = map.getNeighbour(getLocation(), dir);
 		if (!map.has(loc, target))
 			throw new IllegalMoveException("Target isn't there!");
+
+		graphics.reportChange(loc);
+		graphics.reportChange(currentLocation);
 
 		if (Game.attackSucceeds(currentActor, target))
 			target.handleDamage(currentActor.getDamage());
@@ -149,10 +170,12 @@ public class Game implements IGame {
 			while (!actors.isEmpty()) {
 				// get the next player or non-player in the queue
 				currentActor = actors.remove(0);
+				currentLocation = map.getLocation(currentActor);
+				graphics.reportChange(currentLocation);
 				if (currentActor.isDestroyed()) { // skip if it's dead
 					continue;
 				}
-				currentLocation = map.getLocation(currentActor);
+
 				if (currentLocation == null) {
 					displayDebug("doTurn(): Whoops! Actor has disappeared from the map: " + currentActor);
 				}
@@ -168,6 +191,8 @@ public class Game implements IGame {
 						// currentLocation = null;
 					} else {
 						currentActor.doTurn(this);
+						Location newLocation = map.getLocation(currentActor);
+						graphics.reportChange(newLocation);
 					}
 					// For the human player, we need to wait for input, so we just return.
 					// Further keypresses will cause keyPressed() to be called, and once the human
@@ -179,17 +204,20 @@ public class Game implements IGame {
 					// whose turn it is.
 					return true;
 				} else if (currentActor instanceof IActor) {
-					Location oldLocation = map.getLocation(currentActor);
+
 					try {
 						// computer-controlled players do their stuff right away
 						currentActor.doTurn(this);
-						// remove any dead items from current location
 					} catch (Exception e) {
 						// actor did something wrong
 						// do nothing, leave this IActor
 					}
+					Location newLocation = map.getLocation(currentActor);
+					graphics.reportChange(newLocation);
+					
+					// remove any dead items from current location
 					map.clean(currentLocation);
-					map.clean(oldLocation);
+					map.clean(newLocation);
 				} else {
 					displayDebug("doTurn(): Hmm, this is a very strange actor: " + currentActor);
 				}
@@ -221,54 +249,13 @@ public class Game implements IGame {
 
 					toRemove.add(item);
 				} else if (item instanceof IPlayer) {
-					actors.add(0, (IActor) item); // we let the human player go first
+					actors.add(0, (IPlayer) item); // we let the human player go first
 					numPlayers++;
 				} else if (item instanceof IActor) {
 					actors.add((IActor) item); // add other actors to the end of the list
 				}
 			}		
 		}
-
-//		for (IItem item : toRemove)
-//			map.remove(loc, item); // need to do this too, to update item map
-//
-//	});
-		
-		// this extra fancy iteration over each map location runs *in parallel* on
-		// multicore systems!
-		// that makes some things more tricky, hence the "synchronized" block and
-		// "Collections.synchronizedList()" in the initialization of "actors".
-		// NOTE: If you want to modify this yourself, it might be a good idea to replace
-		// "parallelStream()" by "stream()", because weird things can happen when many
-		// things happen
-		// at the same time! (or do INF214 or DAT103 to learn about locks and threading)
-//		map.getArea().parallelStream().forEach((loc) -> { // will do this for each location in map
-//			List<IItem> list = map.getAllModifiable(loc); // all items at loc
-//			Iterator<IItem> li = list.iterator(); // manual iterator lets us remove() items
-//			List<IItem> toRemove = new ArrayList<IItem>();
-//			while (li.hasNext()) { // this is what "for(IItem item : list)" looks like on the inside
-//				IItem item = li.next();
-//				if (item.getCurrentHealth() < 0) {
-//					// normally, we expect these things to be removed when they are destroyed, so
-//					// this shouldn't happen
-//					synchronized (this) {
-//						formatDebug("beginTurn(): found and removed leftover destroyed item %s '%s' at %s%n",
-//								item.getLongName(), item.getGraphicTextSymbol(), loc);
-//					}
-//					toRemove.add(item);
-//				} else if (item instanceof IPlayer) {
-//					actors.add(0, (IActor) item); // we let the human player go first
-//					synchronized (this) {
-//						numPlayers++;
-//					}
-//				} else if (item instanceof IActor) {
-//					actors.add((IActor) item); // add other actors to the end of the list
-//				}
-//			}
-//			for (IItem item : toRemove)
-//				map.remove(loc, item); // need to do this too, to update item map
-//
-//		});
 	}
 
 	@Override
@@ -309,7 +296,7 @@ public class Game implements IGame {
 	}
 
 	public void draw() {
-		graphics.draw();
+		graphics.drawDirty(map);
 	}
 
 	@Override
@@ -349,6 +336,17 @@ public class Game implements IGame {
 	@Override
 	public Location getLocation() {
 		return currentLocation;
+	}
+
+	public Location getLocation(IItem item) {
+		for(Location loc : map.locations()) {
+			for(IItem cur : map.getAll(loc)) {
+				if(item == cur) {
+					return loc;
+				}
+			}
+		}
+		return null;
 	}
 
 	@Override
