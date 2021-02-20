@@ -27,14 +27,21 @@ public class Rabbit implements IActor {
 
 	@Override
 	public void doTurn(IGame game) {
-		if (getMaxHealth()-getCurrentHealth()>2 && eatIfPossible(game))
-			return;
+		boolean isHungry = getMaxHealth()-getCurrentHealth()>2;
+		if(isHungry) {
+			boolean gotFood = eatIfPossible(game);
+			if(gotFood) {
+				//Rabbit is full and prefers to rest
+				return;
+			}
+		}
 
 		performMove(game);
 	}
 
 	/**
 	 * Burns one round of energy
+	 * Rabbits only burn energy if they move, not when laying still.
 	 */
 	private void burnEnergy() {
 		hp--;
