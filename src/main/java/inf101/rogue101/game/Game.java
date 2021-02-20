@@ -28,6 +28,7 @@ import javafx.scene.input.KeyCode;
  * 
  * @author anya
  * @author Anna Eilertsen - anna.eilertsen@uib.no
+ * @author Martin Vatshelle - martin.vatshelle@uib.no
  *
  */
 public class Game implements IGame {
