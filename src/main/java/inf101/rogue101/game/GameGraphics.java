@@ -1,6 +1,7 @@
 package inf101.rogue101.game;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +17,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
+ * This Class Draws Graphics of an IMapView
+ * 
+ * The grid containing IItems is drawn
+ * Text messages are shown in a text area
+ * 
  * @author unknown
  * @author Martin Vatshelle
  *
@@ -25,26 +31,22 @@ public class GameGraphics implements IGameGraphics {
 	// graphics application to draw graphics on
 	private final IBrush painter;
 	private final Printer printer;
-	private final List<String> buffer = new ArrayList<>();
-	/**
-	 * The game map. {@link IGameMap} gives us a few more details than
-	 * {@link IMapView} (write access to item lists); the game needs this but
-	 * individual items don't.
-	 */
-	private IGameMap map;
-	
+	private final List<String> buffer = new ArrayList<>();	
 	EmojiFactory emojiFactory = new EmojiFactory();
+	/**
+	 * These locations have changed since last time graphics drew the screen,
+	 * and need to be redrawn soon.
+	 */
+	private final Set<Location> dirtyLocs = new HashSet<>();
 
 	public GameGraphics(IBrush painter, Printer printer, IGameMap map2) {
 		this.painter = painter;
 		this.printer = printer;
-		this.map = map2;
 	}
 
 	public GameGraphics(IGameMap map) {
 		printer = new Printer(1280, 720);
 		painter = new BrushPainter(1280, 720);
-		this.map = map;
 	}
 
 	@Override
@@ -79,13 +81,17 @@ public class GameGraphics implements IGameGraphics {
 		System.out.println("Status: «" + s + "»");
 	}
 
-	public void draw() {
-		draw(map.getDirtyLocs());
+	public void drawDirty(IMapView map) {
+		draw(dirtyLocs,map);
+		dirtyLocs.clear();
 	}
 
-	public void draw(Set<Location> dirtyLocs) {
-		if (dirtyLocs.isEmpty())
-			return;
+	public void drawAll(IMapView map) {
+		draw(map.locations(),map);
+	}
+
+	public void draw(Iterable<Location> dirtyLocs, IMapView map) {
+
 		GraphicsContext ctx = painter.as(GraphicsContext.class);
 		double h = printer.getCharHeight();
 		double w = printer.getCharWidth();
@@ -114,7 +120,6 @@ public class GameGraphics implements IGameGraphics {
 				ctx.restore();
 			}
 		}
-		dirtyLocs.clear();
 	}
 
 	private String paint(double h, double w, Location loc, IItem item, String sym) {
@@ -142,16 +147,6 @@ public class GameGraphics implements IGameGraphics {
 		displayStatus(String.format(s, args));
 	}
 
-	/**
-	 * Return the game map. {@link IGameMap} gives us a few more details than
-	 * {@link IMapView} (write access to item lists); the game needs this but
-	 * individual items don't.
-	 */
-	@Override
-	public IMapView getMap() {
-		return map;
-	}
-
 	@Override
 	public IBrush getPainter() {
 		return painter;
@@ -163,7 +158,7 @@ public class GameGraphics implements IGameGraphics {
 	}
 
 	@Override
-	public int[] getFreeTextAreaBounds() {
+	public int[] getFreeTextAreaBounds(IMapView map) {
 		int[] area = new int[4];
 		area[0] = map.getWidth() + 1;
 		area[1] = 1;
@@ -173,20 +168,20 @@ public class GameGraphics implements IGameGraphics {
 	}
 
 	@Override
-	public void clearFreeTextArea() {
+	public void clearFreeTextArea(IMapView map) {
 		printer.clearRegion(map.getWidth() + 1, 1, printer.getLineWidth() - map.getWidth(),
 				printer.getPageHeight() - 5);
 	}
 
 	@Override
-	public void clearFreeGraphicsArea() {
+	public void clearFreeGraphicsArea(IMapView map) {
 		painter.as(GraphicsContext.class).clearRect(map.getWidth() * printer.getCharWidth(), 0,
 				painter.getWidth() - map.getWidth() * printer.getCharWidth(),
 				(printer.getPageHeight() - 5) * printer.getCharHeight());
 	}
 
 	@Override
-	public double[] getFreeGraphicsAreaBounds() {
+	public double[] getFreeGraphicsAreaBounds(IMapView map) {
 		double[] area = new double[4];
 		area[0] = map.getWidth() * printer.getCharWidth();
 		area[1] = 0;
@@ -194,4 +189,9 @@ public class GameGraphics implements IGameGraphics {
 		area[3] = map.getHeight() * printer.getCharHeight();
 		return area;
 	}
+
+	public void reportChange(Location currentLocation) {
+		dirtyLocs.add(currentLocation);
+	}
+
 }

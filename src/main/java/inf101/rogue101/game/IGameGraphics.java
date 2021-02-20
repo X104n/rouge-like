@@ -69,12 +69,12 @@ public interface IGameGraphics {
 	/**
 	 * Clear the unused graphics area (you can fill it with whatever you want!)
 	 */
-	void clearFreeGraphicsArea();
+	void clearFreeGraphicsArea(IMapView map);
 
 	/**
 	 * Clear the unused text area (you can fill it with whatever you want!)
 	 */
-	void clearFreeTextArea();
+	void clearFreeTextArea(IMapView map);
 
 	/**
 	 * Get the bounds of the free graphics area.
@@ -85,7 +85,7 @@ public interface IGameGraphics {
 	 * @return Array of coordinates; ([0],[1]) are the top-left corner, and
 	 *         ([2],[3]) are the bottom-right corner (exclusive).
 	 */
-	double[] getFreeGraphicsAreaBounds();
+	double[] getFreeGraphicsAreaBounds(IMapView map);
 
 	/**
 	 * Get the bounds of the free text area.
@@ -106,7 +106,7 @@ public interface IGameGraphics {
 	 * @return Array of column/line numbers; ([0],[1]) is the top-left corner, and
 	 *         ([2],[3]) is the bottom-right corner (inclusive).
 	 */
-	int[] getFreeTextAreaBounds();
+	int[] getFreeTextAreaBounds(IMapView map);
 
 	/**
 	 * See {@link #getFreeGraphicsAreaBounds()}, {@link #clearFreeGraphicsArea()}.
@@ -122,8 +122,4 @@ public interface IGameGraphics {
 	 */
 	Printer getPrinter();
 
-	/**
-	 * @return The map
-	 */
-	IMapView getMap();
 }
