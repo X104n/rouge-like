@@ -134,7 +134,9 @@ public class Grid<T> implements IGrid<T> {
 
 	@Override
 	public void fill(T element) {
-		Collections.fill(cells, element);
+		for (Location loc : this.locations()) {
+			set(loc,element);
+		}
 	}
 
 
