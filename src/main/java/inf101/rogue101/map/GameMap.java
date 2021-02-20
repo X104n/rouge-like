@@ -2,11 +2,7 @@ package inf101.rogue101.map;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.IdentityHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import inf101.grid.GridDirection;
 import inf101.grid.IGrid;

@@ -10,7 +10,6 @@ import inf101.gfx.gfxmode.IBrush;
 import inf101.gfx.textmode.Printer;
 import inf101.grid.Location;
 import inf101.rogue101.RogueApplication;
-import inf101.rogue101.map.IGameMap;
 import inf101.rogue101.map.IMapView;
 import inf101.rogue101.objects.IItem;
 import javafx.scene.canvas.GraphicsContext;

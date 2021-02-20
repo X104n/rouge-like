@@ -1,7 +1,5 @@
 package inf101.grid;
 
-import inf101.grid.IGrid;
-import inf101.grid.Location;
 import inf101.util.IGenerator;
 import inf101.util.generators.GridGenerator;
 import inf101.util.generators.LocationGenerator;

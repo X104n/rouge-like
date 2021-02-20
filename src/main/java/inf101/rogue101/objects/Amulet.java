@@ -1,7 +1,5 @@
 package inf101.rogue101.objects;
 
-import inf101.rogue101.AppInfo;
-
 
 /**
  * Amulet that lets you enter the portal and win the game.

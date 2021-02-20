@@ -1,14 +1,9 @@
 package inf101.rogue101.game;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-
-import inf101.gfx.Screen;
-import inf101.gfx.gfxmode.IBrush;
-import inf101.gfx.textmode.Printer;
 import inf101.grid.GridDirection;
 import inf101.grid.IGrid;
 import inf101.grid.Location;

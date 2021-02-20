@@ -3,7 +3,6 @@ package inf101.rogue101.objects;
 import inf101.gfx.gfxmode.DrawHelper;
 import inf101.gfx.gfxmode.IBrush;
 import inf101.gfx.textmode.Printer;
-import inf101.rogue101.AppInfo;
 import inf101.rogue101.game.EmojiFactory;
 import javafx.scene.paint.Color;
 

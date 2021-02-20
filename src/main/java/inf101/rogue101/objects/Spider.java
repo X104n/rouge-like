@@ -6,7 +6,6 @@ import java.util.Random;
 import inf101.gfx.gfxmode.DrawHelper;
 import inf101.gfx.gfxmode.IBrush;
 import inf101.grid.GridDirection;
-import inf101.rogue101.AppInfo;
 import inf101.rogue101.game.EmojiFactory;
 import inf101.rogue101.game.IGame;
 

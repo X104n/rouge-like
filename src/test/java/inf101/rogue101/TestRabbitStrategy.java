@@ -56,6 +56,7 @@ class TestRabbitStrategy {
 				System.err.println("Strange, how has other actors entered the game?");
 				fail("Not allowed to reproduce");
 			}
+			assertTrue(movesAvg<5*carrots+10);
 		}
 	}
 

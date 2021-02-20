@@ -1,8 +1,6 @@
 package inf101.rogue101.map;
 
 import java.util.List;
-import java.util.Set;
-
 import inf101.grid.GridDirection;
 import inf101.grid.Location;
 import inf101.rogue101.objects.IItem;

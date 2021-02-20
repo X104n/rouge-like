@@ -1,7 +1,6 @@
 package inf101.rogue101.objects;
 
 import inf101.grid.GridDirection;
-import inf101.rogue101.AppInfo;
 import inf101.rogue101.game.IGame;
 import javafx.scene.input.KeyCode;
 /**
