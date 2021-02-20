@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>INF101</groupId>
-	<artifactId>inf101.v20.sem1.losning</artifactId>
+	<artifactId>inf101.sem1</artifactId>
 	<version>1.0-SNAPSHOT</version>
 
 	<properties>
