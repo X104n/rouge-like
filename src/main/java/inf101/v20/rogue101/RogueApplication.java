@@ -36,19 +36,6 @@ public class RogueApplication extends Application {
 	public static final int COLUMN_MAP_END = 40;
 	public static final int COLUMN_RIGHTSIDE_START = 41;
 
-	/**
-	 * Set to true if using emojis – you must download and add the TrueType font
-	 * file manually.
-	 * <p>
-	 * The font can be downloaded from
-	 * <a href="http://vedlegg.uib.no/?id=13b7e208ea8ee38e5de34570a527e80c">http://vedlegg.uib.no/?id=13b7e208ea8ee38e5de34570a527e80c</a>
-	 * (originally from http://users.teilar.gr/~g1951d/)
-	 * <p>
-	 * (Put the Symbola.ttf file in src/main/java/inf101/v20/gfx/fonts/ – do
-	 * 'Refresh' on your project after adding the file)
-	 */
-	public static boolean USE_EMOJI = false;
-
 	public static void launch(String[] args) {
 		Application.launch(args);
 	}
@@ -101,11 +88,11 @@ public class RogueApplication extends Application {
 		printer.setTextMode(MAIN_TEXT_MODE, true);
 
 		// Font with emojis – need separate download
-		if (USE_EMOJI) {
+		if (AppInfo.USE_EMOJI) {
 			if (Printer.FONT_SYMBOLA.getFont().getName().equals("Symbola")) {
 				printer.setFont(Printer.FONT_SYMBOLA);
 			} else {
-				USE_EMOJI = false;
+				AppInfo.USE_EMOJI = false;
 			}
 		}
 

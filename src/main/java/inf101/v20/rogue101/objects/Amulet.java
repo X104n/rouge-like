@@ -1,6 +1,7 @@
 package inf101.v20.rogue101.objects;
 
-import inf101.v20.rogue101.RogueApplication;
+import inf101.v20.rogue101.AppInfo;
+
 
 /**
  * Amulet that lets you enter the portal and win the game.
@@ -55,7 +56,7 @@ public class Amulet implements IItem {
 
 	@Override
 	public String getGraphicTextSymbol() {
-		if (RogueApplication.USE_EMOJI) {
+		if (AppInfo.USE_EMOJI) {
 			return "💳"; 
 		} else {
 			return "" + SYMBOL;

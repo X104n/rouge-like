@@ -3,7 +3,7 @@ package inf101.v20.rogue101.objects;
 import inf101.v20.gfx.gfxmode.DrawHelper;
 import inf101.v20.gfx.gfxmode.IBrush;
 import inf101.v20.gfx.textmode.Printer;
-import inf101.v20.rogue101.RogueApplication;
+import inf101.v20.rogue101.AppInfo;
 import javafx.scene.paint.Color;
 
 /**
@@ -23,7 +23,7 @@ public class Carrot implements IItem {
 
 	@Override
 	public boolean draw(IBrush painter, double w, double h) {
-		if (!RogueApplication.USE_EMOJI) {
+		if (!AppInfo.USE_EMOJI) {
 			DrawHelper.drawCarrot(painter, h, w, getHealthStatus());
 			return true;
 		} else {
@@ -72,7 +72,7 @@ public class Carrot implements IItem {
 	}
 
 	private boolean useEmoji() {
-		return RogueApplication.USE_EMOJI;
+		return AppInfo.USE_EMOJI;
 	}
 
 	@Override

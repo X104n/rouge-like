@@ -1,7 +1,7 @@
 package inf101.v20.rogue101.objects;
 
 import inf101.v20.grid.GridDirection;
-import inf101.v20.rogue101.RogueApplication;
+import inf101.v20.rogue101.AppInfo;
 import inf101.v20.rogue101.game.IGame;
 import javafx.scene.input.KeyCode;
 /**
@@ -78,7 +78,7 @@ public class Player implements IPlayer {
 
 	@Override
 	public String getGraphicTextSymbol() {
-		if (RogueApplication.USE_EMOJI) {
+		if (AppInfo.USE_EMOJI) {
 			return hp > 0 ? "👸" : "⚱️"; // 🤴  ⚰️ 
 		} else {
 			return "" + SYMBOL;
