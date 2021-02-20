@@ -7,6 +7,7 @@ import inf101.gfx.Screen;
 import inf101.gfx.gfxmode.IBrush;
 import inf101.gfx.textmode.Printer;
 import inf101.gfx.textmode.TextMode;
+import inf101.rogue101.game.EmojiFactory;
 import inf101.rogue101.game.Game;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -88,11 +89,11 @@ public class RogueApplication extends Application {
 		printer.setTextMode(MAIN_TEXT_MODE, true);
 
 		// Font with emojis – need separate download
-		if (AppInfo.USE_EMOJI) {
+		if (EmojiFactory.USE_EMOJI) {
 			if (Printer.FONT_SYMBOLA.getFont().getName().equals("Symbola")) {
 				printer.setFont(Printer.FONT_SYMBOLA);
 			} else {
-				AppInfo.USE_EMOJI = false;
+				EmojiFactory.USE_EMOJI = false;
 			}
 		}
 

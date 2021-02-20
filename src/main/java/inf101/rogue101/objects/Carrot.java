@@ -4,6 +4,7 @@ import inf101.gfx.gfxmode.DrawHelper;
 import inf101.gfx.gfxmode.IBrush;
 import inf101.gfx.textmode.Printer;
 import inf101.rogue101.AppInfo;
+import inf101.rogue101.game.EmojiFactory;
 import javafx.scene.paint.Color;
 
 /**
@@ -23,7 +24,7 @@ public class Carrot implements IItem {
 
 	@Override
 	public boolean draw(IBrush painter, double w, double h) {
-		if (!AppInfo.USE_EMOJI) {
+		if (!EmojiFactory.USE_EMOJI) {
 			DrawHelper.drawCarrot(painter, h, w, getHealthStatus());
 			return true;
 		} else {
@@ -60,19 +61,10 @@ public class Carrot implements IItem {
 	public int getSize() {
 		return 2;
 	}
-
+	
 	@Override
-	public String getGraphicTextSymbol() {
-		if (useEmoji()) {
-			return Printer.coloured("🥕", Color.ORANGE);
-		} else {
-			return "" + SYMBOL;
-		}
-
-	}
-
-	private boolean useEmoji() {
-		return AppInfo.USE_EMOJI;
+	public String getEmoji() {
+		return Printer.coloured("🥕", Color.ORANGE);
 	}
 
 	@Override

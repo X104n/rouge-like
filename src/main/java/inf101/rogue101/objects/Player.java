@@ -78,11 +78,12 @@ public class Player implements IPlayer {
 
 	@Override
 	public String getGraphicTextSymbol() {
-		if (AppInfo.USE_EMOJI) {
-			return hp > 0 ? "👸" : "⚱️"; // 🤴  ⚰️ 
-		} else {
 			return "" + SYMBOL;
-		}
+	}
+	
+	@Override
+	public String getEmoji() {
+		return hp > 0 ? "👸" : "⚱️"; // 🤴  ⚰️
 	}
 
 	@Override

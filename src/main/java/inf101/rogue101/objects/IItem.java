@@ -135,8 +135,20 @@ public interface IItem extends Comparable<IItem> {
 	/**
 	 * Get the map symbol of this item.
 	 * <p>
-	 * The symbol can be used on a text-only map for a textual "graphical"
-	 * representation og the item.
+	 * The symbol will be used on a text-only map for a textual "graphical"
+	 * representation of the item.
+	 *
+	 * @return A single-codepoint string with the item's symbol
+	 */
+	default String getGraphicTextSymbol() {
+		return "" + getSymbol();
+	}
+
+	/**
+	 * Get the map emoji symbol of this item.
+	 * <p>
+	 * The symbol can be used for a textual "graphical"
+	 * representation of the item when emoji compatible font is available.
 	 * <p>
 	 * The symbol should be a single Unicode codepoint (i.e.,
 	 * <code>getSymbol().codePointCount(0, getSymbol().length()) == 1</code>). In
@@ -146,7 +158,9 @@ public interface IItem extends Comparable<IItem> {
 	 *
 	 * @return A single-codepoint string with the item's symbol
 	 */
-	String getGraphicTextSymbol();
+	default String getEmoji() {
+		return getGraphicTextSymbol();
+	}
 
 	/**
 	 * Inform the item that it has been damaged

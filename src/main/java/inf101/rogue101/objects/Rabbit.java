@@ -119,15 +119,12 @@ public class Rabbit implements IActor {
 
 	@Override
 	public String getGraphicTextSymbol() {
-		if (useEmoji()) {
-			return hp > 0 ? Printer.coloured("🐰", Color.LIGHTPINK) : "💀"; // 🐇
-		} else {
-			return hp > 0 ? "" + SYMBOL : "¤";
-		}
+		return hp > 0 ? "" + SYMBOL : "¤";
 	}
 	
-	private boolean useEmoji() {
-		return false;
+	@Override
+	public String getEmoji() {
+		return hp > 0 ? Printer.coloured("🐰", Color.LIGHTPINK) : "💀"; // 🐇
 	}
 
 	@Override

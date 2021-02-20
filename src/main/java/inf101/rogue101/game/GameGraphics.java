@@ -16,6 +16,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
+ * @author unknown
  * @author Martin Vatshelle
  *
  */
@@ -31,6 +32,8 @@ public class GameGraphics implements IGameGraphics {
 	 * individual items don't.
 	 */
 	private IGameMap map;
+	
+	EmojiFactory emojiFactory = new EmojiFactory();
 
 	public GameGraphics(IBrush painter, Printer printer, IGameMap map2) {
 		this.painter = painter;
@@ -102,12 +105,7 @@ public class GameGraphics implements IGameGraphics {
 						// ctx.fillRect(loc.getX() * w, loc.getY() * h, w, h);
 					}
 					painter.save();
-					painter.jumpTo((loc.col + 0.5) * w, (loc.row + 0.5) * h);
-					boolean dontPrint = list.get(0).draw(painter, w, h);
-					painter.restore();
-					if (!dontPrint) {
-						sym = list.get(0).getGraphicTextSymbol();
-					}
+					sym = paint(h, w, loc, list.get(0), sym);
 				}
 				printer.printAt(loc.col + 1, loc.row + 1, sym);
 			}
@@ -117,6 +115,16 @@ public class GameGraphics implements IGameGraphics {
 			}
 		}
 		dirtyLocs.clear();
+	}
+
+	private String paint(double h, double w, Location loc, IItem item, String sym) {
+		painter.jumpTo((loc.col + 0.5) * w, (loc.row + 0.5) * h);
+		boolean dontPrint = item.draw(painter, w, h);
+		painter.restore();
+		if (!dontPrint) {
+			sym = emojiFactory.getEmoji(item);
+		}
+		return sym;
 	}
 
 	@Override

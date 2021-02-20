@@ -55,13 +55,10 @@ public class Amulet implements IItem {
 	}
 
 	@Override
-	public String getGraphicTextSymbol() {
-		if (AppInfo.USE_EMOJI) {
-			return "💳"; 
-		} else {
-			return "" + SYMBOL;
-		}	}
-
+	public String getEmoji() {
+		return "💳";
+	}
+	
 	@Override
 	public int handleDamage(int amount) {
 		return 0;

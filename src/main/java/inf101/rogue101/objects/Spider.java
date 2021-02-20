@@ -7,6 +7,7 @@ import inf101.gfx.gfxmode.DrawHelper;
 import inf101.gfx.gfxmode.IBrush;
 import inf101.grid.GridDirection;
 import inf101.rogue101.AppInfo;
+import inf101.rogue101.game.EmojiFactory;
 import inf101.rogue101.game.IGame;
 
 /**
@@ -68,14 +69,10 @@ public class Spider implements IActor {
 	public int getSize() {
 		return 2;
 	}
-
+	
 	@Override
-	public String getGraphicTextSymbol() {
-		if (AppInfo.USE_EMOJI) {
-			return "🕷️";
-		} else {
-			return "" + SYMBOL;
-		}
+	public String getEmoji() {
+		return "🕷️";
 	}
 
 	@Override
@@ -88,7 +85,7 @@ public class Spider implements IActor {
 
 	@Override
 	public boolean draw(IBrush painter, double w, double h) {
-		if (!AppInfo.USE_EMOJI) {
+		if (!EmojiFactory.USE_EMOJI) {
 			DrawHelper.drawSpider(painter, h, w, hp / getMaxHealth());
 			return true;
 		} else {
