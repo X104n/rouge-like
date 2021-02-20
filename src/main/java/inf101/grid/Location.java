@@ -42,8 +42,13 @@ public class Location {
 		return neighbours;
 	}
 	
-	public boolean equals(Location loc) {
-		return this.row == loc.row && this.col == loc.col;
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Location) {
+			Location loc = (Location) obj;
+			return this.row == loc.row && this.col == loc.col;
+		}
+		return false;
 	}
 	
 	@Override
