@@ -5,13 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import inf101.rogue101.game.ItemFactory;
-import inf101.rogue101.objects.Carrot;
-import inf101.rogue101.objects.Dust;
-import inf101.rogue101.objects.IActor;
-import inf101.rogue101.objects.IItem;
-import inf101.rogue101.objects.Rabbit;
-import inf101.rogue101.objects.Spider;
-import inf101.rogue101.objects.Wall;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,7 +132,8 @@ class IItemTest {
 	}
 	void testCompareToReverse(IItem item) {
 		for(IItem other : getTestData(false)) {
-			assertEquals(-other.compareTo(item), item.compareTo(other),"for "+item);
+			IItemComparator comp = new IItemComparator();
+			assertEquals(-comp.compare(other, item), comp.compare(item, other),"for "+item);
 		}
 	}
 
@@ -148,12 +142,13 @@ class IItemTest {
 		runTest(this::testCompareToCycle);
 	}
 	void testCompareToCycle(IItem item) {
+		IItemComparator comp = new IItemComparator();
 		for(IItem a : getTestData(false)) {
 			for(IItem b : getTestData(false)) {
-				if(a.compareTo(b)==0)
-					assertEquals(item.compareTo(b), item.compareTo(a),"for "+item);
-				else if(item.compareTo(a)>=0 && item.compareTo(b)<=0)
-					assertTrue(a.compareTo(item)<=0,"for "+item);
+				if(comp.compare(a, b) ==0)
+					assertEquals(comp.compare(item, b), comp.compare(item, a),"for "+item);
+				else if(comp.compare(item, a)>=0 && comp.compare(item, b)<=0)
+					assertTrue(comp.compare(a, b)<=0,"for "+item);
 			}
 		}
 	}

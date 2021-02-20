@@ -15,13 +15,8 @@ import inf101.gfx.gfxmode.IBrush;
  *
  * @author anya
  */
-public interface IItem extends Comparable<IItem> {
-	public static final char SYMBOL = ' ';
+public interface IItem {
 
-	@Override
-	default int compareTo(IItem other) {
-		return Integer.compare(getSize(), other.getSize());
-	}
 
 	/**
 	 * Draw this item on the screen.
@@ -164,13 +159,17 @@ public interface IItem extends Comparable<IItem> {
 
 	/**
 	 * Inform the item that it has been damaged
+	 * As actors of the game interact with this item they may cause damage to it.
+	 * Some items easily take dameage and some may take less damage than 
+	 * <code>amount</code> due to armour/protection effects.
 	 * 
-	 * @param amount
-	 *            How much damage the item should take
+	 * An item can never take more damage than the health points the item has available.
+	 * Also an item may never take less than 0 damage.
+	 * 
+	 * 
+	 * @param amount - How much damage the item should take
 	 *
-	 * @return Amount of damage actually taken (could be less than
-	 *         <code>amount</code> due to armour/protection effects, or if the item
-	 *         has less health available) – always less or equal to {@link #getCurrentHealth()}
+	 * @return Amount of damage actually taken – always less or equal to {@link #getCurrentHealth()}
 	 */
 	int handleDamage(int amount);
 
