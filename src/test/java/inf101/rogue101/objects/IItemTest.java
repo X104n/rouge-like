@@ -112,7 +112,9 @@ class IItemTest {
 			if(hp > 0) {
 				int damage = item.handleDamage(source.getDamage());
 				assertTrue(damage >= 0, "damage >= 0");
+				System.out.println(item+" took "+damage+" damage");
 				assertTrue(item.getCurrentHealth()<=hp,"for "+item);
+				assertTrue(item.getCurrentHealth()==(hp-damage),"for "+item);
 				assertTrue(damage <= hp,"Item "+item+" took "+damage+" damage with "+hp+" health");
 			}
 		}
@@ -190,8 +192,8 @@ class IItemTest {
 
 		List<IItem> list = new ArrayList<>();
 
-		try {
-			for (char symbol : itemSymbols) {
+		for (char symbol : itemSymbols) {
+			try {
 				IItem item = ItemFactory.createItem(symbol);
 				list.add(item);
 	
@@ -206,8 +208,9 @@ class IItemTest {
 					item.handleDamage(item.getMaxHealth() * 2);
 					list.add(item);
 				}
+			} catch (IllegalArgumentException e) {
+				System.out.println("Can not test "+symbol);
 			}
-		} catch (IllegalArgumentException e) {
 			
 		}
 		return list;
