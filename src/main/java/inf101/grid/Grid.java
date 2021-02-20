@@ -42,9 +42,7 @@ public class Grid<T> implements IGrid<T> {
 	 */
 	public Grid(int width, int height, T initElement) {
 		this(width,height);
-		for (int i = 0; i < cells.size(); ++i) {
-			cells.add(initElement);
-		}
+		fill(initElement);
 	}
 
 	public Grid(int rows, int columns) {
