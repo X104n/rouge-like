@@ -125,21 +125,17 @@ public class MapReader {
 	 */
 	public static IGrid<Character> readFile(String path) {
 		InputStream stream = MapReader.class.getResourceAsStream(path);
+		Grid<Character> symbolMap = null;
 		if (stream == null)
 			return null;
 		try (Scanner in = new Scanner(stream, "UTF-8")) {
-			int width = in.nextInt();
-			int height = in.nextInt();
-			// System.out.println(width + " " + height);
-			Grid<Character> symbolMap = new Grid<Character>(width, height, ' ');
-			in.nextLine();
-			fillMap(symbolMap, in);
+			symbolMap = readScanner(in);
 		}
 		try {
 			stream.close();
 		} catch (IOException e) {
 		}
-		return null;
+		return symbolMap;
 	}
 
 	/**
@@ -149,15 +145,20 @@ public class MapReader {
 	public static IGrid<Character> readString(String input) {
 		Grid<Character> symbolMap = null;
 		try (Scanner in = new Scanner(input)) {
-			int width = in.nextInt();
-			int height = in.nextInt();
-			symbolMap = new Grid<Character>(width, height, ' ');
-			in.nextLine();
-			fillMap(symbolMap, in);
+			symbolMap = readScanner(in);
 		}
 		return symbolMap;
 	}
 
+	public static Grid<Character> readScanner(Scanner in) {
+		int width = in.nextInt();
+		int height = in.nextInt();
+		Grid<Character> symbolMap = new Grid<Character>(height, width, ' ');
+		in.nextLine();
+		fillMap(symbolMap, in);
+		return symbolMap;
+	}
+	
 	public static IGrid<IItem> loadString(String input) {
 		IGrid<Character> symbolMap = readString(input);
 		return toItemMap(symbolMap);
