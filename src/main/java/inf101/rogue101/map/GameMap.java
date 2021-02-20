@@ -23,17 +23,6 @@ public class GameMap implements IGameMap {
 	 * The grid that makes up our map
 	 */
 	private final IMultiGrid<IItem> grid;
-	/**
-	 * These locations have changed since last time graphics drew the screen,
-	 * and need to be redrawn soon.
-	 */
-	private final Set<Location> dirtyLocs = new HashSet<>();
-	/**
-	 * An index of all the items in the map and their locations.
-	 */
-	// an IdentityHashMap uses object identity as a lookup key, so items are
-	// considered equal if they are the same object (a == b)
-	private final Map<IItem, Location> items = new IdentityHashMap<>();
 
 	public GameMap(int rows, int columns) {
 		grid = new MultiGrid<>(rows, columns);
@@ -48,15 +37,6 @@ public class GameMap implements IGameMap {
 		}
 	}
 
-	public static GameMap load(String filename) {
-		IGrid<IItem> inputGrid = MapReader.loadFile("maps/level1.txt");
-		if (inputGrid == null) {
-			System.err.println("Map not found – falling back to builtin map");
-			inputGrid = MapReader.loadString(MapReader.BUILTIN_MAP);
-		}
-		return new GameMap(inputGrid);
-	}
-
 	/**
 	 * This method adds an IItem to the given location.
 	 * Since the draw method only draws one element in each cell,
@@ -67,10 +47,6 @@ public class GameMap implements IGameMap {
 	 */
 	@Override
 	public void add(Location loc, IItem item) {
-		// keep track of location of all items
-		items.put(item, loc);
-		// also keep track of whether we need to redraw this cell
-		dirtyLocs.add(loc);
 
 		// do the actual adding
 		List<IItem> list = grid.get(loc);
@@ -101,14 +77,6 @@ public class GameMap implements IGameMap {
 	}
 
 	/**
-	 * Returns the ILocation's that needs to be redrawn due to some change
-	 * that could lead to a different image being displayed at that ILocation
-	 */
-	public Set<Location> getDirtyLocs() {
-		return dirtyLocs;
-	}
-
-	/**
 	 *  In this implementation only 1 IActor can occupy each cell,
 	 *  hence the size() of the list returned is at most 1.
 	 */
@@ -130,23 +98,20 @@ public class GameMap implements IGameMap {
 
 	@Override
 	public List<IItem> getAllModifiable(Location loc) {
-		dirtyLocs.add(loc);
 		return grid.get(loc);
 	}
 
 	@Override
 	public void clean(Location loc) {
 		// remove any items that have health < 0:
-		if (grid.get(loc).removeIf((item) -> {
+		grid.get(loc).removeIf((item) -> {
 			if (item.isDestroyed()) {
-				items.remove(item);
 				return true;
 			} else {
 				return false;
 			}
-		}))
+		});
 
-		dirtyLocs.add(loc);
 	}
 
 	@Override
@@ -163,7 +128,14 @@ public class GameMap implements IGameMap {
 
 	@Override
 	public Location getLocation(IItem item) {
-		return items.get(item);
+		for(Location loc : locations()) {
+			for(IItem cur : getAll(loc)) {
+				if(cur==item) {
+					return loc;
+				}
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -213,8 +185,6 @@ public class GameMap implements IGameMap {
 	@Override
 	public void remove(Location loc, IItem item) {
 		grid.remove(loc, item);
-		items.remove(item);
-		dirtyLocs.add(loc);
 	}
 
 	@Override
@@ -230,7 +200,7 @@ public class GameMap implements IGameMap {
 
 	@Override
 	public List<GridDirection> getPossibleMoves(Location currentLocation) {
-		return List.of(GridDirection.EAST); // <- Remove this
+		return List.of(GridDirection.EAST); // TODO: Improve this
 	}
 
 	@Override

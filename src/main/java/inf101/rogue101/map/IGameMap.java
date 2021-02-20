@@ -39,8 +39,6 @@ public interface IGameMap extends IMapView {
 	 */
 	void remove(Location loc, IItem item);
 
-	Set<Location> getDirtyLocs();
-
 	/**
 	 * Gets all values of GridDirection that is a valid move from currentLocation
 	 * @param currentLocation
