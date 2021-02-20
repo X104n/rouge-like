@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import inf101.grid.GridDirection;
@@ -12,6 +13,7 @@ import inf101.rogue101.map.GameMap;
 import inf101.rogue101.objects.Carrot;
 import inf101.rogue101.objects.Dust;
 import inf101.rogue101.objects.IItem;
+import inf101.rogue101.objects.IItemComparator;
 import inf101.rogue101.objects.Rabbit;
 import inf101.rogue101.objects.Spider;
 import inf101.rogue101.objects.Wall;
@@ -37,6 +39,7 @@ class GameMapTest {
 	 */
 	@Test
 	void testSortedAdd() {
+		Comparator<IItem> comp = new IItemComparator();
 		GameMap gameMap = new GameMap(20, 20);
 		Location location = gameMap.getLocation(10, 10);
 		gameMap.add(location, new Rabbit());
@@ -44,7 +47,7 @@ class GameMapTest {
 		gameMap.add(location, new Carrot());
 		List<IItem> list = gameMap.getAll(location);
 		for (int i = 1; i < list.size(); i++) {
-			assertTrue(list.get(i - 1).compareTo(list.get(i)) >= 0);
+			assertTrue(comp.compare(list.get(i - 1), list.get(i)) >= 0);
 		}
 	}
 	
