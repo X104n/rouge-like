@@ -3,8 +3,6 @@ package inf101.rogue101.objects;
 import inf101.grid.Location;
 import inf101.rogue101.game.Game;
 import inf101.rogue101.map.MapReader;
-import inf101.rogue101.objects.IPlayer;
-import inf101.rogue101.objects.Spider;
 
 import org.junit.jupiter.api.Test;
 

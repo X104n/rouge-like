@@ -13,12 +13,9 @@ import inf101.grid.Location;
 import inf101.rogue101.game.Game;
 import inf101.rogue101.game.IllegalMoveException;
 import inf101.rogue101.map.MapReader;
-import inf101.rogue101.objects.IActor;
-import inf101.rogue101.objects.Rabbit;
-import inf101.rogue101.objects.Spider;
 
 /**
- * @author mva021
+ * @author Martin Vatshelle
  *
  */
 class IActorTest {

@@ -5,8 +5,6 @@ import inf101.grid.Location;
 import inf101.rogue101.game.Game;
 import inf101.rogue101.game.ItemFactory;
 import inf101.rogue101.map.MapReader;
-import inf101.rogue101.objects.IItem;
-import inf101.rogue101.objects.IPlayer;
 import javafx.scene.input.KeyCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

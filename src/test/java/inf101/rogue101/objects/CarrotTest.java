@@ -4,13 +4,10 @@
 package inf101.rogue101.objects;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
-import inf101.rogue101.objects.Carrot;
-
 /**
- * @author mva021
+ * @author Martin Vatshelle
  *
  */
 class CarrotTest {
