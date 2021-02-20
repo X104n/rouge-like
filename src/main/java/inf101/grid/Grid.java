@@ -109,7 +109,7 @@ public class Grid<T> implements IGrid<T> {
 	}
 
 	@Override
-	public Iterable<Location> locations() {
+	public GridLocationIterator locations() {
 		return new GridLocationIterator(numRows(), numColumns());
 	}
 

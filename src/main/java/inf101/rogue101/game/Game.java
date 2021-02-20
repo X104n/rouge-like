@@ -34,26 +34,30 @@ public class Game implements IGame {
 	/**
 	 * All the IActors that have things left to do this turn
 	 */
-	private List<IActor> actors = Collections.synchronizedList(new ArrayList<>());
+	private List<IActor> actors = new ArrayList<IActor>();
 
 	/**
 	 * This game's random generator
 	 */
 	private Random random = new Random();
+	
 	/**
 	 * The game map. {@link IGameMap} gives us a few more details than
 	 * {@link IMapView} (write access to item lists); the game needs this but
 	 * individual items don't.
 	 */
 	private IGameMap map;
+	
 	/**
 	 * The actor who gets to perform an action this turn
 	 */
 	private IActor currentActor;
+	
 	/**
 	 * The current location of the current actor
 	 */
 	private Location currentLocation;
+	
 	private int movePoints = 0;
 	private int numPlayers = 0;
 	GameGraphics graphics;
@@ -64,38 +68,22 @@ public class Game implements IGame {
 		// per level), and (at least for a Roguelike game) the levels should be
 		// generated
 		//
-		// inputGrid will be filled with single-character strings indicating what (if
-		// anything)
+		// inputGrid will be filled with characters indicating what (if anything)
 		// should be placed at that map square
-		IGrid<String> inputGrid = MapReader.readFile("maps/level1.txt");
-		if (inputGrid == null) {
+		IGrid<IItem> inputGrid;
+		try {
+			inputGrid = MapReader.loadFile("maps/level1.txt");
+		} catch (Exception e) {
 			System.err.println("Map not found – falling back to builtin map");
-			inputGrid = MapReader.readString(MapReader.BUILTIN_MAP);
-		}
+			inputGrid = MapReader.loadString(MapReader.BUILTIN_MAP);
+		} 
 		this.map = new GameMap(inputGrid);
-		for (Location loc : inputGrid.locations()) {
-			char c = inputGrid.get(loc).charAt(0);
-			try {
-				IItem item = createItem(c);
-				if(item != null)
-					map.add(loc, item);
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			}
-		}
+
 		graphics = new GameGraphics(painter, printer, map);
 	}
 
 	public Game(String mapString) {
-		IGrid<String> inputGrid = MapReader.readString(mapString);
-		this.map = new GameMap(inputGrid.numRows(),inputGrid.numColumns());
-		for (Location loc : inputGrid.locations()) {
-			char c = inputGrid.get(loc).charAt(0);
-			IItem item = createItem(c);
-			if (item != null) {
-				map.add(loc, item);
-			}
-		}
+		this.map = new GameMap(MapReader.loadString(mapString));
 
 		graphics = new GameGraphics(map);
 	}

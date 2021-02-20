@@ -2,11 +2,14 @@ package inf101.rogue101.map;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import inf101.grid.Grid;
 import inf101.grid.IGrid;
 import inf101.grid.Location;
+import inf101.rogue101.game.ItemFactory;
+import inf101.rogue101.objects.IItem;
 
 /**
  * A class to read a map from a file. After the file is read, the map is stored
@@ -33,6 +36,7 @@ import inf101.grid.Location;
  *
  * @author larsjaffke (original boulderdash version, 2017)
  * @author anya (Rogue101 update, 2018)
+ * @author Martin Vatshelle (Rogue101 simplified, 2021)
  */
 public class MapReader {
 
@@ -71,8 +75,7 @@ public class MapReader {
 				+ "#   #\n" //
 				+ "# @ #\n" //
 				+ "#"+sym+"  #\n" //
-				+ "#####\n" //
-		;
+				+ "#####\n";
 	}
 
 	public static String TEST_MAP = "40 5\n" //
@@ -80,8 +83,7 @@ public class MapReader {
 			+ "#...... ..C.R ......R.R......... ..R...#\n" //
 			+ "#.R@R...... ..........RC..R...... ... .#\n" //
 			+ "#... ..R........R......R. R........R.RR#\n" //
-			+ "########################################\n" //
-	;
+			+ "########################################\n";
 
 	
 	public static String CARROT_HUNT = "40 10\n" //
@@ -94,24 +96,22 @@ public class MapReader {
 			+ "#      C...#....C..###.C..##.......CCCC#\n" //
 			+ "#      C ..#....C..  #.C. C#C......CCCC#\n" //
 			+ "#        .. ....C..  #.C. C#.......CCCC#\n" //
-			+ "########################################\n" //
-	;	
+			+ "########################################\n";	
+	
 	/**
 	 * This method fills the previously initialized {@link #symbolMap} with the
 	 * characters read from the file.
 	 */
-	private static void fillMap(IGrid<String> symbolMap, Scanner in) {
-		// we need to store x and y in an object (array) rather than as variables,
-		// otherwise the foreach and lambda below won't work.
-		int[] xy = new int[2]; // xy[0] is x, xy[1] is y
-		xy[1] = 0;
+	private static void fillMap(Grid<Character> symbolMap, Scanner in) {
+		//we need to go through each location on the grid
+		Iterator<Location> locIter = symbolMap.locations();
+
+		//we read line by line and for each character on the line
 		while (in.hasNextLine()) {
-			xy[0] = 0;
-			in.nextLine().codePoints().forEach((codePoint) -> {
-				if (xy[0] < symbolMap.numColumns())
-					symbolMap.set(new Location(xy[0]++, xy[1]), String.valueOf(Character.toChars(codePoint)));
-			});
-			xy[1]++;
+			for(Character c : in.nextLine().toCharArray()) {
+				Location loc = locIter.next();
+				symbolMap.set(loc, c);
+			}
 		}
 	}
 
@@ -123,8 +123,7 @@ public class MapReader {
 	 * @return the dungeon map as a grid of characters read from the file, or null
 	 *         if it failed
 	 */
-	public static IGrid<String> readFile(String path) {
-		IGrid<String> symbolMap = null;
+	public static IGrid<Character> readFile(String path) {
 		InputStream stream = MapReader.class.getResourceAsStream(path);
 		if (stream == null)
 			return null;
@@ -132,7 +131,7 @@ public class MapReader {
 			int width = in.nextInt();
 			int height = in.nextInt();
 			// System.out.println(width + " " + height);
-			symbolMap = new Grid<String>(width, height, " ");
+			Grid<Character> symbolMap = new Grid<Character>(width, height, ' ');
 			in.nextLine();
 			fillMap(symbolMap, in);
 		}
@@ -140,22 +139,50 @@ public class MapReader {
 			stream.close();
 		} catch (IOException e) {
 		}
-		return symbolMap;
+		return null;
 	}
 
 	/**
-	 * @return the dungeon map as a grid of characters read from the input string,
+	 * @return reads a map as a grid of characters read from the input string,
 	 *         or null if it failed
 	 */
-	public static IGrid<String> readString(String input) {
-		IGrid<String> symbolMap = null;
+	public static IGrid<Character> readString(String input) {
+		Grid<Character> symbolMap = null;
 		try (Scanner in = new Scanner(input)) {
 			int width = in.nextInt();
 			int height = in.nextInt();
-			symbolMap = new Grid<String>(width, height, " ");
+			symbolMap = new Grid<Character>(width, height, ' ');
 			in.nextLine();
 			fillMap(symbolMap, in);
 		}
 		return symbolMap;
+	}
+
+	public static IGrid<IItem> loadString(String input) {
+		IGrid<Character> symbolMap = readString(input);
+		return toItemMap(symbolMap);
+	}
+	
+	public static IGrid<IItem> loadFile(String file) {
+		IGrid<Character> symbolMap = readFile(file);
+		return toItemMap(symbolMap);
+	}
+	
+	/**
+	 * This method converts a Character grid to an IItem grid by calling
+	 * the ItemFactory for each location.
+	 * The returned grid will have the same dimensions as the input.
+	 * 
+	 * @param symbolMap a grid of symbols
+	 * @return a grid of IItems 
+	 */
+	public static IGrid<IItem> toItemMap(IGrid<Character> symbolMap){
+		IGrid<IItem> itemMap = new Grid<IItem>(symbolMap.numRows(), symbolMap.numColumns());
+		
+		for(Location loc : symbolMap.locations()) {
+			IItem item = ItemFactory.createItem(symbolMap.get(loc));
+			itemMap.set(loc, item);
+		}
+		return itemMap;		
 	}
 }

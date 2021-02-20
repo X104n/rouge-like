@@ -39,8 +39,22 @@ public class GameMap implements IGameMap {
 		grid = new MultiGrid<>(rows, columns);
 	}
 
-	public GameMap(IGrid<String> inputGrid) {
+	public GameMap(IGrid<IItem> inputGrid) {
 		this(inputGrid.numRows(),inputGrid.numColumns());
+		for(Location loc : inputGrid.locations()) {
+			IItem item = inputGrid.get(loc);
+			if(item != null)
+				add(loc, item);
+		}
+	}
+
+	public static GameMap load(String filename) {
+		IGrid<IItem> inputGrid = MapReader.loadFile("maps/level1.txt");
+		if (inputGrid == null) {
+			System.err.println("Map not found – falling back to builtin map");
+			inputGrid = MapReader.loadString(MapReader.BUILTIN_MAP);
+		}
+		return new GameMap(inputGrid);
 	}
 
 	/**
