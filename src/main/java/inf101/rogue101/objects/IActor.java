@@ -1,6 +1,6 @@
 package inf101.rogue101.objects;
 
-import inf101.rogue101.game.IGame;
+import inf101.rogue101.game.IGameView;
 
 /**
  * An actor is an IItem that can also do something, either controlled by the
@@ -31,5 +31,5 @@ public interface IActor extends IItem {
 	* @param game Game, for interacting with the world
 	*/
 
-	void doTurn(IGame game);
+	void doTurn(IGameView game);
 }

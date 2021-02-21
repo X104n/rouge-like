@@ -55,7 +55,7 @@ public class GameMap implements IGameMap {
 	 * and only one IActor can be at each cell
 	 */
 	@Override
-	public boolean canGo(Location to) {
+	public boolean isAvailable(Location to) {
 		return !grid.contains(to, (i) -> (i instanceof Wall || i instanceof IActor));
 	}
 
@@ -69,7 +69,7 @@ public class GameMap implements IGameMap {
 		if (!grid.canGo(from,dir))
 			return false;
 		Location loc = from.getNeighbor(dir);
-		return canGo(loc);
+		return isAvailable(loc);
 	}
 
 	/**
@@ -152,7 +152,7 @@ public class GameMap implements IGameMap {
 		if (!grid.canGo(from,dir))
 			throw new IllegalMoveException("Cannot move outside map!");
 		Location loc = from.getNeighbor(dir);
-		if (!canGo(loc))
+		if (!isAvailable(loc))
 			throw new IllegalMoveException("Occupied!");
 		return loc;
 	}

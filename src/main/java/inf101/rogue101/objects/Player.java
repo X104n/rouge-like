@@ -1,7 +1,7 @@
 package inf101.rogue101.objects;
 
 import inf101.grid.GridDirection;
-import inf101.rogue101.game.IGame;
+import inf101.rogue101.game.IGameView;
 import javafx.scene.input.KeyCode;
 /**
  * En spiller i Rogue 101 
@@ -94,7 +94,7 @@ public class Player implements IPlayer {
 	}
 
 	@Override
-	public void keyPressed(IGame game, KeyCode key) {
+	public void keyPressed(IGameView game, KeyCode key) {
 		System.err.println("Player moves");
 		switch (key) {
 		case LEFT:
@@ -121,7 +121,7 @@ public class Player implements IPlayer {
 		showStatus(game);
 	}
 
-	private void tryToMove(IGame game, GridDirection dir) {
+	private void tryToMove(IGameView game, GridDirection dir) {
 		if (game.canGo(dir)) {
 			game.displayDebug("Moving.");
 			game.move(dir);
@@ -134,18 +134,18 @@ public class Player implements IPlayer {
 		}
 	}
 
-	public void showStatus(IGame game) {
+	public void showStatus(IGameView game) {
 		game.displayMessage("Player has " + this.hp + " hp left");
 	}
 
-	public void pickUp(IGame game) {
+	public void pickUp(IGameView game) {
 	}
 
-	public void drop(IGame game) {
+	public void drop(IGameView game) {
 	}
 
 	@Override
-	public void doTurn(IGame game) {
+	public void doTurn(IGameView game) {
 	}
 	
 	@Override 

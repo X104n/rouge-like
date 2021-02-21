@@ -7,7 +7,7 @@ import inf101.gfx.gfxmode.DrawHelper;
 import inf101.gfx.gfxmode.IBrush;
 import inf101.grid.GridDirection;
 import inf101.rogue101.game.EmojiFactory;
-import inf101.rogue101.game.IGame;
+import inf101.rogue101.game.IGameView;
 
 /**
  * En edderkopp i spillet Rogue 101. 
@@ -93,7 +93,7 @@ public class Spider implements IActor {
 	}
 
 	@Override
-	public void doTurn(IGame game) {
+	public void doTurn(IGameView game) {
 		if (game.canGo(lastDir)) {
 			game.move(lastDir);
 		} else {

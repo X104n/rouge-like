@@ -1,6 +1,6 @@
 package inf101.rogue101.objects;
 
-import inf101.rogue101.game.IGame;
+import inf101.rogue101.game.IGameView;
 
 /**
  * En magisk portal i spillet Rogue101. 
@@ -62,7 +62,7 @@ public class Portal implements IActor {
 	}
 
 	@Override
-	public void doTurn(IGame game) {
+	public void doTurn(IGameView game) {
 		 if (graphicTextSymbol.equals("*"))
 			graphicTextSymbol = "o";
 		else 

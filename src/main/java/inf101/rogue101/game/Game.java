@@ -272,11 +272,6 @@ public class Game implements IGame {
 	}
 
 	@Override
-	public IItem createItem(char sym) {
-		return ItemFactory.createItem(sym);
-	}
-
-	@Override
 	public void displayDebug(String s) {
 		graphics.displayDebug(s);
 	}
@@ -445,11 +440,6 @@ public class Game implements IGame {
 	}
 
 	@Override
-	public Random getRandom() {
-		return random;
-	}
-
-	@Override
 	public <T extends IActor> boolean containsActor(Location loc, Class<T> c) {
 		for (IActor actor : map.getActors(loc)) {
 			if (c.isInstance(actor))
@@ -468,7 +458,8 @@ public class Game implements IGame {
 	}
 
 	@Override
-	public <T extends IItem> boolean containsItem(Location loc, Class<T> c) {
+	public <T extends IItem> boolean containsItem(GridDirection dir, Class<T> c) {
+		Location loc = currentLocation.getNeighbor(dir);
 		for (IItem item : map.getItems(loc)) {
 			if (c.isInstance(item))
 				return true;

@@ -160,9 +160,12 @@ class IItemTest {
 		assertTrue(ItemFactory.createItem('.') instanceof Dust);
 	}
 	
+	public static final char GOLD_SYMBOL = 'G';
+
 	@Test
 	void testItemFactoryCreatesGold() {
-		//assertTrue(ItemFactory.createItem(Gold.SYMBOL) instanceof inf101.v20.rogue101.objects.Gold);
+		IItem gold = ItemFactory.createItem(GOLD_SYMBOL);
+		assertNotNull(gold);
 	}
 
 	/**
@@ -188,7 +191,7 @@ class IItemTest {
 	 * @return
 	 */
 	List<IItem> getTestData(boolean newItemsOnly) {
-		char[] itemSymbols = { Dust.SYMBOL, Wall.SYMBOL, Carrot.SYMBOL, Rabbit.SYMBOL, Spider.SYMBOL/*, Gold.SYMBOL*/ };
+		char[] itemSymbols = { Dust.SYMBOL, Wall.SYMBOL, Carrot.SYMBOL, Rabbit.SYMBOL, Spider.SYMBOL, GOLD_SYMBOL };
 
 		List<IItem> list = new ArrayList<>();
 

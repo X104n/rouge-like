@@ -5,7 +5,9 @@ import java.util.List;
 
 import inf101.gfx.textmode.Printer;
 import inf101.grid.GridDirection;
-import inf101.rogue101.game.IGame;
+import inf101.grid.Location;
+import inf101.rogue101.game.IGameView;
+import inf101.rogue101.map.IMapView;
 import javafx.scene.paint.Color;
 
 /**
@@ -26,7 +28,7 @@ public class Rabbit implements IActor {
 	private int hp = getMaxHealth();
 
 	@Override
-	public void doTurn(IGame game) {
+	public void doTurn(IGameView game) {
 		boolean isHungry = getMaxHealth()-getCurrentHealth()>2;
 		if(isHungry) {
 			boolean gotFood = eatIfPossible(game);
@@ -52,10 +54,13 @@ public class Rabbit implements IActor {
 	 * 
 	 * @param game
 	 */
-	private void performMove(IGame game) {
+	private void performMove(IGameView game) {
 		List<GridDirection> possibleMoves = game.getPossibleMoves();
 		if (!possibleMoves.isEmpty()) {
 			burnEnergy();
+			for(GridDirection move : possibleMoves) {
+				boolean found = game.containsItem(move, Carrot.class);
+			}
 			Collections.shuffle(possibleMoves);
 			game.move(possibleMoves.get(0));
 		}
@@ -68,7 +73,7 @@ public class Rabbit implements IActor {
 	 *            The game the object exists in
 	 * @return true if it spend the turn eating
 	 */
-	private boolean eatIfPossible(IGame game) {
+	private boolean eatIfPossible(IGameView game) {
 		for (IItem item : game.getLocalNonActorItems()) {
 			if (item instanceof Carrot) {
 				System.out.println("found carrot!");

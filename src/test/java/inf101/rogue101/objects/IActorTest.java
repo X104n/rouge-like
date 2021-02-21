@@ -12,6 +12,7 @@ import inf101.grid.GridDirection;
 import inf101.grid.Location;
 import inf101.rogue101.game.Game;
 import inf101.rogue101.game.IllegalMoveException;
+import inf101.rogue101.map.GameMap;
 import inf101.rogue101.map.MapReader;
 
 /**
@@ -88,7 +89,8 @@ class IActorTest {
 	void testDoTurn(IActor actor) {
 		Game game = new Game(MapReader.BUILTIN_MAP);
 		Location loc = new Location(5, 5);
-		game.getMap().add(loc, actor);
+		GameMap map = (GameMap) game.getMap();
+		map.add(loc, actor);
 		game.setCurrent(loc);
 		List<GridDirection> moves = game.getPossibleMoves();
 		ArrayList<Location> locations = new ArrayList<Location>();

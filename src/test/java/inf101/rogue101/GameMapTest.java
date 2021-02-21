@@ -60,9 +60,9 @@ class GameMapTest {
 		Location location = new Location(10, 10);
 		Collection<Location> locations = location.allNeighbours();
 		for(Location loc : locations) {
-			assertTrue(map.canGo(loc));
+			assertTrue(map.isAvailable(loc));
 			map.add(loc, new Rabbit());
-			assertFalse(map.canGo(loc));
+			assertFalse(map.isAvailable(loc));
 		}
 	}
 
@@ -77,7 +77,7 @@ class GameMapTest {
 		assertEquals(8,locations.size());
 		for(Location loc : locations) {
 			map.add(loc, new Rabbit());
-			assertFalse(map.canGo(loc));
+			assertFalse(map.isAvailable(loc));
 		}
 	}
 
@@ -92,7 +92,7 @@ class GameMapTest {
 		assertEquals(8,locations.size());
 		for(Location loc : locations) {
 			map.add(loc, new Wall());
-			assertFalse(map.canGo(loc));
+			assertFalse(map.isAvailable(loc));
 		}
 	}
 	/**

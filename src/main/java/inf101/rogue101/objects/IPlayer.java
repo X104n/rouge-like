@@ -1,6 +1,6 @@
 package inf101.rogue101.objects;
 
-import inf101.rogue101.game.IGame;
+import inf101.rogue101.game.IGameView;
 import javafx.scene.input.KeyCode;
 
 public interface IPlayer extends IActor {
@@ -21,7 +21,7 @@ public interface IPlayer extends IActor {
 	 *
 	 * @param game Game, for interacting with the world
 	 */
-	void keyPressed(IGame game, KeyCode key);
+	void keyPressed(IGameView game, KeyCode key);
 
 	/**
 	 * Check if IPlayer has the item

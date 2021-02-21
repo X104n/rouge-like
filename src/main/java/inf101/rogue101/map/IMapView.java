@@ -2,21 +2,12 @@ package inf101.rogue101.map;
 
 import java.util.List;
 
-import inf101.grid.GridDirection;
 import inf101.grid.Location;
-import inf101.rogue101.game.IllegalMoveException;
 import inf101.rogue101.objects.IActor;
 import inf101.rogue101.objects.IItem;
 import inf101.rogue101.objects.Wall;
 
 public interface IMapView {
-	/**
-	 * Add an item to the map.
-	 *
-	 * @param loc  A location
-	 * @param item the item
-	 */
-	void add(Location loc, IItem item);
 
 	/**
 	 * Check if it's legal for an IActor to go into the given location
@@ -24,17 +15,7 @@ public interface IMapView {
 	 * @param to A location
 	 * @return True if the location isn't already occupied
 	 */
-	boolean canGo(Location to);
-
-	/**
-	 * Check if it's legal for an IActor to go in the given direction from the given
-	 * location
-	 *
-	 * @param from Current location
-	 * @param dir  Direction we want to move in
-	 * @return True if the next location exists and isn't occupied
-	 */
-	boolean canGo(Location from, GridDirection dir);
+	boolean isAvailable(Location loc);
 
 	/**
 	 * Get all IActors at the given location
@@ -88,27 +69,6 @@ public interface IMapView {
 	 */
 	Location getLocation(IItem item);
 
-
-	/**
-	 * Get the neighbouring location in the given direction
-	 *
-	 * @param from A location
-	 * @param dir  the Direction
-	 * @return from's neighbour in direction dir, or null, if this would be outside
-	 *         the map
-	 */
-	Location getNeighbour(Location from, GridDirection dir);
-
-	/**
-	 * Compute new location of an IActor moving the given direction
-	 *
-	 * @param from Original location
-	 * @param dir  Direction we're moving in
-	 * @return The new location
-	 * @throws IllegalMoveException if !{@link #canGo(ILocation, GridDirection)}
-	 */
-	Location go(Location from, GridDirection dir) throws IllegalMoveException;
-
 	/**
 	 * Check if an item exists at a location
 	 *
@@ -144,31 +104,15 @@ public interface IMapView {
 	boolean hasWall(Location loc);
 
 	/**
-	 * Check if a neighbour exists on the map
+	 * Iterate over all grid locations
+	 * <p>
+	 * See also {@link #iterator()} – using the grid directly in a for-loop will
+	 * iterate over the elements.
+	 * <p>
+	 * All locations obtained through the iterator are guaranteed to be valid
+	 * according to {@link #isValid(ILocation)}.
 	 *
-	 * @param from A location
-	 * @param dir  A direction
-	 * @return True if {@link #getNeighbour(from, dir)} would return non-null
+	 * @return An iterable for iterating over all the locations in the grid
 	 */
-	boolean hasNeighbour(Location from, GridDirection dir);
-
-	/**
-	 * Get all locations within i steps from the given centre
-	 * 
-	 * @param centre
-	 * @param dist
-	 * @return A list of locations, all at most i grid cells away from centre
-	 */
-	List<Location> getNeighbourhood(Location centre, int dist);
-	
-	/**
-	 * In a game some cells can be unreachable because other IItem may block the way
-	 * The method canGo() defines which directions it is possible to go in
-	 * @param centre
-	 * @param dist
-	 * @return
-	 */
-	List<Location> getReachable(Location centre, int dist);
-
 	public Iterable<Location> locations();
 }
