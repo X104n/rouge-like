@@ -123,13 +123,13 @@ public class MapReader {
 	 * @return the dungeon map as a grid of characters read from the file, or null
 	 *         if it failed
 	 */
-	public static IGrid<Character> readFile(String path) {
+	public static IGrid<Character> loadChars(String path) {
 		InputStream stream = MapReader.class.getResourceAsStream(path);
 		Grid<Character> symbolMap = null;
 		if (stream == null)
 			return null;
 		try (Scanner in = new Scanner(stream, "UTF-8")) {
-			symbolMap = readScanner(in);
+			symbolMap = readChars(in);
 		}
 		try {
 			stream.close();
@@ -142,15 +142,15 @@ public class MapReader {
 	 * @return reads a map as a grid of characters read from the input string,
 	 *         or null if it failed
 	 */
-	public static IGrid<Character> readString(String input) {
+	public static IGrid<Character> readChars(String input) {
 		Grid<Character> symbolMap = null;
 		try (Scanner in = new Scanner(input)) {
-			symbolMap = readScanner(in);
+			symbolMap = readChars(in);
 		}
 		return symbolMap;
 	}
 
-	public static Grid<Character> readScanner(Scanner in) {
+	public static Grid<Character> readChars(Scanner in) {
 		int width = in.nextInt();
 		int height = in.nextInt();
 		Grid<Character> symbolMap = new Grid<Character>(height, width, ' ');
@@ -159,13 +159,13 @@ public class MapReader {
 		return symbolMap;
 	}
 	
-	public static IGrid<IItem> loadString(String input) {
-		IGrid<Character> symbolMap = readString(input);
+	public static IGrid<IItem> readItems(String input) {
+		IGrid<Character> symbolMap = readChars(input);
 		return toItemMap(symbolMap);
 	}
 	
-	public static IGrid<IItem> loadFile(String file) {
-		IGrid<Character> symbolMap = readFile(file);
+	public static IGrid<IItem> loadItems(String file) {
+		IGrid<Character> symbolMap = loadChars(file);
 		return toItemMap(symbolMap);
 	}
 	

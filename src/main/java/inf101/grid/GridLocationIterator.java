@@ -9,9 +9,9 @@ import java.util.Iterator;
  */
 public class GridLocationIterator implements Iterator<Location>, Iterable<Location> {
 
-	int numRows;
-	int numCols;
-	Location current;
+	private int numRows;
+	private int numCols;
+	private Location current;
 
 	/**
 	 * Constructs a GridLocationIterator

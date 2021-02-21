@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public interface IMultiGrid<T> extends IGrid<List<T>> {
+
 	/**
 	 * Add to the cell at the given location.
 	 *
@@ -83,8 +84,8 @@ public interface IMultiGrid<T> extends IGrid<List<T>> {
 	 * @return Number of elements removed
 	 * @throws IndexOutOfBoundsException if !isValid(loc)
 	 */
-	default int remove(Location loc, T element) {
-		return get(loc).remove(element) ? 1 : 0;
+	default boolean remove(Location loc, T element) {
+		return get(loc).remove(element);
 	}
 
 

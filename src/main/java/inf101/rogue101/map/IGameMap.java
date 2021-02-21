@@ -3,7 +3,6 @@ package inf101.rogue101.map;
 import java.util.List;
 import inf101.grid.GridDirection;
 import inf101.grid.Location;
-import inf101.rogue101.game.IllegalMoveException;
 import inf101.rogue101.objects.IItem;
 
 /**
@@ -46,26 +45,6 @@ public interface IGameMap extends IMapView {
 	 * @param item
 	 */
 	void remove(Location loc, IItem item);
-
-	/**
-	 * Get the neighbouring location in the given direction
-	 *
-	 * @param from A location
-	 * @param dir  the Direction
-	 * @return from's neighbour in direction dir, or null, if this would be outside
-	 *         the map
-	 */
-	Location getNeighbour(Location from, GridDirection dir);
-
-	/**
-	 * Compute new location of an IActor moving the given direction
-	 *
-	 * @param from Original location
-	 * @param dir  Direction we're moving in
-	 * @return The new location
-	 * @throws IllegalMoveException if !{@link #canGo(ILocation, GridDirection)}
-	 */
-	Location go(Location from, GridDirection dir) throws IllegalMoveException;
 
 	/**
 	 * Check if it's legal for an IActor to go in the given direction from the given

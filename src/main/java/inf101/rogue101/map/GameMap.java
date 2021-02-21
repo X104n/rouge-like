@@ -135,26 +135,8 @@ public class GameMap implements IGameMap {
 	}
 
 	@Override
-	public Location getNeighbour(Location from, GridDirection dir) {
-		if (!hasNeighbour(from, dir))
-			return null;
-		else
-			return from.getNeighbor(dir);
-	}
-
-	@Override
 	public int getWidth() {
 		return grid.numColumns();
-	}
-
-	@Override
-	public Location go(Location from, GridDirection dir) throws IllegalMoveException {
-		if (!grid.canGo(from,dir))
-			throw new IllegalMoveException("Cannot move outside map!");
-		Location loc = from.getNeighbor(dir);
-		if (!isAvailable(loc))
-			throw new IllegalMoveException("Occupied!");
-		return loc;
 	}
 
 	@Override
@@ -209,6 +191,7 @@ public class GameMap implements IGameMap {
 		return grid.locations();
 	}
 
+	@Override
 	public <T extends IItem> boolean containsItem(Location loc, Class<T> c) {
 		List<IItem> items = getItems(loc);
 		for (IItem item : items) {
@@ -217,16 +200,4 @@ public class GameMap implements IGameMap {
 		}
 		return false;
 	}
-
-	public <T extends IActor> boolean containsActor(Location loc, Class<T> c) {
-		for (IActor actor : getActors(loc)) {
-			if (c.isInstance(actor))
-				return true;
-		}
-		return false;
-	}
-	
-	
-
-
 }

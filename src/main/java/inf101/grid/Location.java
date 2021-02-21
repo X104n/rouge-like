@@ -27,15 +27,34 @@ public class Location {
 		this.col = col;
 	}
 	
+	/**
+	 * Gets the Location of the adjacent cell in the given direction.
+	 * {@link GridDirection#getNeighbor}
+	 * 
+	 * @param dir The direction to go in
+	 * @return The adjacent location
+	 */
 	public Location getNeighbor(GridDirection dir) {
 		return dir.getNeighbor(this);
 	}
 
+	/**
+	 * Returns the Manhattan distance between 2 locations.
+	 * That is the shortest distance distance between two points
+	 * if you can only go East,West,North and South (not diagonally)
+	 * @param loc
+	 * @return
+	 */
 	public int gridDistanceTo(Location loc) {
 		return Math.abs(row-loc.row)+Math.abs(col-loc.col);
 	}
 
-	public Collection<Location> allNeighbours() {
+	/**
+	 * Returns a list of the eight neighbors around this location
+	 * 
+	 * @return
+	 */
+	public Collection<Location> allNeighbors() {
 		ArrayList<Location> neighbours = new ArrayList<Location>();
 		for(GridDirection dir : GridDirection.EIGHT_DIRECTIONS)
 			neighbours.add(this.getNeighbor(dir));

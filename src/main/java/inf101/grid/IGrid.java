@@ -5,11 +5,46 @@ import java.util.function.Function;
 public interface IGrid<T> extends Iterable<T> {
 
 	/**
-	 * Make a copy
+	 * Get the contents of the cell in the given x,y location.
 	 *
-	 * @return A fresh copy of the grid, with the same elements
+	 * y must be greater than or equal to 0 and less than getHeight(). x must be
+	 * greater than or equal to 0 and less than getWidth().
+	 *
+	 * @param loc The (x,y) position of the grid cell to get the contents of.
+	 * @throws IndexOutOfBoundsException if !isOnGrid(loc)
 	 */
-	IGrid<T> copy();
+	T get(Location loc);	
+
+	/**
+	 * Get the contents of the cell in the given x,y location.
+	 *
+	 * y must be greater than or equal to 0 and less than getHeight(). x must be
+	 * greater than or equal to 0 and less than getWidth().
+	 *
+	 * @param pos           The (x,y) position of the grid cell to get the contents
+	 *                      of.
+	 * @param defaultResult A default value to be substituted if the (x,y) is out of
+	 *                      bounds or contents == null.
+	 */
+	T getOrDefault(Location pos, T defaultResult);
+	
+	/**
+	 * Set the contents of the cell in the given x,y location.
+	 *
+	 * y must be greater than or equal to 0 and less than getHeight(). x must be
+	 * greater than or equal to 0 and less than getWidth().
+	 *
+	 * @param pos     The (x,y) position of the grid cell to get the contents of.
+	 * @param element The contents the cell is to have.
+	 * @throws IndexOutOfBoundsException if !isOnGrid(pos)
+	 */
+	void set(Location pos, T element);
+	
+	/** @return The height of the grid. */
+	int numRows();
+
+	/** @return The width of the grid. */
+	int numColumns();
 
 	/**
 	 * Initialise the contents of all cells using an initialiser function.
@@ -41,36 +76,11 @@ public interface IGrid<T> extends Iterable<T> {
 	void fill(T element);
 
 	/**
-	 * Get the contents of the cell in the given x,y location.
+	 * Make a copy
 	 *
-	 * y must be greater than or equal to 0 and less than getHeight(). x must be
-	 * greater than or equal to 0 and less than getWidth().
-	 *
-	 * @param pos The (x,y) position of the grid cell to get the contents of.
-	 * @throws IndexOutOfBoundsException if !isValid(pos)
+	 * @return A fresh copy of the grid, with the same elements
 	 */
-	T get(Location pos);
-
-
-	/** @return The height of the grid. */
-	int numRows();
-
-	/**
-	 * Get the contents of the cell in the given x,y location.
-	 *
-	 * y must be greater than or equal to 0 and less than getHeight(). x must be
-	 * greater than or equal to 0 and less than getWidth().
-	 *
-	 * @param pos           The (x,y) position of the grid cell to get the contents
-	 *                      of.
-	 * @param defaultResult A default value to be substituted if the (x,y) is out of
-	 *                      bounds or contents == null.
-	 */
-	T getOrDefault(Location pos, T defaultResult);
-
-
-	/** @return The width of the grid. */
-	int numColumns();
+	IGrid<T> copy();
 
 	/**
 	 * Check if coordinates are valid.
@@ -98,17 +108,6 @@ public interface IGrid<T> extends Iterable<T> {
 	Iterable<Location> locations();
 
 
-	/**
-	 * Set the contents of the cell in the given x,y location.
-	 *
-	 * y must be greater than or equal to 0 and less than getHeight(). x must be
-	 * greater than or equal to 0 and less than getWidth().
-	 *
-	 * @param pos     The (x,y) position of the grid cell to get the contents of.
-	 * @param element The contents the cell is to have.
-	 * @throws IndexOutOfBoundsException if !isValid(pos)
-	 */
-	void set(Location pos, T element);
 
 	boolean canGo(Location from, GridDirection dir);
 	

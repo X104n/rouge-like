@@ -58,7 +58,7 @@ public class Game implements IGame {
 	}
 
 	public Game(String mapString) {
-		this(MapReader.loadString(mapString));
+		this(MapReader.readItems(mapString));
 	}
 
 	public Game(IGrid<IItem> inputGrid) {
@@ -82,10 +82,10 @@ public class Game implements IGame {
 
 		IGrid<IItem> grid;
 		try {
-			grid = MapReader.loadFile("maps/level1.txt");
+			grid = MapReader.loadItems("maps/level1.txt");
 		} catch (Exception e) {
 			System.err.println("Map not found – falling back to builtin map");
-			grid = MapReader.loadString(MapReader.BUILTIN_MAP);
+			grid = MapReader.readItems(MapReader.BUILTIN_MAP);
 		} 
 		return grid;
 	}

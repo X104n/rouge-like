@@ -1,19 +1,15 @@
 package inf101.rogue101.objects;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-
 import inf101.grid.GridDirection;
 import inf101.grid.Location;
 import inf101.rogue101.game.Game;
 import inf101.rogue101.game.GameView;
 import inf101.rogue101.game.IllegalMoveException;
-import inf101.rogue101.map.GameMap;
 import inf101.rogue101.map.IGameMap;
 import inf101.rogue101.map.MapReader;
 

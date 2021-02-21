@@ -58,7 +58,7 @@ class GameMapTest {
 	void testCanGo() {
 		GameMap map = new GameMap(20, 20);
 		Location location = new Location(10, 10);
-		Collection<Location> locations = location.allNeighbours();
+		Collection<Location> locations = location.allNeighbors();
 		for(Location loc : locations) {
 			assertTrue(map.isAvailable(loc));
 			map.add(loc, new Rabbit());
@@ -73,7 +73,7 @@ class GameMapTest {
 	void testCanNotGoActor() {
 		GameMap map = new GameMap(20, 20);
 		Location location = new Location(10, 10);
-		Collection<Location> locations = location.allNeighbours();
+		Collection<Location> locations = location.allNeighbors();
 		assertEquals(8,locations.size());
 		for(Location loc : locations) {
 			map.add(loc, new Rabbit());
@@ -88,7 +88,7 @@ class GameMapTest {
 	void testCanNotGoWall() {
 		GameMap map = new GameMap(20, 20);
 		Location location = new Location(10, 10);
-		Collection<Location> locations = location.allNeighbours();
+		Collection<Location> locations = location.allNeighbors();
 		assertEquals(8,locations.size());
 		for(Location loc : locations) {
 			map.add(loc, new Wall());
