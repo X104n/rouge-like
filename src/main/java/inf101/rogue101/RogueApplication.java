@@ -156,11 +156,11 @@ public class RogueApplication extends Application {
 						e.printStackTrace(writer);
 						writer.close();
 						String trace = sw.toString().split("\n")[0];
-						game.displayDebug("Exception: " + trace);
+						game.getIMessageView().displayDebug("Exception: " + trace);
 					} catch (Exception e2) {
 						System.err.println("Also got this exception trying to display the previous one");
 						e2.printStackTrace();
-						game.displayDebug("Exception: " + e.getMessage());
+						game.getIMessageView().displayDebug("Exception: " + e.getMessage());
 					}
 				}
 				printer.redrawDirty();

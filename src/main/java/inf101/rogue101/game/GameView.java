@@ -1,106 +1,112 @@
 package inf101.rogue101.game;
 
 import java.util.List;
+import java.util.Optional;
 
 import inf101.grid.GridDirection;
 import inf101.grid.Location;
+import inf101.rogue101.objects.IActor;
 import inf101.rogue101.objects.IItem;
 
+/**
+ * This class is very simple, it just passes method calls to a game object.
+ * Since Game implements GameView we could have just given a Game to the IActors
+ * with a variable type IGameView, but then type casting this object to Game gets tempting.
+ * 
+ * Each gameView is accosieted with a current location.
+ * When passed to an IActor this current location should be sat to the location at which this IActor is.
+ * 
+ * @author Martin Vatshelle - martin.vatshelle@uib.no
+ *
+ */
 public class GameView implements IGameView {
 
-	private Game game;
-
-	public GameView(Game game) {
-		this.game = game;
-	}
+	private IGame game;
+	private Location currentLocation;
+	private IActor currentActor;
 	
-	@Override
-	public void addItem(IItem item) {
-		game.addItem(item);
-	}
-
-	@Override
-	public void addItem(char sym) {
-		game.addItem(sym);
+	public GameView(Game game,Location currentLocation) {
+		this.game = game;
 	}
 
 	@Override
 	public boolean attack(GridDirection dir) {
-		return game.attack(dir);
+		return game.attack(currentActor, dir);
 	}
 
 	@Override
 	public Location attack(GridDirection dir, IItem target) throws IllegalMoveException {
-		return game.attack(dir, target);
+		return game.attack(currentActor, dir, target);
 	}
 
 	@Override
 	public boolean canGo(GridDirection dir) {
-		return game.canGo(dir);
+		return game.canGo(currentActor, dir);
 	}
 
 	@Override
 	public void displayDebug(String s) {
-		game.displayDebug(s);
+		game.getIMessageView().displayDebug(s);
 	}
 
 	@Override
 	public void displayMessage(String s) {
-		game.displayMessage(s);
+		game.getIMessageView().displayMessage(s);
 	}
 
 	@Override
 	public void displayStatus(String s) {
-		game.displayStatus(s);
+		game.getIMessageView().displayStatus(s);
 	}
 
 	@Override
 	public void formatDebug(String s, Object... args) {
-		game.formatDebug(s, args);
+		game.getIMessageView().formatDebug(s, args);
 	}
 
 	@Override
 	public void formatMessage(String s, Object... args) {
-		game.formatMessage(s, args);
+		game.getIMessageView().formatMessage(s, args);
 	}
 
 	@Override
 	public void formatStatus(String s, Object... args) {
-		game.formatStatus(s, args);
+		game.getIMessageView().formatStatus(s, args);
 	}
 
 	@Override
-	public IItem pickUp(IItem item) {
-		return game.pickUp(item);
+	public Optional<IItem> pickUp(IItem item) {
+		
+		return game.pickUpItem(currentActor, item);
 	}
 
 	@Override
 	public boolean drop(IItem item) {
-		return game.drop(item);
+		return game.addItem(item, currentLocation);
 	}
 
 	@Override
 	public List<GridDirection> getPossibleMoves() {
-		return game.getPossibleMoves();
+		return game.getPossibleMoves(currentActor);
 	}
 
 	@Override
 	public Location move(GridDirection dir) {
-		return game.move(dir);
+		return game.move(currentActor, dir);
 	}
 
 	@Override
 	public Location rangedAttack(GridDirection dir, IItem target) {
-		return game.rangedAttack(dir, target);
+		return game.rangedAttack(currentActor, dir, target);
 	}
 
 	@Override
 	public <T extends IItem> boolean containsItem(GridDirection dir, Class<T> c) {
-		return game.containsItem(dir,c);
+		return game.getMap().containsItem(currentLocation.getNeighbor(dir),c);
 	}
 
 	@Override
 	public List<IItem> getLocalNonActorItems() {
-		return game.getLocalNonActorItems();
+		return game.getMap().getItems(currentLocation);
 	}
 }

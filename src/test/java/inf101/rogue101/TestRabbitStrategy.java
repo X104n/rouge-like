@@ -39,16 +39,16 @@ class TestRabbitStrategy {
 	private void runSimulation() {
 		Game game = new Game(MapReader.CARROT_HUNT);
 		game.doTurn();
-		Rabbit rabbit = (Rabbit) game.getActor();
-		Location previous = game.getLocation();
+		Rabbit rabbit = (Rabbit) game.getCurrentActor();
+		Location previous = game.getCurrentLocation();
 		int carrots = 0;
 		while (rabbit.getCurrentHealth() > 0) {
 			game.doTurn();
-			if (game.getActor() == rabbit) {
-				if (game.containsItem(Carrot.class)) {
+			if (game.getCurrentActor() == rabbit) {
+				if (game.containsItem(game.getCurrentLocation(),Carrot.class)) {
 					carrots++;
 				}
-				if (!game.getLocation().equals(previous)) {
+				if (!game.getCurrentLocation().equals(previous)) {
 					movesAvg++;
 				}
 

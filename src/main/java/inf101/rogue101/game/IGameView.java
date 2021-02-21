@@ -1,6 +1,7 @@
 package inf101.rogue101.game;
 
 import java.util.List;
+import java.util.Optional;
 
 import inf101.grid.GridDirection;
 import inf101.grid.Location;
@@ -10,6 +11,7 @@ import inf101.rogue101.objects.IItem;
 /**
  * Actors in the game does not have complete information about the map.
  * They only see what is close by.
+ * This interface provides the methods that IActors may use to do their move.
  * 
  * The game has rules for where a player is allowed to go, these rules
  * are enforced by methods in this interface
@@ -17,25 +19,7 @@ import inf101.rogue101.objects.IItem;
  * @author Martin Vatshelle - martin.vatshelle@uib.no
  *
  */
-public interface IGameView {
-
-	/**
-	 * Add an item to the current location
-	 * <p>
-	 * If the item is an actor, it won't move until the next turn.
-	 *
-	 * @param item
-	 */
-	void addItem(IItem item);
-
-	/**
-	 * Add a new item (identified by symbol) to the current location
-	 * <p>
-	 * If the item is an actor, it won't move until the next turn.
-	 *
-	 * @param sym
-	 */
-	void addItem(char sym);
+public interface IGameView extends IMessageView{
 
 	/**
 	 * Perform an attack by the current {@link IActor} in the provided direction
@@ -76,55 +60,6 @@ public interface IGameView {
 	 */
 	boolean canGo(GridDirection dir);
 
-	/**
-	 * Displays a message in the debug area on the screen (bottom line)
-	 *
-	 * @param s A message
-	 */
-	void displayDebug(String s);
-
-	/**
-	 * Displays a message in the message area on the screen (below the map and the
-	 * status line)
-	 *
-	 * @param s A message
-	 */
-	void displayMessage(String s);
-
-	/**
-	 * Displays a status message in the status area on the screen (right below the
-	 * map)
-	 *
-	 * @param s A message
-	 */
-	void displayStatus(String s);
-
-	/**
-	 * Displays a message in the message area on the screen (below the map and the
-	 * status line)
-	 *
-	 * @param s A message
-	 * @see String#format(String, Object...)
-	 */
-	void formatDebug(String s, Object... args);
-
-	/**
-	 * Displays a formatted message in the message area on the screen (below the map
-	 * and the status line)
-	 *
-	 * @param s A message
-	 * @see String#format(String, Object...)
-	 */
-	void formatMessage(String s, Object... args);
-
-	/**
-	 * Displays a formatted status message in the status area on the screen (right
-	 * below the map)
-	 *
-	 * @param s A message
-	 * @see String#format(String, Object...)
-	 */
-	void formatStatus(String s, Object... args);
 
 	/**
 	 * Pick up an item
@@ -137,7 +72,7 @@ public interface IGameView {
 	 * @return The item that was picked up (normally <code>item</code>), or
 	 *         <code>null</code> if it failed
 	 */
-	IItem pickUp(IItem item);
+	Optional<IItem> pickUp(IItem item);
 
 	/**
 	 * Drop an item

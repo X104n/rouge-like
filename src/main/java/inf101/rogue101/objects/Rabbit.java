@@ -5,9 +5,7 @@ import java.util.List;
 
 import inf101.gfx.textmode.Printer;
 import inf101.grid.GridDirection;
-import inf101.grid.Location;
 import inf101.rogue101.game.IGameView;
-import inf101.rogue101.map.IMapView;
 import javafx.scene.paint.Color;
 
 /**

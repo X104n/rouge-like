@@ -3,6 +3,8 @@ package inf101.rogue101.objects;
 import inf101.grid.GridDirection;
 import inf101.grid.Location;
 import inf101.rogue101.game.Game;
+import inf101.rogue101.game.GameView;
+import inf101.rogue101.game.IGameView;
 import inf101.rogue101.game.ItemFactory;
 import inf101.rogue101.map.MapReader;
 import javafx.scene.input.KeyCode;
@@ -18,21 +20,23 @@ import java.util.List;
 
 class PlayerTest {
 
-    private Game board;
+	private Game game;
+    private IGameView board;
     private IPlayer player;
     private Location loc;
 
     @BeforeEach
     void beforeEach() {
-        board = new Game(MapReader.TEST_MAP);
-        player = (IPlayer) board.setCurrent(new Location(3, 2));
-        loc = board.getLocation();
+        game = new Game(MapReader.TEST_MAP);
+        player = (IPlayer) game.setCurrent(new Location(3, 2));
+        board = new GameView(game, loc);
+        loc = game.getCurrentLocation();
     }
 
     @Test
     void PlayerDoesMoves() {
         player.keyPressed(board, KeyCode.UP);
-        assertEquals(loc.getNeighbor(GridDirection.NORTH), board.getLocation());
+        assertEquals(loc.getNeighbor(GridDirection.NORTH), game.getCurrentLocation());
     }
 
     @Test
@@ -45,25 +49,25 @@ class PlayerTest {
     @Test
     void PlayerCanPickUpAndDropItem() {
         loc = new Location(3, 1);
-        assertEquals(1, board.getMap().getAll(loc).size());
+        assertEquals(1, game.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.UP);
-        assertEquals(2, board.getMap().getAll(loc).size());
+        assertEquals(2, game.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.P);
-        assertEquals(1, board.getMap().getAll(loc).size());
+        assertEquals(1, game.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.D);
-        assertEquals(2, board.getMap().getAll(loc).size());
+        assertEquals(2, game.getMap().getAll(loc).size());
     }
     
     @Test
     void PlayerPickUpHasItem() {
         loc = new Location(3, 1);
-        assertEquals(1, board.getMap().getAll(loc).size());
+        assertEquals(1, game.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.UP);
-        assertEquals(2, board.getMap().getAll(loc).size());
+        assertEquals(2, game.getMap().getAll(loc).size());
 
         List<IItem> localNonActorItemList = board.getLocalNonActorItems();
 		assertFalse(localNonActorItemList.isEmpty(), "Something is wrong with the test object, there are no items to pick up.");
@@ -77,10 +81,10 @@ class PlayerTest {
     @Test
     void PlayerPickUpDropHasItem() {
         loc = new Location(3, 1);
-        assertEquals(1, board.getMap().getAll(loc).size());
+        assertEquals(1, game.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.UP);
-        assertEquals(2, board.getMap().getAll(loc).size());
+        assertEquals(2, game.getMap().getAll(loc).size());
 
         List<IItem> localNonActorItemList = board.getLocalNonActorItems();
 		assertFalse(localNonActorItemList.isEmpty(), "Something is wrong with the test object, there are no items to pick up.");
@@ -96,10 +100,10 @@ class PlayerTest {
     @Test
     void PlayerPickUpHasItemReferenceEqualityItem() {
         loc = new Location(3, 1);
-        assertEquals(1, board.getMap().getAll(loc).size());
+        assertEquals(1, game.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.UP);
-        assertEquals(2, board.getMap().getAll(loc).size());
+        assertEquals(2, game.getMap().getAll(loc).size());
 
         List<IItem> localNonActorItemList = board.getLocalNonActorItems();
 		assertFalse(localNonActorItemList.isEmpty(), "Something is wrong with the test object, there are no items to pick up.");
@@ -115,26 +119,26 @@ class PlayerTest {
     void PlayerCanPickUpAndDropMoreItems() {
         loc = new Location(3, 1);
 
-        assertEquals(1, board.getMap().getAll(loc).size());
+        assertEquals(1, game.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.UP);
-        assertEquals(2, board.getMap().getAll(loc).size());
+        assertEquals(2, game.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.P);
-        assertEquals(1, board.getMap().getAll(loc).size());
+        assertEquals(1, game.getMap().getAll(loc).size());
 
-        board.doTurn();
+        game.doTurn();
         player.keyPressed(board, KeyCode.RIGHT);
-        loc = board.getLocation();
-        assertEquals(2, board.getMap().getAll(loc).size());
+        loc = game.getCurrentLocation();
+        assertEquals(2, game.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.P);
-        assertEquals(1, board.getMap().getAll(loc).size());
+        assertEquals(1, game.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.D);
-        assertEquals(2, board.getMap().getAll(loc).size());
+        assertEquals(2, game.getMap().getAll(loc).size());
 
         player.keyPressed(board, KeyCode.D);
-        assertEquals(3, board.getMap().getAll(loc).size());
+        assertEquals(3, game.getMap().getAll(loc).size());
     }
 }

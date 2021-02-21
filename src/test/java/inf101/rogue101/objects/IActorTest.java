@@ -11,8 +11,10 @@ import java.util.function.Consumer;
 import inf101.grid.GridDirection;
 import inf101.grid.Location;
 import inf101.rogue101.game.Game;
+import inf101.rogue101.game.GameView;
 import inf101.rogue101.game.IllegalMoveException;
 import inf101.rogue101.map.GameMap;
+import inf101.rogue101.map.IGameMap;
 import inf101.rogue101.map.MapReader;
 
 /**
@@ -89,22 +91,22 @@ class IActorTest {
 	void testDoTurn(IActor actor) {
 		Game game = new Game(MapReader.BUILTIN_MAP);
 		Location loc = new Location(5, 5);
-		GameMap map = (GameMap) game.getMap();
+		IGameMap map = game.getMap();
 		map.add(loc, actor);
 		game.setCurrent(loc);
-		List<GridDirection> moves = game.getPossibleMoves();
+		List<GridDirection> moves = game.getPossibleMoves(actor);
 		ArrayList<Location> locations = new ArrayList<Location>();
 		for(GridDirection dir : moves) {
 			locations.add(loc.getNeighbor(dir));
 		}
 		try {
-			actor.doTurn(game);			
+			actor.doTurn(new GameView(game, loc));
 		} catch (IllegalMoveException e) {
 			fail("You can only move once");
 		}
 		game.setCurrent(actor);
-		assertEquals(actor, game.getActor());
-		assertTrue(locations.contains(game.getLocation()));
+		assertEquals(actor, game.getCurrentActor());
+		assertTrue(locations.contains(game.getCurrentLocation()));
 	}
 
 	@Test
@@ -121,14 +123,14 @@ class IActorTest {
 		Game game = new Game(MapReader.mapTrap(symbol));
 		Location loc = new Location(1, 1);
 		IActor actor = game.setCurrent(loc);
-		assertTrue(game.containsActor(loc, actor.getClass()));
-		assertNotEquals(null, game.getLocation());
+		assertTrue(game.containsItem(loc, actor.getClass()));
+		assertNotEquals(null, game.getCurrentLocation());
 		try {
-			actor.doTurn(game);			
+			actor.doTurn(new GameView(game, loc));			
 		} catch (IllegalMoveException e) {
 			fail("You can only move once");
 		}
 		game.setCurrent(loc);
-		assertEquals(loc,game.getLocation());
+		assertEquals(loc,game.getCurrentLocation());
 	}
 }

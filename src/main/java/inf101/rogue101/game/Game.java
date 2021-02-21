@@ -3,7 +3,7 @@ package inf101.rogue101.game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import java.util.Optional;
 import inf101.grid.GridDirection;
 import inf101.grid.IGrid;
 import inf101.grid.Location;
@@ -31,11 +31,6 @@ public class Game implements IGame {
 	 * All the IActors that have things left to do this turn
 	 */
 	private List<IActor> actors = new ArrayList<IActor>();
-
-	/**
-	 * This game's random generator
-	 */
-	private Random random = new Random();
 	
 	/**
 	 * The game map. {@link IGameMap} gives us a few more details than
@@ -96,51 +91,71 @@ public class Game implements IGame {
 	}
 
 	@Override
-	public void addItem(IItem item) {
-		map.add(currentLocation, item);
-		// also keep track of whether we need to redraw this cell
-		graphics.reportChange(currentLocation);
-	}
-
-	@Override
-	public void addItem(char symbol) {
-		IItem item = ItemFactory.createItem(symbol);
+	public boolean addItem(IItem item, Location loc) {
 		if (item != null) {
-			map.add(currentLocation, item);
+			map.add(loc, item);
 			// also keep track of whether we need to redraw this cell
-			graphics.reportChange(currentLocation);
-		}
-	}
-
-	public boolean attack(GridDirection dir) {
-		Location loc = map.getNeighbour(getLocation(), dir);
-		graphics.reportChange(loc);
-		graphics.reportChange(currentLocation);
-		List<IActor> actorsOnTargetLoc = map.getActors(loc);
-		if (actorsOnTargetLoc.isEmpty())
+			graphics.reportChange(loc);
 			return true;
-		actorsOnTargetLoc.sort(null);
-		IActor target = actorsOnTargetLoc.get(0);
-		if (attack(dir, target).equals(currentLocation))
-			return false;
-		return true;
+		}
+		return false;
 	}
 
 	@Override
-	public Location attack(GridDirection dir, IItem target) {
-		Location loc = map.getNeighbour(getLocation(), dir);
-		if (!map.has(loc, target))
+	public Optional<IItem> removeItem(IItem item, Location loc) {
+		if (item == null || !map.has(currentLocation, item))
+			return Optional.ofNullable(null);
+		if (!Game.pickUpSucceeds(currentActor, item))
+			return Optional.ofNullable(null);
+		map.remove(currentLocation, item);
+		return Optional.ofNullable(item);
+	}
+
+
+	public boolean attack(IActor attacker, GridDirection dir) {
+		if(!hasTurn(attacker))
+			return false;
+		
+		//choose target
+		Location to = getCurrentLocation().getNeighbor(dir);
+		List<IActor> actorsOnTargetLoc = map.getActors(to);
+		if (actorsOnTargetLoc.isEmpty()) //just like move
+			return true;
+		if(actorsOnTargetLoc.size()>1) { 
+			throw new IllegalMoveException("Can not attack multiple target at once.");
+		}
+		actorsOnTargetLoc.get(0);
+		IActor target = actorsOnTargetLoc.get(0);
+
+		Location newLoc = attack(attacker,dir,target);
+		return to.equals(newLoc);
+	}
+
+	private boolean hasTurn(IActor actor) {
+		return movePoints>0 && actor == getCurrentActor();
+	}
+
+	public Location attack(IActor attacker, GridDirection dir, IItem target) {
+		Location from = map.getLocation(attacker);
+		if(!hasTurn(attacker))
+			return from;
+
+		Location to = from.getNeighbor(dir);
+		if(!map.has(to, target)) {
 			throw new IllegalMoveException("Target isn't there!");
+		}
+		
+		graphics.reportChange(from);
+		graphics.reportChange(to);
+		
+		if (Game.attackSucceeds(attacker, target))
+			target.handleDamage(attacker.getDamage());
 
-		graphics.reportChange(loc);
-		graphics.reportChange(currentLocation);
+		map.clean(from);
+		map.clean(to);
 
-		if (Game.attackSucceeds(currentActor, target))
-			target.handleDamage(currentActor.getDamage());
-
-		map.clean(loc);
 		if (target.isDestroyed()) {
-			return move(dir);
+			return move(attacker,dir);
 		} else {
 			movePoints--;
 			return currentLocation;
@@ -173,7 +188,7 @@ public class Game implements IGame {
 				}
 
 				if (currentLocation == null) {
-					displayDebug("doTurn(): Whoops! Actor has disappeared from the map: " + currentActor);
+					graphics.displayDebug("doTurn(): Whoops! Actor has disappeared from the map: " + currentActor);
 				}
 				movePoints = 1; // everyone gets to do one thing
 
@@ -181,12 +196,9 @@ public class Game implements IGame {
 					if (currentActor.getCurrentHealth() <= 0) {
 						// a dead human player gets removed from the game
 						// TODO: you might want to be more clever here
-						displayStatus(currentActor.getShortName() + " died.");
-						// map.remove(currentLocation, currentActor);
-						// currentActor = null;
-						// currentLocation = null;
+						graphics.displayStatus(currentActor.getShortName() + " died.");
 					} else {
-						currentActor.doTurn(this);
+						currentActor.doTurn(new GameView(this, currentLocation));
 						Location newLocation = map.getLocation(currentActor);
 						graphics.reportChange(newLocation);
 					}
@@ -203,7 +215,7 @@ public class Game implements IGame {
 
 					try {
 						// computer-controlled players do their stuff right away
-						currentActor.doTurn(this);
+						currentActor.doTurn(new GameView(this, currentLocation));
 					} catch (Exception e) {
 						// actor did something wrong
 						// do nothing, leave this IActor
@@ -215,7 +227,7 @@ public class Game implements IGame {
 					map.clean(currentLocation);
 					map.clean(newLocation);
 				} else {
-					displayDebug("doTurn(): Hmm, this is a very strange actor: " + currentActor);
+					graphics.displayDebug("doTurn(): Hmm, this is a very strange actor: " + currentActor);
 				}
 			}
 
@@ -240,7 +252,7 @@ public class Game implements IGame {
 				if (item.getCurrentHealth() < 0) {
 					// normally, we expect these things to be removed when they are destroyed, so
 					// this shouldn't happen
-					formatDebug("beginTurn(): found and removed leftover destroyed item %s '%s' at %s%n",
+					graphics.formatDebug("beginTurn(): found and removed leftover destroyed item %s '%s' at %s%n",
 							item.getLongName(), item.getGraphicTextSymbol(), loc);
 
 					toRemove.add(item);
@@ -255,16 +267,12 @@ public class Game implements IGame {
 	}
 
 	@Override
-	public boolean canGo(GridDirection dir) {
-		Location location = getLocation(dir);
-		if (containsActor(location, Portal.class) && currentActor instanceof IPlayer) {
+	public boolean canGo(IActor actor, GridDirection dir) {
+		Location from = map.getLocation(actor);
+		Location to = from.getNeighbor(dir);
+		if (containsItem(to, Portal.class) && actor instanceof IPlayer) {
 			IPlayer currentPlayer = (IPlayer) currentActor;
-			Portal portal = (Portal) map.getActors(location).get(0);
 			if (currentPlayer.hasItem(Amulet.getInstance())) {
-				displayStatus("Congratulations, you reached the portal with the " + Amulet.getInstance().getShortName()
-						+ " and won the game!");
-				portal.open();
-				map.remove(location, portal);
 				return true;
 			}
 		}
@@ -272,46 +280,14 @@ public class Game implements IGame {
 	}
 
 	@Override
-	public void displayDebug(String s) {
-		graphics.displayDebug(s);
+	public IMessageView getIMessageView() {
+		return graphics;
 	}
 
-	@Override
-	public void displayMessage(String s) {
-		graphics.displayMessage(s);
-	}
 
-	@Override
-	public void displayStatus(String s) {
-		graphics.displayStatus(s);
-	}
 
 	public void draw() {
 		graphics.drawDirty(map);
-	}
-
-	@Override
-	public boolean drop(IItem item) {
-		if (item != null) {
-			map.add(currentLocation, item);
-			return true;
-		} else
-			return false;
-	}
-
-	@Override
-	public void formatDebug(String s, Object... args) {
-		graphics.formatDebug(s, args);
-	}
-
-	@Override
-	public void formatMessage(String s, Object... args) {
-		graphics.formatMessage(s, args);
-	}
-
-	@Override
-	public void formatStatus(String s, Object... args) {
-		graphics.formatStatus(s, args);
 	}
 
 	@Override
@@ -319,33 +295,13 @@ public class Game implements IGame {
 		return map.getHeight();
 	}
 
-	@Override
 	public List<IItem> getLocalNonActorItems() {
 		return map.getItems(currentLocation);
 	}
 
 	@Override
-	public Location getLocation() {
+	public Location getCurrentLocation() {
 		return currentLocation;
-	}
-
-	public Location getLocation(IItem item) {
-		for(Location loc : map.locations()) {
-			for(IItem cur : map.getAll(loc)) {
-				if(item == cur) {
-					return loc;
-				}
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public Location getLocation(GridDirection dir) {
-		if (this.map.canGo(currentLocation,dir))
-			return currentLocation.getNeighbor(dir);
-		else
-			return null;
 	}
 
 	/**
@@ -354,13 +310,13 @@ public class Game implements IGame {
 	 * individual items don't.
 	 */
 	@Override
-	public IMapView getMap() {
+	public IGameMap getMap() {
 		return map;
 	}
 
 	@Override
-	public List<GridDirection> getPossibleMoves() {
-		return map.getPossibleMoves(currentLocation);
+	public List<GridDirection> getPossibleMoves(IActor actor) {
+		return map.getPossibleMoves(map.getLocation(actor));
 	}
 
 	@Override
@@ -381,42 +337,48 @@ public class Game implements IGame {
 			if (currentActor.getCurrentHealth() <= 0) {
 				graphics.displayMessage("Sorry, you're dead!");
 			} else {
-				((IPlayer) currentActor).keyPressed(this, code); // do your thing
+				IGameView gv = new GameView(this, currentLocation);
+				((IPlayer) currentActor).keyPressed(gv, code); // do your thing
 			}
 		}
 	}
 
 	@Override
-	public Location move(GridDirection dir) {
-		if (movePoints < 1)
+	public Location move(IActor actor, GridDirection dir) {
+		if(!hasTurn(actor))
 			throw new IllegalMoveException("You're out of moves!");
-		if (!canGo(dir))
+		if (!canGo(actor,dir))
 			throw new IllegalMoveException("You cannot go there!");
-		Location newLoc = map.go(currentLocation, dir);
-		map.remove(currentLocation, currentActor);
-		map.add(newLoc, currentActor);
-		currentLocation = newLoc;
+
+		Location to = currentLocation.getNeighbor(dir);
+		
+		//winning condition
+		if (containsItem(to, Portal.class) && actor instanceof IPlayer) {
+			IPlayer currentPlayer = (IPlayer) currentActor;
+			Portal portal = (Portal) map.getActors(to).get(0);
+			if (currentPlayer.hasItem(Amulet.getInstance())) {
+				graphics.displayStatus("Congratulations, you reached the portal with the " + Amulet.getInstance().getShortName()
+						+ " and won the game!");
+				portal.open();
+				map.remove(to, portal);
+				return to;
+			}
+		}
+
+		map.remove(currentLocation, actor);
+		map.add(to, actor);
+		currentLocation = to;
 		movePoints--;
+		return to;
+	}
+
+	@Override
+	public Location rangedAttack(IActor attacker, GridDirection dir, IItem target) {
 		return currentLocation;
 	}
 
 	@Override
-	public IItem pickUp(IItem item) {
-		if (item == null || !map.has(currentLocation, item))
-			return null;
-		if (!Game.pickUpSucceeds(currentActor, item))
-			return null;
-		map.remove(currentLocation, item);
-		return item;
-	}
-
-	@Override
-	public Location rangedAttack(GridDirection dir, IItem target) {
-		return currentLocation;
-	}
-
-	@Override
-	public IActor getActor() {
+	public IActor getCurrentActor() {
 		return currentActor;
 	}
 
@@ -439,33 +401,7 @@ public class Game implements IGame {
 		return currentActor;
 	}
 
-	@Override
-	public <T extends IActor> boolean containsActor(Location loc, Class<T> c) {
-		for (IActor actor : map.getActors(loc)) {
-			if (c.isInstance(actor))
-				return true;
-		}
-		return false;
-	}
 
-	public <T extends IItem> boolean containsItem(Class<T> c) {
-		List<IItem> items = getLocalNonActorItems();
-		for (IItem item : items) {
-			if (c.isInstance(item))
-				return true;
-		}
-		return false;
-	}
-
-	@Override
-	public <T extends IItem> boolean containsItem(GridDirection dir, Class<T> c) {
-		Location loc = currentLocation.getNeighbor(dir);
-		for (IItem item : map.getItems(loc)) {
-			if (c.isInstance(item))
-				return true;
-		}
-		return false;
-	}
 
 	/**
 	 * An {@link IActor} succeeds at picking up a target item if the actors attack score 
@@ -489,5 +425,18 @@ public class Game implements IGame {
 	 */
 	public static boolean attackSucceeds(IActor attacker, IItem target) {
 		return attacker.getAttack() > target.getDefence();
+	}
+
+	@Override
+	public <T extends IItem> boolean containsItem(Location loc, Class<T> c) {
+		return map.containsItem(loc, c);
+	}
+
+	@Override
+	public Optional<IItem> pickUpItem(IActor actor, IItem item) {
+		if(!hasTurn(actor))
+			return Optional.ofNullable(null);
+		movePoints--;
+		return removeItem(item, currentLocation);
 	}
 }

@@ -10,6 +10,7 @@ import inf101.rogue101.objects.IItem;
  * Extra map methods that are for the game class only!
  *
  * @author anya
+ * @author Martin Vatshelle
  *
  */
 public interface IGameMap extends IMapView {
@@ -116,4 +117,7 @@ public interface IGameMap extends IMapView {
 	 * @return
 	 */
 	List<Location> getReachable(Location centre, int dist);
+	
+	public <T extends IItem> boolean containsItem(Location loc, Class<T> c);
+
 }

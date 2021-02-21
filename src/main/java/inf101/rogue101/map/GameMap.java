@@ -209,4 +209,24 @@ public class GameMap implements IGameMap {
 		return grid.locations();
 	}
 
+	public <T extends IItem> boolean containsItem(Location loc, Class<T> c) {
+		List<IItem> items = getItems(loc);
+		for (IItem item : items) {
+			if (c.isInstance(item))
+				return true;
+		}
+		return false;
+	}
+
+	public <T extends IActor> boolean containsActor(Location loc, Class<T> c) {
+		for (IActor actor : getActors(loc)) {
+			if (c.isInstance(actor))
+				return true;
+		}
+		return false;
+	}
+	
+	
+
+
 }
