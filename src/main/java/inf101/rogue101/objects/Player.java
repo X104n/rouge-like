@@ -134,14 +134,14 @@ public class Player implements IPlayer {
 		}
 	}
 
-	public void showStatus(IGameView game) {
+	private void showStatus(IGameView game) {
 		game.displayMessage("Player has " + this.hp + " hp left");
 	}
 
-	public void pickUp(IGameView game) {
+	private void pickUp(IGameView game) {
 	}
 
-	public void drop(IGameView game) {
+	private void drop(IGameView game) {
 	}
 
 	@Override

@@ -1,12 +1,12 @@
-# [Semesteroppgave 1: “Rogue One oh one”](https://retting.ii.uib.no/inf101.v20.sem1/blob/master/SEM-1.md)
+# [Semesteroppgave 1: “Rogue One oh one”](https://git.app.uib.no/ii/inf101/21v/assignments)
 
 I semesteroppgaven skal du implementere et spill inspirert av [Rogue](information/rogue.md). 
 
-Oppgaven skal leveres inn via GitLab innen **fredag 6. mars kl. 23:59**. 
+Oppgaven skal leveres inn via GitLab innen **fredag 12. mars kl. 16:00**. 
 
-*Hvis du ikke har brukt GitLab enda, bør du gå gjennom lab 0 og lab 2.*
+*Hvis du ikke har brukt GitLab enda, bør du gå gjennom tidligere lab oppgaver.*
 
-Hvis du får mindre enn 40 poeng på én eller begge av semesteroppgaven **får du ikke ta eksamen**.  
+Hvis du får mindre enn 6 poeng på én eller begge av semesteroppgaven **får du ikke ta eksamen**.  
 
 Spillet er delvis skrevet; du skal endre eksisterende kode, legge til ny kode, og skrive tekst-svar. 
 
@@ -25,7 +25,7 @@ Du kan følge med på testene dine på https://retting.ii.uib.no:81/me etterhver
 
 _Eclipse-tips: Forsvinner testene i stedet for å bli grønne? Trykk på ⋮menyen i JUnit tabben og slå av Show Failures Only – det er mye er motiverende å se at det dukker opp grønne bokser når vi får til noe!_
 
-## Oppgave 1 - Abstrakte Ting - 15%
+## Oppgave 1 - Abstrakte Ting - 2 poeng
 
 _I denne oppgaven skal du bli kjent med interfacet `IItem`. Der oppgavene ber om tekst-svar, skal du skrive disse i innleveringsfilen [Svar.md](Svar.md)._
 
@@ -78,7 +78,9 @@ Nå skal du utvide støtten for spill-objekter til å også kunne representere g
 
 👉 Opprett en klasse `Gold.java` som implementerer interfacet `IItem` i samme mappe som `Carrot.java`. 
 
-Det finnes ingen tester for gull enda. 
+Det finnes tester i `IItemTest.java` for gull som krever at klassen Gull har symbolet 'G'. (se hvordan de andre typene IItem har implementert SYMBOL og gjør det likt.)
+Testene i `IItemTest.java` vil ikke virke ennå, vi skal jobbe videre med de testene i Oppgave 3. 
+Men vær sikker på at du bruker rett symbol på Gold klassen ellers får du problemer i Oppgave 3.
 
 For å implementere metodene kan det være nyttig for deg å se på hvordan de andre klassene for spill-objekter fra 1.4 implementerer dem. 
 
@@ -90,7 +92,7 @@ Sjekk at filen `Gold.java` finnes i ditt online repositorie i samme mappe som `C
 
 _Tips: Du kan velge mer eller mindre tilfeldige verdier for *max health* og *defence* – forløpig har vi ikke tenkt på om gull skal kunne skades eller angripes. For `getSize()`, bør du sette den til å være større enn andre items, slik at den blir synlig på kartet (det er den største tingen som blir vist / plukket opp)._
 
-## Oppgave 2 - The Rabbit - 15%
+## Oppgave 2 - The Rabbit - 2 Poeng
 _I Oppgave 1 ble du kjent med interfacet `IItem` og hva de ulike metodene brukes til. Vi skal fortsette med å se på interfacene for spillobjektene, og i denne oppgaven skal vi se på `IActor` og eksempler på en “aktor” i spillet vårt._
 
 Husk at du kan alltids sjekke ut dokumentasjonen i linkene øverst i denne filen dersom du syns det er vanskelig å forstå hvordan disse interface-bitene henger sammen.
@@ -114,6 +116,9 @@ Se på `Rabbit.java`. Hvordan bestemmer Rabbit hvilken vei den skal gå i `doTur
 Et naturlig spørsmål en `IActor` kan stille kartet (via `IGame`) er “Hvilke muligheter har jeg til å bevege meg?”. Metoden `GameMap::getPossibleMoves` gir svar på dette ved å returnere en liste med de retningene som en rolle har *lov* til å gå. Se eksempel på bruk av denne i `Rabbit::performMove()`. Per nå så returnerer `getPossibleMoves` bare en liste med retningen 'EAST'.
 
 👉 Implementer metoden `GameMap::getPossibleMoves`.
+
+✅ `GameMapTest:testGetPossibleMoves` skal passere når du er ferdig med denne oppgaven.
+
 
 🤔 Ligner dette på noe du har gjort på tidligere ukeoppgave? 
 

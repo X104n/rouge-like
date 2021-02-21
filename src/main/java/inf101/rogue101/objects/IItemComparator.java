@@ -14,6 +14,4 @@ public class IItemComparator implements Comparator<IItem>{
 			return 1;
 		return Integer.compare(o1.getSize(), o2.getSize());
 	}
-
-
 }

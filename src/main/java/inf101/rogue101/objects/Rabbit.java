@@ -56,9 +56,6 @@ public class Rabbit implements IActor {
 		List<GridDirection> possibleMoves = game.getPossibleMoves();
 		if (!possibleMoves.isEmpty()) {
 			burnEnergy();
-			for(GridDirection move : possibleMoves) {
-				boolean found = game.containsItem(move, Carrot.class);
-			}
 			Collections.shuffle(possibleMoves);
 			game.move(possibleMoves.get(0));
 		}

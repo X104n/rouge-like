@@ -9,9 +9,9 @@ import inf101.grid.IGrid;
 import inf101.grid.IMultiGrid;
 import inf101.grid.Location;
 import inf101.grid.MultiGrid;
-import inf101.rogue101.game.IllegalMoveException;
 import inf101.rogue101.objects.IActor;
 import inf101.rogue101.objects.IItem;
+import inf101.rogue101.objects.IItemComparator;
 import inf101.rogue101.objects.Wall;
 
 public class GameMap implements IGameMap {
@@ -47,7 +47,7 @@ public class GameMap implements IGameMap {
 		// do the actual adding
 		List<IItem> list = grid.get(loc);
 		list.add(item);
-		Collections.sort(list, Collections.reverseOrder());
+		Collections.sort(list, Collections.reverseOrder(new IItemComparator()));
 	}
 
 	/**

@@ -5,7 +5,6 @@ import java.util.List;
 import inf101.grid.Location;
 import inf101.rogue101.objects.IActor;
 import inf101.rogue101.objects.IItem;
-import inf101.rogue101.objects.Wall;
 
 public interface IMapView {
 

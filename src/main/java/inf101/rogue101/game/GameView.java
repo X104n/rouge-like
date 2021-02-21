@@ -35,8 +35,10 @@ public class GameView implements IGameView {
 	}
 
 	@Override
-	public Location attack(GridDirection dir, IItem target) throws IllegalMoveException {
-		return game.attack(currentActor, dir, target);
+	public boolean attack(GridDirection dir, IItem target) throws IllegalMoveException {
+		Location before = game.getCurrentLocation();
+		Location after = game.attack(currentActor, dir, target);
+		return !before.equals(after);
 	}
 
 	@Override
@@ -91,8 +93,10 @@ public class GameView implements IGameView {
 	}
 
 	@Override
-	public Location move(GridDirection dir) {
-		return game.move(currentActor, dir);
+	public boolean move(GridDirection dir) {
+		Location before = game.getCurrentLocation();
+		Location after = game.move(currentActor, dir);
+		return !before.equals(after);
 	}
 
 	@Override

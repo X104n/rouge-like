@@ -62,15 +62,17 @@ public class Game implements IGame {
 	}
 
 	public Game(IGrid<IItem> inputGrid) {
-		this.map = new GameMap(inputGrid);
-		this.graphics = new GameGraphics();
+		this(new GameGraphics(),inputGrid);
 	}
 	
 	public Game(GameGraphics graphics) {
+		this(graphics,getDefaultMap());
+	}
+
+	public Game(GameGraphics graphics,IGrid<IItem> inputGrid) {
 		this.graphics = graphics;
 		this.map = new GameMap(getDefaultMap());
 	}
-
 
 	static IGrid<IItem> getDefaultMap() {
 		// NOTE: in a more realistic situation, we will have multiple levels (one map
@@ -111,7 +113,7 @@ public class Game implements IGame {
 		return Optional.ofNullable(item);
 	}
 
-
+	@Override
 	public boolean attack(IActor attacker, GridDirection dir) {
 		if(!hasTurn(attacker))
 			return false;
@@ -135,6 +137,7 @@ public class Game implements IGame {
 		return movePoints>0 && actor == getCurrentActor();
 	}
 
+	@Override
 	public Location attack(IActor attacker, GridDirection dir, IItem target) {
 		Location from = map.getLocation(attacker);
 		if(!hasTurn(attacker))
@@ -283,7 +286,6 @@ public class Game implements IGame {
 	public IMessageView getIMessageView() {
 		return graphics;
 	}
-
 
 
 	public void draw() {

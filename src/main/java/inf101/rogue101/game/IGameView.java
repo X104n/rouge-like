@@ -52,7 +52,7 @@ public interface IGameView extends IMessageView{
 	 * @return the attacker's new location, or the previous location if the attack
 	 *         failed
 	 */
-	Location attack(GridDirection dir, IItem target) throws IllegalMoveException;
+	boolean attack(GridDirection dir, IItem target) throws IllegalMoveException;
 
 	/**
 	 * @param dir
@@ -102,7 +102,7 @@ public interface IGameView extends IMessageView{
 	 * @return A new location
 	 * @throws IllegalMoveException if moving in that direction is illegal
 	 */
-	Location move(GridDirection dir);
+	boolean move(GridDirection dir);
 
 	/**
 	 * Perform a ranged attack on the target.
