@@ -195,7 +195,7 @@ public class GameMap implements IGameMap {
 
 	@Override
 	public <T extends IItem> boolean containsItem(Location loc, Class<T> c) {
-		List<IItem> items = getItems(loc);
+		List<IItem> items = getAll(loc);
 		for (IItem item : items) {
 			if (c.isInstance(item))
 				return true;
