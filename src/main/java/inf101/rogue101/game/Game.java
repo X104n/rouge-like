@@ -71,7 +71,7 @@ public class Game implements IGame {
 
 	public Game(GameGraphics graphics,IGrid<IItem> inputGrid) {
 		this.graphics = graphics;
-		this.map = new GameMap(getDefaultMap());
+		this.map = new GameMap(inputGrid);
 	}
 
 	static IGrid<IItem> getDefaultMap() {
