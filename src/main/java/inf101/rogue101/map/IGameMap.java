@@ -81,10 +81,13 @@ public interface IGameMap extends IMapView {
 
 	/**
 	 * Get all locations within i steps from the given centre
+	 * The centre location should not be in the list.
+	 * All locations returned should have distance at most dist to the centre
+	 * All locations returned should be different.
 	 * 
 	 * @param centre
 	 * @param dist
-	 * @return A list of locations, all at most i grid cells away from centre
+	 * @return A list of all locations, at most dist grid cells away from centre
 	 */
 	List<Location> getNeighbourhood(Location centre, int dist);
 	
