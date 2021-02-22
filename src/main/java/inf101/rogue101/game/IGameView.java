@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import inf101.grid.GridDirection;
-import inf101.grid.Location;
-import inf101.rogue101.objects.Carrot;
 import inf101.rogue101.objects.IActor;
 import inf101.rogue101.objects.IItem;
 
@@ -115,7 +113,7 @@ public interface IGameView extends IMessageView{
 	 *               direction
 	 * @return Your new location if the attack resulted in you moving (unlikely)
 	 */
-	Location rangedAttack(GridDirection dir, IItem target);
+	boolean rangedAttack(GridDirection dir, IItem target);
 
 	/**
 	 * IActors can see the nearby cells and what is on them.
@@ -145,5 +143,5 @@ public interface IGameView extends IMessageView{
 	 * @param dist
 	 * @return A list of locations, all at most i grid cells away from centre
 	 */
-	List<Location> getNeighbourhood(int dist);
+	List<IItem> getNearbyItems(int dist);
 }

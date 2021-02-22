@@ -29,7 +29,7 @@ class PlayerTest {
     void beforeEach() {
         game = new Game(MapReader.TEST_MAP);
         player = (IPlayer) game.setCurrent(new Location(3, 2));
-        board = new GameView(game, loc);
+        board = new GameView(game, player);
         loc = game.getCurrentLocation();
     }
 

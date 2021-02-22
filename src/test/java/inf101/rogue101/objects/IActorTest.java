@@ -96,7 +96,7 @@ class IActorTest {
 			locations.add(loc.getNeighbor(dir));
 		}
 		try {
-			actor.doTurn(new GameView(game, loc));
+			actor.doTurn(new GameView(game, actor));
 		} catch (IllegalMoveException e) {
 			fail("You can only move once");
 		}
@@ -122,7 +122,7 @@ class IActorTest {
 		assertTrue(game.containsItem(loc, actor.getClass()));
 		assertNotEquals(null, game.getCurrentLocation());
 		try {
-			actor.doTurn(new GameView(game, loc));			
+			actor.doTurn(new GameView(game, actor));			
 		} catch (IllegalMoveException e) {
 			fail("You can only move once");
 		}

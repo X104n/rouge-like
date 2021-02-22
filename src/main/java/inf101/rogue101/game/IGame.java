@@ -166,9 +166,9 @@ public interface IGame{
 	 * @param dir    Direction
 	 * @param target A target item, which should in some square in the given
 	 *               direction
-	 * @return Your new location if the attack resulted in you moving (unlikely)
+	 * @return true if the attack resulted in killing an enemy
 	 */
-	Location rangedAttack(IActor attacker, GridDirection dir, IItem target);
+	boolean rangedAttack(IActor attacker, GridDirection dir, IItem target);
 	
 	/**
 	 * @param dir

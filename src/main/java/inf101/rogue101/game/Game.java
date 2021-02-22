@@ -201,7 +201,7 @@ public class Game implements IGame {
 						// TODO: you might want to be more clever here
 						graphics.displayStatus(currentActor.getShortName() + " died.");
 					} else {
-						currentActor.doTurn(new GameView(this, currentLocation));
+						currentActor.doTurn(new GameView(this, currentActor));
 						Location newLocation = map.getLocation(currentActor);
 						graphics.reportChange(newLocation);
 					}
@@ -218,7 +218,7 @@ public class Game implements IGame {
 
 					try {
 						// computer-controlled players do their stuff right away
-						currentActor.doTurn(new GameView(this, currentLocation));
+						currentActor.doTurn(new GameView(this, currentActor));
 					} catch (Exception e) {
 						// actor did something wrong
 						// do nothing, leave this IActor
@@ -339,7 +339,7 @@ public class Game implements IGame {
 			if (currentActor.getCurrentHealth() <= 0) {
 				graphics.displayMessage("Sorry, you're dead!");
 			} else {
-				IGameView gv = new GameView(this, currentLocation);
+				IGameView gv = new GameView(this, currentActor);
 				((IPlayer) currentActor).keyPressed(gv, code); // do your thing
 			}
 		}
@@ -375,8 +375,9 @@ public class Game implements IGame {
 	}
 
 	@Override
-	public Location rangedAttack(IActor attacker, GridDirection dir, IItem target) {
-		return currentLocation;
+	public boolean rangedAttack(IActor attacker, GridDirection dir, IItem target) {
+		//TODO: this functionality is not implemented
+		return false;
 	}
 
 	@Override

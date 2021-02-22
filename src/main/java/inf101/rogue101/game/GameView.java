@@ -1,5 +1,6 @@
 package inf101.rogue101.game;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,11 +23,11 @@ import inf101.rogue101.objects.IItem;
 public class GameView implements IGameView {
 
 	private IGame game;
-	private Location currentLocation;
 	private IActor currentActor;
 	
-	public GameView(Game game,Location currentLocation) {
+	public GameView(Game game,IActor currentActor) {
 		this.game = game;
+		this.currentActor = currentActor;
 	}
 
 	@Override
@@ -84,9 +85,13 @@ public class GameView implements IGameView {
 
 	@Override
 	public boolean drop(IItem item) {
-		return game.addItem(item, currentLocation);
+		return game.addItem(item, getCurrentLocation());
 	}
 
+	Location getCurrentLocation() {
+		return game.getMap().getLocation(currentActor);
+	}
+	
 	@Override
 	public List<GridDirection> getPossibleMoves() {
 		return game.getPossibleMoves(currentActor);
@@ -100,22 +105,31 @@ public class GameView implements IGameView {
 	}
 
 	@Override
-	public Location rangedAttack(GridDirection dir, IItem target) {
+	public boolean rangedAttack(GridDirection dir, IItem target) {
 		return game.rangedAttack(currentActor, dir, target);
 	}
 
 	@Override
 	public <T extends IItem> boolean containsItem(GridDirection dir, Class<T> c) {
-		return game.getMap().containsItem(currentLocation.getNeighbor(dir),c);
+		return game.getMap().containsItem(getCurrentLocation().getNeighbor(dir),c);
 	}
 
 	@Override
 	public List<IItem> getLocalNonActorItems() {
-		return game.getMap().getItems(currentLocation);
+		return game.getMap().getItems(getCurrentLocation());
+	}
+
+	public List<IItem> getNessaIItems(int dist) {
+		
+		return null;
 	}
 
 	@Override
-	public List<Location> getNeighbourhood(int dist) {
-		return game.getMap().getNeighbourhood(currentLocation, dist);
+	public List<IItem> getNearbyItems(int dist) {
+		List<IItem> items = new ArrayList<IItem>();
+		for(Location loc : game.getMap().getNeighbourhood(getCurrentLocation(), dist)){
+			items.addAll(game.getMap().getItems(loc));
+		}
+		return items;
 	}
 }
