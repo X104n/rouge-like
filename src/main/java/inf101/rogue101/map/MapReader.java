@@ -181,8 +181,12 @@ public class MapReader {
 		IGrid<IItem> itemMap = new Grid<IItem>(symbolMap.numRows(), symbolMap.numColumns());
 		
 		for(Location loc : symbolMap.locations()) {
-			IItem item = ItemFactory.createItem(symbolMap.get(loc));
-			itemMap.set(loc, item);
+			try {
+				IItem item = ItemFactory.createItem(symbolMap.get(loc));
+				itemMap.set(loc, item);
+			}catch(IllegalArgumentException e) {
+				System.err.println("Failed to add "+symbolMap.get(loc)+" to the map.");
+			}
 		}
 		return itemMap;		
 	}

@@ -28,7 +28,7 @@ class PlayerTest {
     @BeforeEach
     void beforeEach() {
         game = new Game(MapReader.TEST_MAP);
-        player = (IPlayer) game.setCurrent(new Location(3, 2));
+        player = (IPlayer) game.setCurrent(new Location(2, 3));
         board = new GameView(game, player);
         loc = game.getCurrentLocation();
     }
