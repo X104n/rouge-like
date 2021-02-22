@@ -1,5 +1,9 @@
 package inf101.rogue101.objects;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 import inf101.grid.GridDirection;
 import inf101.rogue101.game.IGameView;
 import javafx.scene.input.KeyCode;
@@ -139,6 +143,13 @@ public class Player implements IPlayer {
 	}
 
 	private void pickUp(IGameView game) {
+		List<IItem> items = game.getLocalNonActorItems();
+		if(!items.isEmpty()) {
+			Collections.sort(items,new IItemComparator());
+			Optional<IItem> found = game.pickUp(items.get(items.size()-1));
+			if(found.isPresent())
+				game.displayMessage("Picked up"+found.get().getLongName());
+		}
 	}
 
 	private void drop(IGameView game) {
