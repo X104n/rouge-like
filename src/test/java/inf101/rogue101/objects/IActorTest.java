@@ -119,7 +119,8 @@ class IActorTest {
 		Game game = new Game(MapReader.mapTrap(symbol));
 		Location loc = new Location(1, 1);
 		IActor actor = game.setCurrent(loc);
-		assertTrue(game.containsItem(loc, actor.getClass()));
+		assertNotNull(actor,"Failed to place "+symbol+" on the map.");
+		assertTrue(game.containsItem(loc, actor.getClass()),actor+" was not placed on the map.");
 		assertNotEquals(null, game.getCurrentLocation());
 		try {
 			actor.doTurn(new GameView(game, actor));			

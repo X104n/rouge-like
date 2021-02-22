@@ -13,7 +13,11 @@ import inf101.rogue101.objects.IItem;
  * This interface provides the methods that IActors may use to do their move.
  * 
  * The game has rules for where a player is allowed to go, these rules
- * are enforced by methods in this interface
+ * are enforced by methods in this interface.
+ * 
+ * One of the points with this Interface is to limit the IActor from knowing its position
+ * They only see their surroundings. 
+ * (Unless they have found a GPS or Harry Potters magic map)
  * 
  * @author Martin Vatshelle - martin.vatshelle@uib.no
  *
@@ -87,6 +91,9 @@ public interface IGameView extends IMessageView{
 	boolean drop(IItem item);
 
 	/**
+	 * Possible moves are the moves an IActor can make.
+	 * Note that this also include the CENTER direction.
+	 * 
 	 * @return A list of directions we can move in, for use with
 	 *         {@link #move(GridDirection)}
 	 */
