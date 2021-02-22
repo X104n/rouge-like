@@ -84,11 +84,11 @@ class PlayerTest {
 
     @Test
     void PlayerPickUpDropHasItem() {
-        loc = this.loc.getNeighbor(GridDirection.NORTH);
-        assertEquals(1, game.getMap().getAll(loc).size());
+        Location neighbor = this.loc.getNeighbor(GridDirection.NORTH);
+        assertEquals(1, game.getMap().getAll(neighbor).size());
 
         player.keyPressed(board, KeyCode.UP);
-        assertEquals(2, game.getMap().getAll(loc).size());
+        assertEquals(2, game.getMap().getAll(neighbor).size());
 
         List<IItem> localNonActorItemList = board.getLocalNonActorItems();
 		assertFalse(localNonActorItemList.isEmpty(), "Something is wrong with the test object, there are no items to pick up.");
