@@ -68,6 +68,8 @@ public class GameMap implements IGameMap {
 	public boolean canGo(Location from, GridDirection dir) {
 		if (!grid.canGo(from,dir))
 			return false;
+		if(dir.equals(GridDirection.CENTER))
+			return true;
 		Location loc = from.getNeighbor(dir);
 		return isAvailable(loc);
 	}

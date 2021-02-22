@@ -142,6 +142,7 @@ class GameMapTest {
 	void testGetPossibleMoves() {
 		GameMap map = new GameMap(20, 20);
 		Location loc = new Location(3,3);
+		map.add(loc, new Spider());
 		map.add(new Location(3,4), new Wall());
 		map.add(new Location(4,3), new Wall());
 		map.add(new Location(2,3), new Spider());
