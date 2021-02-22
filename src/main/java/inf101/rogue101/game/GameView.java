@@ -113,4 +113,9 @@ public class GameView implements IGameView {
 	public List<IItem> getLocalNonActorItems() {
 		return game.getMap().getItems(currentLocation);
 	}
+
+	@Override
+	public List<Location> getNeighbourhood(int dist) {
+		return game.getMap().getNeighbourhood(currentLocation, dist);
+	}
 }

@@ -139,4 +139,11 @@ public interface IGameView extends IMessageView{
 	 */
 	List<IItem> getLocalNonActorItems();
 
+	/**
+	 * Get all locations within i steps from the current location
+	 * 
+	 * @param dist
+	 * @return A list of locations, all at most i grid cells away from centre
+	 */
+	List<Location> getNeighbourhood(int dist);
 }
