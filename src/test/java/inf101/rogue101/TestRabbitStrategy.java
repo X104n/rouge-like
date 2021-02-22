@@ -42,8 +42,10 @@ class TestRabbitStrategy {
 		Rabbit rabbit = (Rabbit) game.getCurrentActor();
 		Location previous = game.getCurrentLocation();
 		int carrots = 0;
-		while (rabbit.getCurrentHealth() > 0) {
+		int turnsLeft = 1000;
+		while (rabbit.getCurrentHealth() > 0 && turnsLeft>0) {
 			game.doTurn();
+			turnsLeft--;
 			if (game.getCurrentActor() == rabbit) {
 				if (game.containsItem(game.getCurrentLocation(),Carrot.class)) {
 					carrots++;
