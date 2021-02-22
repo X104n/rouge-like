@@ -33,9 +33,9 @@ public class Spider implements IActor {
 
 	public Spider() {
 		hp = Spider.MAXHEALTH;
-		defence = 1;
-		attack = 5;
-		damage = 3;
+		defence = 1; //they are easy to kill
+		damage = 1;
+		attack = 50; //they sneak in so almost impossible to resist attack
 		lastDir = GridDirection.NORTHEAST;
 	}
 
@@ -94,10 +94,21 @@ public class Spider implements IActor {
 
 	@Override
 	public void doTurn(IGameView game) {
+		
+		for(GridDirection dir : GridDirection.EIGHT_DIRECTIONS) {
+			if(dir.equals(GridDirection.CENTER))
+				continue;
+			if(game.containsItem(dir, IActor.class)) {
+				game.attack(dir);
+				return;
+			}
+		}
+		
+		List<GridDirection> moves = game.getPossibleMoves();
 		if (game.canGo(lastDir)) {
 			game.move(lastDir);
 		} else {
-			List<GridDirection> moves = game.getPossibleMoves();
+			moves.remove(GridDirection.CENTER);
 			if (!moves.isEmpty()) {
 				Random r = new Random();
 				lastDir = moves.get(r.nextInt(moves.size()));
