@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
  * De forbrenner energi raskt og må være effektiv 
  * 
  * @author Knut Anders Stokke
+ * @author Martin Vatshelle
  *
  */
 public class Rabbit implements IActor {
@@ -36,7 +37,17 @@ public class Rabbit implements IActor {
 			}
 		}
 
-		performMove(game);
+		GridDirection dir = selectMove(game);
+		performMove(game,dir);
+	}
+
+	/**
+	 * This method selects which move the Rabbit want to make.
+	 */
+	private GridDirection selectMove(IGameView game) {
+		List<GridDirection> possibleMoves = game.getPossibleMoves();
+		Collections.shuffle(possibleMoves);
+		return possibleMoves.get(0);
 	}
 
 	/**
@@ -49,15 +60,18 @@ public class Rabbit implements IActor {
 
 	/**
 	 * Performs a move
+	 * Every time a Rabbit moves it burns energy
+	 * GridDirection.CENTER means the Rabbit is resting and not burning energy
 	 * 
 	 * @param game
 	 */
-	private void performMove(IGameView game) {
-		List<GridDirection> possibleMoves = game.getPossibleMoves();
-		if (!possibleMoves.isEmpty()) {
+	private void performMove(IGameView game, GridDirection dir) {
+		if (!dir.equals(GridDirection.CENTER)) {
 			burnEnergy();
-			Collections.shuffle(possibleMoves);
-			game.move(possibleMoves.get(0));
+			boolean moved = game.move(dir);
+			if(!moved) {
+				game.displayMessage("Rabbit wasted energy on move");
+			}
 		}
 	}
 
