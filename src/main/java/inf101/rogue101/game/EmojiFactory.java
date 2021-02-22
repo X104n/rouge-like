@@ -9,11 +9,16 @@ public class EmojiFactory {
 	 * file manually.
 	 * <p>
 	 * The font can be downloaded from
-	 * <a href="http://vedlegg.uib.no/?id=13b7e208ea8ee38e5de34570a527e80c">http://vedlegg.uib.no/?id=13b7e208ea8ee38e5de34570a527e80c</a>
-	 * (originally from http://users.teilar.gr/~g1951d/)
+	 * <a href="https://dn-works.com/wp-content/uploads/2020/UFAS-Fonts/Symbola.zip)
 	 * <p>
 	 * (Put the Symbola.ttf file in src/main/java/inf101/v20/gfx/fonts/ – do
 	 * 'Refresh' on your project after adding the file)
+	 * 
+	 * <p>
+	 * Overview
+	 * <a href="https://dn-works.com/wp-content/uploads/2020/UFAS-Docs/Symbola.pdf)
+	 * <p>
+	 * 
 	 */
 	public static boolean USE_EMOJI = false;
 	

@@ -43,7 +43,7 @@ public class Printer implements IPaintLayer {
 	 * <p>
 	 * (Put the extracted Symbola.ttf in src/main/java/inf101/v20/gfx/fonts/)
 	 */
-	public static final TextFont FONT_SYMBOLA = new TextFont("Symbola.ttf", 26.70, TextMode.CHAR_BOX_SIZE, -0.4000,
+	public static final TextFont FONT_SYMBOLA = new TextFont("Symbola.otf", 26.70, TextMode.CHAR_BOX_SIZE, -0.4000,
 			-7.6000, 1.35000, 1.0000, true);
 
 	/**
