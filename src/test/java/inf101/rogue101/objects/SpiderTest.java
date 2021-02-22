@@ -21,17 +21,18 @@ public class SpiderTest {
         Game game = new Game(MapReader.playerTrapWith('S'));
         IPlayer player = (IPlayer) game.setCurrent(new Location(2, 2));
 
-        for (int i = 0; i < 1000; i++) game.doTurn();
+        for (int i = 0; i < 1000; i++) 
+        	game.doTurn();
 
         assertEquals(-1, player.getCurrentHealth());
     }
 
-    @Test
-    void SpiderHasShield() {
-        Game game = new Game(MapReader.mapTrap('S'));
-        Spider spider = (Spider) game.setCurrent(new Location(1, 1));
-        assertEquals(10, spider.getCurrentHealth());
-        spider.handleDamage(5);
-        assertEquals(6, spider.getCurrentHealth());
-    }
+//    @Test
+//    void SpiderHasShield() {
+//        Game game = new Game(MapReader.mapTrap('S'));
+//        Spider spider = (Spider) game.setCurrent(new Location(1, 1));
+//        assertEquals(10, spider.getCurrentHealth());
+//        spider.handleDamage(5);
+//        assertEquals(6, spider.getCurrentHealth());
+//    }
 }
