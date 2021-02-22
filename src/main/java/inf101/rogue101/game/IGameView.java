@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import inf101.grid.GridDirection;
 import inf101.grid.Location;
+import inf101.rogue101.objects.Carrot;
 import inf101.rogue101.objects.IActor;
 import inf101.rogue101.objects.IItem;
 
@@ -117,7 +118,15 @@ public interface IGameView extends IMessageView{
 	Location rangedAttack(GridDirection dir, IItem target);
 
 	/**
-	 * Checks if a location contains an item of a specific class
+	 * IActors can see the nearby cells and what is on them.
+	 * This method checks if a neighbour location contains an item of a specific class
+	 * 
+	 * Although it may seem unlogical that an actor can see a small key 
+	 * hidden under a large rock from a distance, this is just how the game works.
+	 * 
+	 * usage:
+	 *     boolean found = game.containsItem(dir, Gold.class)
+	 *     
 	 * @param <T> class of the item
 	 * @param loc the location
 	 * @param c class of the item
