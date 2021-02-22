@@ -54,6 +54,7 @@ class TestRabbitStrategy {
 				}
 				if (!game.getCurrentLocation().equals(previous)) {
 					moves++;
+					previous = game.getCurrentLocation();
 				}
 
 			} else {
