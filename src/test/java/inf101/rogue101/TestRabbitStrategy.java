@@ -18,6 +18,7 @@ import inf101.rogue101.objects.Rabbit;
 class TestRabbitStrategy {
 
 	double movesAvg = 0;
+	int movesTotal = 0;
 	int NUMBER_OF_SIMULATIONS = 10;
 
 	/**
@@ -33,7 +34,7 @@ class TestRabbitStrategy {
 		for (int i = 0; i < NUMBER_OF_SIMULATIONS; i++) {
 			runSimulation();
 		}		
-		movesAvg = movesAvg / NUMBER_OF_SIMULATIONS;
+		movesAvg = movesTotal / NUMBER_OF_SIMULATIONS;
 	}
 
 	private void runSimulation() {
@@ -42,6 +43,7 @@ class TestRabbitStrategy {
 		Rabbit rabbit = (Rabbit) game.getCurrentActor();
 		Location previous = game.getCurrentLocation();
 		int carrots = 0;
+		int moves = 0;
 		int turnsLeft = 1000;
 		while (rabbit.getCurrentHealth() > 0 && turnsLeft>0) {
 			game.doTurn();
@@ -51,65 +53,66 @@ class TestRabbitStrategy {
 					carrots++;
 				}
 				if (!game.getCurrentLocation().equals(previous)) {
-					movesAvg++;
+					moves++;
 				}
 
 			} else {
 				System.err.println("Strange, how has other actors entered the game?");
 				fail("Not allowed to reproduce");
 			}
-			assertTrue(movesAvg<5*carrots+10);
+			assertTrue(moves<=5*carrots+10,"Rabbit is moving without burning energy. Made "+moves+" moves and ate "+carrots+" carrots.");
 		}
+		movesTotal += moves;
 	}
 
 	@Test
 	void level1() {
-		assertTrue(movesAvg > 10);
+		assertTrue(movesAvg > 10,"Rabbit made "+movesAvg+" moves.");
 	}
 
 	@Test
 	void level2() {
-		assertTrue(movesAvg > 20);
+		assertTrue(movesAvg > 20,"Rabbit made "+movesAvg+" moves.");
 	}
 
 	@Test
 	void level3() {
-		assertTrue(movesAvg > 30);
+		assertTrue(movesAvg > 30,"Rabbit made "+movesAvg+" moves.");
 	}
 
 	@Test
 	void level4() {
-		assertTrue(movesAvg > 40);
+		assertTrue(movesAvg > 40,"Rabbit made "+movesAvg+" moves.");
 	}
 
 	@Test
 	void level5() {
-		assertTrue(movesAvg > 50);
+		assertTrue(movesAvg > 50,"Rabbit made "+movesAvg+" moves.");
 	}
 
 	@Test
 	void level6() {
-		assertTrue(movesAvg > 60);
+		assertTrue(movesAvg > 60,"Rabbit made "+movesAvg+" moves.");
 	}
 
 	@Test
 	void level7() {
-		assertTrue(movesAvg > 70);
+		assertTrue(movesAvg > 70,"Rabbit made "+movesAvg+" moves.");
 	}
 
 	@Test
 	void level8() {
-		assertTrue(movesAvg > 80);
+		assertTrue(movesAvg > 80,"Rabbit made "+movesAvg+" moves.");
 	}
 
 	@Test
 	void level9() {
-		assertTrue(movesAvg > 90);
+		assertTrue(movesAvg > 90,"Rabbit made "+movesAvg+" moves.");
 	}
 
 	@Test
 	void level10() {
-		assertTrue(movesAvg > 100);
+		assertTrue(movesAvg > 100,"Rabbit made "+movesAvg+" moves.");
 	}
 
 	@Test
