@@ -30,6 +30,7 @@ public class IItemTest {
 	 */
 	@Test
 	void testNewGetCurrentHealth() {
+    	assertTrue(GetStarted.hasRead);
 		runTestNewOnly(this::testNewGetCurrentHealth);
 	}
 	void testNewGetCurrentHealth(IItem item) {
