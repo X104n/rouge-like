@@ -20,6 +20,7 @@ Utfylende praktisk informasjon om semesteroppgaven og innlevering finner dere i 
 
 👉 Les [praktiskinfo.md](information/praktiskinfo.md) og åpne java filen `inf101.GetStarted.java` for å bekrefte at du har lest informasjonen. JUnit testene vil ikke virke før du har gjort dette.
 
+`add-commit-push`
 
 ### Tester
 Det er mange tester som følger med semesteroppgaven, noen passerer (er grønne) og noen feiler (er røde).
