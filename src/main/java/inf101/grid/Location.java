@@ -74,4 +74,13 @@ public class Location {
 	public String toString() {
 		return "("+row+","+col+")";
 	}
+	/**
+	 * Finds one GridDirection such that the distance to loc decreases if one go in that direction.
+	 * @param loc The location one wants to go in.
+	 * @return The direction to go in.
+	 */
+	public GridDirection directionTo(Location loc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -153,4 +153,11 @@ public interface IGameView extends IMessageView{
 	 * @return A list of locations, all at most i grid cells away from centre
 	 */
 	List<IItem> getNearbyItems(int dist);
+	
+	/**
+	 * Get direction towards an visible object, only close by objects will be visible
+	 * @param item The item you want to look for
+	 * @return The direction you should go
+	 */
+	GridDirection getDirectionTo(IItem item);
 }

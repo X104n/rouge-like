@@ -24,6 +24,9 @@ public class GameView implements IGameView {
 
 	private IGame game;
 	private IActor currentActor;
+	/** This determines how far the actor can see */
+	int visionFactor;
+	
 	
 	public GameView(Game game,IActor currentActor) {
 		this.game = game;
@@ -131,5 +134,15 @@ public class GameView implements IGameView {
 			items.addAll(game.getMap().getItems(loc));
 		}
 		return items;
+	}
+
+	@Override
+	public GridDirection getDirectionTo(IItem item) {
+		Location loc = game.getMap().getLocation(item);
+		int dist = loc.gridDistanceTo(getCurrentLocation());
+		if(dist>visionFactor*item.getSize())
+			throw new IllegalArgumentException("This actor can not see that Item.");
+		
+		return getCurrentLocation().directionTo(loc);
 	}
 }
