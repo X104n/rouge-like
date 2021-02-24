@@ -66,7 +66,9 @@ Opphavsrett er et separat spørsmål – du kan generelt ikke klippe kode eller 
 Oppgaven leveres inn ved å pushe til git.app.uib.no, slik du har gjort med alle tidligere INF101-oppgaver.
 Husk å få med alle eventuelle nye filer du har opprettet (hvis testene virker hos deg, men ikke i innleveringssystemet, er det gjerne det som er feil).
 
-**VIKTIG:** *Sjekk kvitteringssiden som kommer opp når du pusher, i tilfelle det skjer feil!* Du må evt. gjøre Pull før Push, slik du så i (TODO: link).
+**VIKTIG:** *Sjekk at testene kjører på server, i tilfelle det skjer feil!* Du må sørge for at alle filene er kommet med og evt. gjøre Pull før Push, slik du får merget endringer hvis flere har endret på samme repositorie.
+
+Du finner resultatet fra din commit ved å klikke: `Project overview -> Activity -> Comments`. For å se hele kommentaren må du klikke på id'en til commit'en..
 
 Vi anbefaler at du gjør commit flere ganger hver dag, eller hver gang du er ferdig med en
 deloppgave, i tilfelle du mister det du jobber med på din egen maskin.
@@ -94,9 +96,6 @@ Vi har lagt inn en del symboler i oppgaveteksten for å markere viktige ting i d
 - 👉: Dette er selve oppgavesetningen som sier hva som skal gjøres.
 - ✅: Dette er en test som (sannsynligvis) er rød før du gjør oppgaven, og skal bli grønn når oppgaven er ferdig.
 - 🤔: Dette er et spørsmål til refleksjon. Du skal ikke levere noe her, men forståelse for dette vil hjelpe deg til å løse oppgaven.
-
-## Sjekkliste:
-TODO: liker ideen om sjekkeliste, fyll ut eller slett
 
 ### Tips
 * Det er litt mer å gjøre enn i en vanlig ukeoppgave, og det er *veldig mye* å sette seg inn i. 
