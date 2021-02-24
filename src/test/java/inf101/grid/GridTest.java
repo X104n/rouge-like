@@ -1,5 +1,6 @@
 package inf101.grid;
 
+import inf101.GetStarted;
 import inf101.util.IGenerator;
 import inf101.util.generators.GridGenerator;
 import inf101.util.generators.LocationGenerator;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GridTest {
     private static final int N = 10000;
@@ -33,6 +35,7 @@ public class GridTest {
 
     @Test
     public void fillTest1() {
+    	assertTrue(GetStarted.hasRead);
         for (int i = 0; i < N / 10; i++) {
             IGrid<String> grid = gridGen.generate();
 
@@ -43,6 +46,7 @@ public class GridTest {
 
     @Test
     public void fillTest2() {
+    	assertTrue(GetStarted.hasRead);
         for (int i = 0; i < N / 10; i++) {
             IGrid<String> grid = gridGen.generate();
 
@@ -63,6 +67,7 @@ public class GridTest {
 
     @Test
     public void setGetIndependentTest() {
+    	assertTrue(GetStarted.hasRead);
         for (int j = 0; j < 10; j++) {
             IGrid<String> grid = gridGen.generate();
             IGenerator<Location> lGen = new LocationGenerator(grid);
@@ -90,6 +95,7 @@ public class GridTest {
      */
     @Test
     public void setGetTest() {
+    	assertTrue(GetStarted.hasRead);
         for (int j = 0; j < 10; j++) {
             IGrid<String> grid = gridGen.generate();
             IGenerator<Location> lGen = new LocationGenerator(grid);
@@ -105,6 +111,7 @@ public class GridTest {
 
     @Test
     public void uniqueLocations() {
+    	assertTrue(GetStarted.hasRead);
         for (int i = 0; i < N / 10; i++) {
         }
     }

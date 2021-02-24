@@ -1,12 +1,15 @@
     package inf101.rogue101;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
+import inf101.GetStarted;
 import inf101.grid.GridDirection;
 import inf101.grid.Location;
 import inf101.rogue101.map.GameMap;
@@ -18,9 +21,14 @@ import inf101.rogue101.objects.Rabbit;
 import inf101.rogue101.objects.Spider;
 import inf101.rogue101.objects.Wall;
 
-class GameMapTest {
+public class GameMapTest {
 
-	/**
+    @BeforeEach
+    void beforeEach() {
+    	assertTrue(GetStarted.hasRead);
+    }
+
+    /**
 	 * Tests if it is possible to add an item to an empty map.
 	 */
 	@Test

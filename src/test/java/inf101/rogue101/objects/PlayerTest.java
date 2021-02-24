@@ -1,5 +1,6 @@
 package inf101.rogue101.objects;
 
+import inf101.GetStarted;
 import inf101.grid.GridDirection;
 import inf101.grid.Location;
 import inf101.rogue101.game.Game;
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-class PlayerTest {
+public class PlayerTest {
 
 	private Game game;
     private IGameView board;
@@ -27,7 +28,8 @@ class PlayerTest {
 
     @BeforeEach
     void beforeEach() {
-        game = new Game(MapReader.TEST_MAP);
+    	assertTrue(GetStarted.hasRead);
+       game = new Game(MapReader.TEST_MAP);
         player = (IPlayer) game.setCurrent(new Location(2, 3));
         board = new GameView(game, player);
         loc = game.getCurrentLocation();

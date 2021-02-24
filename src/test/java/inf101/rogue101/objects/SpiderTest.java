@@ -1,5 +1,6 @@
 package inf101.rogue101.objects;
 
+import inf101.GetStarted;
 import inf101.grid.Location;
 import inf101.rogue101.game.Game;
 import inf101.rogue101.map.MapReader;
@@ -7,17 +8,20 @@ import inf101.rogue101.map.MapReader;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SpiderTest {
 
     @Test
     void ConstructorTest() {
+    	assertTrue(GetStarted.hasRead);
         Spider spider = new Spider();
         assertEquals(spider.getMaxHealth(), spider.getCurrentHealth());
     }
 
     @Test
     void SpiderKillsPlayer() {
+    	assertTrue(GetStarted.hasRead);
         Game game = new Game(MapReader.playerTrapWith('S'));
         IPlayer player = (IPlayer) game.setCurrent(new Location(2, 2));
 

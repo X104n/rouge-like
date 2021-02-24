@@ -4,13 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import inf101.GetStarted;
 import inf101.rogue101.game.ItemFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-class IItemTest {
+public class IItemTest {
 
 	/**
 	 * Tests that getArticle returns one of the three possible values.
@@ -157,6 +158,7 @@ class IItemTest {
 
 	@Test
 	void testItemFactoryCreatesDust() {
+    	assertTrue(GetStarted.hasRead);
 		assertTrue(ItemFactory.createItem('.') instanceof Dust);
 	}
 	
@@ -164,6 +166,7 @@ class IItemTest {
 
 	@Test
 	void testItemFactoryCreatesGold() {
+    	assertTrue(GetStarted.hasRead);
 		IItem gold = ItemFactory.createItem(GOLD_SYMBOL);
 		assertNotNull(gold);
 	}
@@ -173,6 +176,7 @@ class IItemTest {
 	 * @param test
 	 */
 	void runTest(Consumer<IItem> test) {
+    	assertTrue(GetStarted.hasRead);
 		for(IItem item : getTestData(false))
 			test.accept(item);
 	}

@@ -6,11 +6,13 @@ package inf101.rogue101.objects;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import inf101.GetStarted;
+
 /**
  * @author Martin Vatshelle
  *
  */
-class CarrotTest {
+public class CarrotTest {
 
 	Carrot carrot = new Carrot();
 
@@ -19,6 +21,7 @@ class CarrotTest {
 	 */
 	@Test
 	void testGetDefence() {
+    	assertTrue(GetStarted.hasRead);
 		assertEquals(0, carrot.getDefence());;
 	}
 
@@ -27,6 +30,7 @@ class CarrotTest {
 	 */
 	@Test
 	void testGetMaxHealth() {
+    	assertTrue(GetStarted.hasRead);
 		assertEquals(5, carrot.getMaxHealth());
 	}
 
@@ -35,6 +39,7 @@ class CarrotTest {
 	 */
 	@Test
 	void testGetShortName() {
+    	assertTrue(GetStarted.hasRead);
 		assertEquals("carrot", carrot.getShortName());
 	}
 
@@ -43,6 +48,7 @@ class CarrotTest {
 	 */
 	@Test
 	void testGetLongName() {
+    	assertTrue(GetStarted.hasRead);
 		assertTrue(carrot.getLongName().contains(carrot.getShortName()));
 	}
 
@@ -51,6 +57,7 @@ class CarrotTest {
 	 */
 	@Test
 	void testGetSize() {
+    	assertTrue(GetStarted.hasRead);
 		assertEquals(2, carrot.getSize());
 	}
 
@@ -59,6 +66,7 @@ class CarrotTest {
 	 */
 	@Test
 	void testHandleDamage() {
+    	assertTrue(GetStarted.hasRead);
 		Carrot carrot = new Carrot();
 		int damage = carrot.handleDamage(1);
 		assertEquals(1,damage);
@@ -72,6 +80,7 @@ class CarrotTest {
 	 */
 	@Test
 	void testGetSymbol() {
+    	assertTrue(GetStarted.hasRead);
 		assertEquals('C',Carrot.SYMBOL);
 	}
 

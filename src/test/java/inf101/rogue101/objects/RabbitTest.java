@@ -1,9 +1,11 @@
 package inf101.rogue101.objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import inf101.GetStarted;
 import inf101.grid.Location;
 import inf101.rogue101.game.Game;
 import inf101.rogue101.map.IMapView;
@@ -13,16 +15,18 @@ import inf101.rogue101.map.MapReader;
  * @author Martin Vatshelle
  *
  */
-class RabbitTest {
+public class RabbitTest {
 
 	@Test
 	void testConstructor(){
+    	assertTrue(GetStarted.hasRead);
 		Rabbit rabbit = new Rabbit();
 		assertEquals(rabbit.getMaxHealth(), rabbit.getCurrentHealth());
 	}
 
 	@Test
 	void CuteRabbitIsHarmless() {
+    	assertTrue(GetStarted.hasRead);
 		Game game = new Game(MapReader.playerTrapWith('R'));
 		IPlayer player = (IPlayer) game.setCurrent(new Location(2, 2));
 
@@ -39,6 +43,7 @@ class RabbitTest {
 			+ "######\n";
 	@Test
 	void testMakesMove() {
+    	assertTrue(GetStarted.hasRead);
 		Game game = new Game(testDoTurnMap);
 		IActor rabbit = game.getMap().getActors(new Location(2,2)).get(0);
 		
@@ -46,6 +51,7 @@ class RabbitTest {
 	}
 
 	private boolean itemMoved(Game game, IItem rabbit) {
+    	assertTrue(GetStarted.hasRead);
 		IMapView map = game.getMap();
 		Location before = map.getLocation(rabbit);
 		assertEquals(new Location(2,2), before);

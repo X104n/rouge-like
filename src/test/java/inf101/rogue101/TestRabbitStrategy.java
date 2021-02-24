@@ -4,10 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
+import inf101.GetStarted;
 import inf101.grid.Location;
 import inf101.rogue101.game.Game;
 import inf101.rogue101.map.MapReader;
@@ -15,7 +17,7 @@ import inf101.rogue101.objects.Carrot;
 import inf101.rogue101.objects.Rabbit;
 
 @TestInstance(Lifecycle.PER_CLASS)
-class TestRabbitStrategy {
+public class TestRabbitStrategy {
 
 	double movesAvg = 0;
 	int movesTotal = 0;
@@ -37,7 +39,12 @@ class TestRabbitStrategy {
 		movesAvg = movesTotal / NUMBER_OF_SIMULATIONS;
 	}
 
-	private void runSimulation() {
+    @BeforeEach
+    void beforeEach() {
+    	assertTrue(GetStarted.hasRead);
+    }
+
+    private void runSimulation() {
 		Game game = new Game(MapReader.CARROT_HUNT);
 		Rabbit rabbit = (Rabbit) game.getCurrentActor();
 		Location previous = game.getCurrentLocation();

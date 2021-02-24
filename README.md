@@ -12,10 +12,14 @@ Spillet er delvis skrevet; du skal endre eksisterende kode, legge til ny kode, o
 
 Det er 7 del-oppgaver i denne semesteroppgaven.
 
-
-Utfylende praktisk informasjon om semesteroppgaven og innlevering finner dere [her](information/praktiskinfo.md). 
-
 For utfyllende forklaring av Java-konsepter see [Oracle Java Tutorial](https://docs.oracle.com/javase/tutorial/ information/konsepter.md).
+
+## Bekreft at du har lest viktig informasjon
+
+Utfylende praktisk informasjon om semesteroppgaven og innlevering finner dere i [praktiskinfo.md](information/praktiskinfo.md). 
+
+👉 Les [praktiskinfo.md](information/praktiskinfo.md) og åpne java filen `inf101.GetStarted.java` for å bekrefte at du har lest informasjonen. JUnit testene vil ikke virke før du har gjort dette.
+
 
 ### Tester
 Det er mange tester som følger med semesteroppgaven, noen passerer (er grønne) og noen feiler (er røde).

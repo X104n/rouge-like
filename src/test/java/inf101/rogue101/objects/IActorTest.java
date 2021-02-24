@@ -1,10 +1,14 @@
 package inf101.rogue101.objects;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+
+import inf101.GetStarted;
 import inf101.grid.GridDirection;
 import inf101.grid.Location;
 import inf101.rogue101.game.Game;
@@ -17,9 +21,14 @@ import inf101.rogue101.map.MapReader;
  * @author Martin Vatshelle
  *
  */
-class IActorTest {
+public class IActorTest {
 
-	/**
+    @BeforeEach
+    void beforeEach() {
+    	assertTrue(GetStarted.hasRead);
+    }
+    
+ 	/**
 	 * This method returns several instances of IActors
 	 * Most tests are run on each of these instances.
 	 * @return
