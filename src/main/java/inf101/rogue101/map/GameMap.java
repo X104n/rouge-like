@@ -196,7 +196,19 @@ public class GameMap implements IGameMap {
 	@Override
 	public <T extends IItem> boolean containsItem(Location loc, Class<T> c) {
 		List<IItem> items = getAll(loc);
-		for (IItem item : items) {
+		return containsItem(items, c);
+	}
+
+	/**
+	 * This is a helper method that searches through a list to see if there are any
+	 * instances of a particular type.
+	 * 
+	 * @param items the list to search through
+	 * @param c the type to search for
+	 * @return true if an instance was found, false otherwise
+	 */
+	public static boolean containsItem(List<?> items, Class<?> c) {
+		for (Object item : items) {
 			if (c.isInstance(item))
 				return true;
 		}
