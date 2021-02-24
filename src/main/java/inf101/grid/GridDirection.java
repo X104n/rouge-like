@@ -57,38 +57,11 @@ public enum GridDirection {
 
 	/**
 	 * Returns the direction one get by rotating this direction 
-	 * 90 degrees to the left
-	 * @return
-	 */
-	public GridDirection turnLeft() {
-		GridDirection dir = turnLeft45();
-		return dir.turnLeft45();
-	}
-
-	public GridDirection turnLeft45() {
-		switch (this) {
-		case NORTH 	   : {return GridDirection.NORTHWEST;}
-		case NORTHWEST : {return GridDirection.WEST;}
-		case WEST 	   : {return GridDirection.SOUTHWEST;}
-		case SOUTHWEST : {return GridDirection.SOUTH;}
-		case SOUTH 	   : {return GridDirection.SOUTHEAST;}
-		case SOUTHEAST : {return GridDirection.EAST;}
-		case EAST 	   : {return GridDirection.NORTHEAST;}
-		case NORTHEAST : {return GridDirection.NORTH;}
-		case CENTER    : {return GridDirection.CENTER;}
-		}
-		throw new IllegalStateException("Unknown state of Direction");
-	}
-
-	
-	/**
-	 * Returns the direction one get by rotating this direction 
 	 * 90 degrees to the right
 	 * @return
 	 */
 	public GridDirection turnRight() {
-		GridDirection dir = turnRight45();
-		return dir.turnRight45();
+		return this.turnRight45().turnRight45();
 	}
 
 	public GridDirection turnRight45() {
@@ -104,5 +77,23 @@ public enum GridDirection {
 		case CENTER    : {return GridDirection.CENTER;}
 		}
 		throw new IllegalStateException("Unknown state of Direction");
+	}
+	
+	/**
+	 * Returns the direction one get by rotating this direction 
+	 * 90 degrees to the left
+	 * @return
+	 */
+	public GridDirection turnLeft() {
+		return this.turnRight().turnRight().turnRight();	
+	}
+
+	/**
+	 * Returns the direction one get by rotating this direction 
+	 * 45 degrees to the left
+	 * @return
+	 */
+	public GridDirection turnLeft45() {
+		return this.turnLeft().turnRight45();
 	}
 }
