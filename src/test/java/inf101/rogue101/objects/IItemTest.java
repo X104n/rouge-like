@@ -113,8 +113,8 @@ class IItemTest {
 				int damage = item.handleDamage(source.getDamage());
 				assertTrue(damage >= 0, "damage >= 0");
 				System.out.println(item+" took "+damage+" damage");
-				assertTrue(item.getCurrentHealth()<=hp,"for "+item);
-				assertTrue(item.getCurrentHealth()==(hp-damage),"for "+item);
+				assertTrue(item.getCurrentHealth()<=hp-damage,"for "+item);
+				assertTrue(item.isDestroyed() || item.getCurrentHealth()==(hp-damage),"for "+item);
 				assertTrue(damage <= hp,"Item "+item+" took "+damage+" damage with "+hp+" health");
 			}
 		}
