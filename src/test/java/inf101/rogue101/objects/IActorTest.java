@@ -92,6 +92,7 @@ class IActorTest {
 		game.setCurrent(loc);
 		List<GridDirection> moves = game.getPossibleMoves(actor);
 		ArrayList<Location> locations = new ArrayList<Location>();
+		locations.add(game.getCurrentLocation());
 		for(GridDirection dir : moves) {
 			locations.add(loc.getNeighbor(dir));
 		}

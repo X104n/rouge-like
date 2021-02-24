@@ -148,6 +148,7 @@ class GameMapTest {
 		map.add(new Location(2,3), new Spider());
 
 		List<GridDirection> moves = map.getPossibleMoves(loc);
+		assertFalse(moves.contains(GridDirection.CENTER),"CENTER is always a valid move");
 		for(GridDirection dir : GridDirection.values()) {
 			assertEquals(map.canGo(loc,dir),moves.contains(dir));
 		}

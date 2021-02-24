@@ -65,6 +65,9 @@ public interface IGameMap extends IMapView {
 	 * -The location is a Wall
 	 * -Another IActor occupies the cell
 	 * 
+	 * Note that GridDirection.CENTER is always valid, but is not counted as a possible move.
+	 * Only 8 directions are possible.
+	 * 
 	 * @param currentLocation - location of current actor
 	 * @return A list of all directions current actor may choose to go.
 	 */

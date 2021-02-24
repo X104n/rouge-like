@@ -92,7 +92,9 @@ public interface IGameView extends IMessageView{
 
 	/**
 	 * Possible moves are the moves an IActor can make.
-	 * Note that this also include the CENTER direction.
+	 * Note that this does not include the CENTER direction.
+	 * A player could choose to move in the CENTER direction but it would
+	 * not result in an actual move.
 	 * 
 	 * @return A list of directions we can move in, for use with
 	 *         {@link #move(GridDirection)}
