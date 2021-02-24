@@ -34,10 +34,9 @@ Til sammen teller de to semesteroppgavene 30 % på karakteren i faget.
 Ved poengsetting gis det totalt opp til 15 poeng der vi legger vekt på følgende:
 
 * (7 poeng) At du har fungerende løsninger på de forskjellige deloppgavene
+* (3 poeng) Tekst-svarene i svar.md er riktige og forståelige
 * (3 poeng) At koden din er ryddig og at eventuelle deler som er vanskelig å forstå er forklart i kommentarer
-* (2 poeng) Dokumentasjon og at tekst-svarene er riktige og forståelige
-* (2 poeng) Kreativitet
-* (1 poeng) At du har laget tester for koden din
+* (2 poeng) Kreativitet (først og fremst for løsninger på oppgave 5.3 og oppgave 7)
 
 Merk at har du ikke gjort noen ting innen en av disse kategoriene så blir det 0 poeng der.
 Vær derfor sikker på at du har gjort noe på alle disse kategoriene, alt trenger ikke være perfekt for å leveres inn.

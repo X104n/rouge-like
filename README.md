@@ -180,11 +180,11 @@ Når vi må endre flere klasser for å gjøre én endring betyr at vi har brutt 
 I denne oppgaven skal du legge til støtte for spillobjekter av typen Gold. 
 Du må ha gjort oppgave 1 og tidligere deler av oppgave 3 for å kunne løse denne oppgaven. 
 
-Åpne IItemTest i pakken `inf101.v20.rogue101.objects`.
+Åpne IItemTest i pakken `inf101.rogue101.objects`.
 
 👉 Legg til et nytt objekt av typen Gold i `IItemTest::getTestData()`-metoden etter samme mønster som for de andre objektene. Kjør testene. 
 
-👉 Finn filen `level1.txt` i `inf101.v20.rouge101.map.maps`, åpne den og erstatt noen av symbolene med gull-symbolet du valgte i Oppgave 1. Lagre filen. Kjør programmet. Gull-symbolene skal vises på skjermen der du la dem inn i kartet. 
+👉 Finn filen `level1.txt` i `resources/inf101/rouge101/map/maps`, åpne den og erstatt noen av symbolene med gull-symbolet du valgte i Oppgave 1. Lagre filen. Kjør programmet. Gull-symbolene skal vises på skjermen der du la dem inn i kartet. 
 
 ## Oppgave 4 - Et smartere kart
 
@@ -211,17 +211,25 @@ Når en rolle lurer på hvilke lokasjoner som befinner seg i nærheten, så er d
 ✅ `GameMapTest::testGetNeighbourhoodDoesNotReturnWall`
 
 ### 4.3 Sort Neighbourhood
-Gå til `IGameMap::getNeighbourhood` og `IGameMap::getReachable` og sorter listen med lokasjoner før den returneres. `IList::sort` trenger en `Comparator<ILocation>`, her kan du bruke `ILocationComparator` som tar en lokasjon og sammenligner distansene til to andre lokasjoner.
-Du kan bruke: Collections.sort(reachable,new LocationComparator(loc));
+Gå til `IGameMap::getNeighbourhood` og sorter listen med lokasjoner før den returneres. `IList::sort` trenger en `Comparator<Location>`, her kan du bruke `LocationComparator` som tar en lokasjon og sammenligner distansene til to andre lokasjoner.
+
+Du kan bruke: `Collections.sort(neighborhood,new LocationComparator(loc));`
+
+👉 Forbedre metoden `GameMap::getNeighbourhood` slik at den returnerer lokasjoner i sortert rekkefølge.
+
+✅ `GameMapTest::testGetNeighbourhoodSorted`
 
 ### 4.4 getReachable
-Noen ganger kan en lokasjon være nært men vanskelig å nå fordi andre IItem er i veien. Du skal finne de lokasjonene som er mulig å nå på `dist` antall steg. (Dette kan være vanskelig og vi regner ikke med at alle får til denne oppgaven.)
+Noen ganger kan en lokasjon være nært men vanskelig å nå fordi andre IItem er i veien. Du skal finne de lokasjonene som er mulig å nå på `dist` antall steg. 
+
+Dette kan være vanskelig og vi regner ikke med at alle får til denne oppgaven.
 Du kan gjøre resten av oppgavene selv om denne oppgaven ikke er ferdig.
 
 👉 Implementer metoden `GameMap:getReachable` slik at den returnerer de lokasjoner som er mulig å gå til på `dist` antall steg.
 
-_Tips: Kan du bruke noe lignende det du lærte i forelesningen om rekursjon?_  
-Er det lurt med en helpemetode `ILocation go(ILocation from, List<GridDirection> steps)` som forteller deg hvor du ender opp hvis du følger en sekvens med steg?
+_Tips: For å finne de lokasjonene som kan nåes på 1 steg kan du kanskje gjenbruke noe fra_
+ `getPossibleMoves()`  
+Er det lurt med en helpemetode `List<Location> expand(List<Location> found)` som legger til alle lokasjoner du kan nå med et ekstra steg?
 
 ✅ `GameMapTest::testGetReachableDoesNotWalkPastWalls`
 
@@ -234,18 +242,32 @@ Nå som vi vet litt mer om Game og GameMap kan vi gjøre den enda smartere ved �
 ### 5.1 Test Rabbit strategy
 Kjør testene til prosjektet, og sjekk hvor mange nivåer kaninen din klarer seg på i `TestRabbitStrategy`. Merk at ettersom kaninen din kanskje oppfører seg litt “tilfeldig”, så kan testresultatet variere fra gang til gang.
 
-Vi ønsker å gjøre kaninen enda smartere ved å lukte etter gullrøtter i nærheten ved å bruke metodene fra oppgave 4  gir alle lokasjonene som er synlig fra en lokasjon med rekkevidde 3.
+Vi ønsker å gjøre kaninen enda smartere ved å lukte etter gullrøtter i nærheten ved å bruke metodene fra oppgave 4 som gir alle items som er maks `dist` steg unna.
+Men før vi kommer så langt skal vi se om vi kan finne ut hva kaninene gjør.
+
+👉 Gå til `inf101.rouge101.Main` og bytt om hvilken applikasjon som kjøres og se hvordan din kanin gjør det.
+
+_Tips: Kaniner skal spise opp guleroten og få energi av det, så skal gulleroten forsvinne. Det er store gullerøtter så kaninen spiser ikke hele gulleroten på en gang, noe blir liggende igjen og så kommer den kanskje igjen senere for å sise resten. Hvis gulleroten ikke forsvinner er det kanskje noe galt i gullerot klassen?_
 
 ### 5.2 Get direction
-Bruk `IGameMap::getNeighbourhood` eller `IGameMap::getReachable` fra oppgave 4  til å hente alle synlig lokasjoner fra kaninen sin posisjon, og sjekk om det ligger noe gullrøtter i nærheten. Beveg Rabbit i retning av gulroten dersom den kan se noen. Dette kan erstatte at kaninen ser etter en gulrot ved siden av seg.
+Bruk `IGameMap::getNeighbourhood` eller `IGameMap::getReachable` fra oppgave 4  til å hente alle synlig lokasjoner fra kaninen sin posisjon, og sjekk om det ligger noe gullrøtter i nærheten. Beveg Rabbit i retning av gulroten dersom den kan se noen. Det er altså 3 steg du må gjøre:
+* Finn en gullerot i nærheten
+* Finn en retning som går mot denne gulleroten.
+* Hvis kaninen kan hoppe denne veien, så gjør den det.
+Dette kan erstatte eller komplimentere at kaninen ser etter en gulrot ved siden av seg.
 
-_Tips: Her kan det være lurt med en hjelpemetode som tar to lokasjoner og returnerer retningen du må gå for å komme deg fra den ene til den andre. Hvis du vil, kan du legge denne funksjonaliteten inn i `ILocation` ettersom “retning fra en lokasjon til en annen” ikke er spesifikt for Rabbit._
+👉 Implementer hjelpemetoden `Location::directionTo` og gjør slik at din Rabbit bruker metoden `IGameView::getDirectionTo`.
 
 
 ### 5.3 Rabbit AI
 Kjør testene på nytt, og se om kaninen klarer seg bedre nå.
-Klarer du å få enda flere tester i `TestRabbitStrategy` til å passere så blir det ekstra bonuspoeng på denne oppgaven.
+Klarer du å få enda flere tester i `TestRabbitStrategy` til å passere så kan det gi god uttelling for kreativitet. (Du trenger ikke få alle testene til å passere for å få full pott på denne.)
 
+👉 Forbedre Rabbit sin AI. Skriv i `svar.md` hva du har gjort/prøvd/tenkt.
+
+_Tips 1: Poenget er ikke å gi Rabbit superkrefter, det er å få Rabbit til å oppføre seg normalt i spillet. Du har kanskje sett spill der en AI sitter fast og bare går rett i en vegg eller lignende? Det ser ikke profft ut._
+
+_Tips 2:_  `GameView::getNearbyItems`  _er allerede implementert, men kanskje du kan gjøre en liten endring på implementasjonen for å gjøre den litt mer anvennelig?_
 
 ## Oppgave 6 - Player klassen
 
@@ -283,7 +305,7 @@ Eks:
   
 >    Player has 100 hp left holding items(s) carrot, carrot
 
-## Oppgave 7 - Fri oppgave
+## Oppgave 7 - Utvid programmet
 
 Oppgave 1-6 har hjulpet deg med å bli kjent med de ulike spillelementene og hvordan de interegarer med spillet, med spillkartet og med hverandre. Herfra og ut kan du gjøre spillet til ditt eget, og det er bare kreativiteten som setter grenser for hva du kan gjøre.
 
