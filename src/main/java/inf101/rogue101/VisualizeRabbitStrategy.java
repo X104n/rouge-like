@@ -7,9 +7,11 @@ import inf101.gfx.Screen;
 import inf101.gfx.gfxmode.IBrush;
 import inf101.gfx.textmode.Printer;
 import inf101.gfx.textmode.TextMode;
+import inf101.grid.Location;
 import inf101.rogue101.game.EmojiFactory;
 import inf101.rogue101.game.Game;
 import inf101.rogue101.game.GameGraphics;
+import inf101.rogue101.map.MapReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -20,7 +22,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class RogueApplication extends Application {
+public class VisualizeRabbitStrategy extends Application{
+
+
 	// you might want to tune these options
 	public static final boolean MAIN_USE_BACKGROUND_GRID = true;
 	public static final boolean MAP_AUTO_SCALE_ITEM_DRAW = true;
@@ -53,10 +57,14 @@ public class RogueApplication extends Application {
 	private Timeline bigStepTimeline;
 	private Timeline smallStepTimeline;
 
+	int moves=0;
+	Location previous;
+	
 	private void setup() {
 		//
 		GameGraphics graphics = new GameGraphics(painter, printer);
-		game = new Game(graphics);
+		game = new Game(graphics,MapReader.readItems(MapReader.CARROT_HUNT));
+		previous = game.getCurrentLocation();
 		game.draw();
 
 		//
@@ -99,9 +107,8 @@ public class RogueApplication extends Application {
 			}
 		}
 
-		if (grid) {
+		if (grid)
 			printer.drawCharCells();
-		}
 		printer.setAutoScroll(false);
 		screen.setKeyPressedHandler((KeyEvent event) -> {
 			KeyCode code = event.getCode();
@@ -183,15 +190,35 @@ public class RogueApplication extends Application {
 	public void doTurn() {
 		long t = System.currentTimeMillis();
 		boolean waitForPlayer = game.doTurn();
-		if (DEBUG_TIME)
-			System.out.println("doTurn() took " + (System.currentTimeMillis() - t) + "ms");
+		if(!game.getCurrentLocation().equals(previous)) {
+			moves++;
+			System.out.println("moved: "+previous+" -> "+game.getCurrentLocation());
+			previous = game.getCurrentLocation();
+		}
+		else {
+			game.getIMessageView().displayDebug("Rabbit did not move");
+		}
+			
 		long t2 = System.currentTimeMillis();
+		
+		if (DEBUG_TIME)
+			System.out.println("doTurn() took " + (t2 - t) + "ms");
+		
 		game.draw();
 		printer.redrawDirty();
 		if (DEBUG_TIME) {
 			System.out.println("draw() took " + (System.currentTimeMillis() - t2) + "ms");
 			System.out.println("doTurn()+draw() took " + (System.currentTimeMillis() - t) + "ms");
 			System.out.println("waiting for player? " + waitForPlayer);
+		}
+		
+		int hp = game.getCurrentActor().getCurrentHealth();
+
+		if(hp>0) {
+			game.getIMessageView().displayStatus("Rabbit has "+hp+" energy left.");
+		}
+		else {
+			game.getIMessageView().displayStatus("Rabbit is out of energy after "+moves+" moves.");
 		}
 		if (!waitForPlayer)
 			smallStepTimeline.playFromStart(); // this will kickstart a new turn in a few milliseconds
