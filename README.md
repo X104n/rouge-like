@@ -10,18 +10,18 @@ Hvis du får mindre enn 6 poeng på én eller begge av semesteroppgaven **får d
 
 Spillet er delvis skrevet; du skal endre eksisterende kode, legge til ny kode, og skrive tekst-svar. 
 
-Oppgave 1-6 er obligatorisk og oppgave 7 er valgfri. Spillet som du utvikler er ditt eget og du står fritt til å endre grafikk, tekst eller funksjonalitet og tema slik du vil. Dersom du vil ha poengvurdering for spennende endringer du har gjort ut over instruksjonene i oppgaven så må disse beskrives i [Svar.md](Svar.md). 
+Det er 7 del-oppgaver i denne semesteroppgaven.
 
-For [praktisk informasjon](information/praktiskinfo.md) om semesteroppgaven og innlevering se [her](information/praktiskinfo.md). 
 
-For utfyllende forklaring av [Java-konsepter](information/konsepter.md) i oppgaven se [her](information/konsepter.md) – (Forklarer blant annet `interface I extends J` og `default`-metoder).
+Utfylende praktisk informasjon om semesteroppgaven og innlevering finner dere [her](information/praktiskinfo.md). 
+
+For utfyllende forklaring av Java-konsepter see [Oracle Java Tutorial](https://docs.oracle.com/javase/tutorial/ information/konsepter.md).
 
 ### Tester
-De fleste oppgavene har tester som i utgangspunktet er røde (ikke passerer) og skal bli grønn når oppgaven er gjort. Som alltid, så betyr ikke grønn test nødvendigvis at alt er riktig, men det kan gi deg et hint om du er på riktig vei. 
+Det er mange tester som følger med semesteroppgaven, noen passerer (er grønne) og noen feiler (er røde).
+De fleste oppgavene har en eller flere tester som i utgangspunktet feiler og skal passere når oppgaven er gjort. Som alltid, så betyr ikke det at en test passerer nødvendigvis at alt er riktig, men det sier deg at du er på riktig vei. 
 
-Vi anbefaler at du løser hver oppgave ved å først kjøre testen(e) og sjekke at de er røde. Så løser du oppgaven og kjører testen(e) på nytt og sjekker at de er blitt grønn. Så comitter du og pusher. [(Dette kalles testdrevet utvikling, TDD)](https://en.wikipedia.org/wiki/Test-driven_development)
-
-Du kan følge med på testene dine på https://retting.ii.uib.no:81/me etterhvert som du pusher comittene dine (du må være logget inn på https://retting.ii.uib.no/ først, og trykke OK til autentisering første gangen). De som retter følger også med på denne siden.
+Vi anbefaler at du løser hver oppgave ved å først kjøre testen(e) og sjekke om de feiler. Så løser du oppgaven og kjører testen(e) på nytt og sjekker at de passerer. Så comitter du og pusher. Dette kalles [(testdrevet utvikling, TDD)](https://en.wikipedia.org/wiki/Test-driven_development).
 
 _Eclipse-tips: Forsvinner testene i stedet for å bli grønne? Trykk på ⋮menyen i JUnit tabben og slå av Show Failures Only – det er mye er motiverende å se at det dukker opp grønne bokser når vi får til noe!_
 
@@ -41,20 +41,20 @@ Ikke gå videre før du har skrevet ned svaret ditt under oppgave 1.1 i [Svar.md
 
 👉 Skriv en kort tekst i [Svar.md](Svar.md) som beskriver hvordan IItem *abstraherer* minst 5 egenskaper ved spill-elementer av typen “ting” i et Rogue-spill. Skriv svaret i [Svar.md](Svar.md).
 
-🤔 - Selv om du kanskje skrev ned andre egenskapet enn det som ligger i IItem, så betyr det gjerne ikke at noen av delene er feil. For eksempel så har hver ting en posisjon, men i vår kode er det spill-kartet som holder styr på det, ikke tingen selv. Med et annet design kunne det like godt være en egenskap i IItem.
+🤔 - Selv om du kanskje skrev ned andre egenskaper enn det som ligger i IItem, så betyr det gjerne ikke at noen av delene er feil. For eksempel så har hver ting en posisjon, men i vår kode er det spill-kartet som holder styr på det, ikke tingen selv. Med et annet design kunne det like godt være en egenskap i IItem.
 
-_Tips: Hvis du vil endre på svar du alt har pushet så kan du fritt gjøre det. Bare husk å legge ved en beskrivende commit-melding, f.eks. “Forbedret oppgave 1.1 etter gruppeleder forklarte abstraksjon.”_
+_Tips: Hvis du vil endre på svar du allerede har pushet så kan du fritt gjøre det. Bare bruke en beskrivende commit-melding, f.eks. “Forbedret oppgave 1.1 etter gruppeleder forklarte abstraksjon.” Det er siste versjon før fristen som teller._
 
 ### 1.3) Carrot.java
 Klassen `Carrot` implementerer interfacet `IItem` og representerer en Gulrot-“ting” på spillkartet. Et objekt av typen `Carrot` er altså på et vis både en abstraksjon av en _ekte_ gulrot, og av et spillobjekt fra Rogue. Åpne `Carrot`-klassen og se hvordan den implementerer metodene fra `IItem`. 
 
 ✅ `ItemTest:testHandleDamage`
 
-Hvilke egenskaper ved en _ekte_ gulrot finnes i den abstrakte `Carrot`-klassen, og hvilke egenskaper har en gulrot som _ikke_ finnes i `Carrot`-klassen? 
+Hvilke egenskaper ved en  _ekte_  gulrot finnes i den abstrakte `Carrot`-klassen, og hvilke egenskaper har en gulrot som  _ikke_  finnes i `Carrot`-klassen? 
 
 👉 List opp 3 egenskaper fra oppgave 1.2 som `Carrot`-klassen implementerer, og beskriv hvordan den implementerer dem. Skriv svaret i [Svar.md](Svar.md).
 
-👉 List opp 1 egenskap ved en _ekte_ gulrot som er representert i `Carrot`-klassen og 1 some _ikke_ er det. Skriv svaret i [Svar.md](Svar.md).
+👉 List opp 1 egenskap ved en  _ekte_  gulrot som er representert i `Carrot`-klassen og 1 some  _ikke_  er det. Skriv svaret i [Svar.md](Svar.md).
 
 Metoden `Carrot::handleDamage()` er ikke rett implementert. Vi tenker oss at gulrøtter blir skadet når en Rabbit spiser på den. Rabbit gir gulroten beskjed om hvor mye den spiser ved å kalle `Carrot::handleDamage()` og Carrot sin health går ned tilsvarende
 
@@ -71,7 +71,8 @@ Hvilke andre klasser implementerer `IItem`?
 
 👉 List opp alle klassene som implementerer dette interfacet. Skriv svaret i [Svar.md](Svar.md).
 
-_Tips: høyreklikk på IItem og velg Open Type Hierarchy for å få opp en liste av referanser til IItem-deklarasjonen._ (I IntelliJ heter det “Find usage”)
+_Tips: høyreklikk på IItem og velg Open Type Hierarchy for å få opp en liste av referanser til IItem-deklarasjonen._
+(I IntelliJ heter det “Find usage”)
 
 ### 1.5) Gold.java
 
@@ -252,7 +253,7 @@ Player-klassen er litt mer avansert enn de andre klassene. Denne klassen har bla
 
 Tasten `P` og `D` skal henholdsvis plukke opp og legge fra seg ting den står på på kartet.
 
-Det finnes en del nyttige metoder i `IGame` som du kan få bruk for her. `IGame` kan f.eks. la deg plukke en spesifikk ting fra lokasjonen du står på (gitt at tingen ligger på denne lokasjonen), la deg legge en ting på kartet, og la deg spørre om hvilke ting (som ikke er `IActor`) som finnes på den lokasjonen du står på.
+Det finnes en del nyttige metoder i `IGameView` som du kan få bruk for her. `IGameView` kan f.eks. la deg plukke en spesifikk ting fra lokasjonen du står på (gitt at tingen ligger på denne lokasjonen), la deg legge en ting på kartet, og la deg spørre om hvilke ting (som ikke er `IActor`) som finnes på den lokasjonen du står på.
 
 I denne oppgaven får du *noe* uttelling for at Player kan plukke opp 1 ting, og *full* uttelling dersom Player kan plukke opp flere ting. Hvis Player kun kan plukke opp 1 ting, så må den legge dette fra seg dersom den prøver å plukke opp noe annet (slik at tingen han hadde ikke forsvinner fra spillet).
 

@@ -1,5 +1,6 @@
 ## Kunnskap/konsepter du har bruk for til denne delen
-* *Abstraksjon* – å se bort fra uvesentlige detaljer og konsentrere seg om de tingene som er viktig (for det vi holder på med / fra vårt synspunkt)
+* *Abstraksjon* – å se bort fra uvesentlige detaljer og konsentrere seg om de tingene som er viktig (for det vi holder på med / fra vårt synspunkt).
+Det handler mye om å velge de rette felt variablene i en klasse, men det er også viktig å velge de rette klassene, metodene og hvordan disse skal samhandle.
 * *Modellering* – en modell er en (som regel forenklet) representasjon av noe. Vi bruker modeller for å
     * prøve ut / leke med / teste ting når vi ikke kan/vil gjøre direkte med det vi modellerer (f.eks.: en klimamodell lar oss forstå hvordan klimaet kan utvikle seg i forskjellige scenarier uten at vi trenger å teste det i virkeligheten; en prototype lar deg se hvordan at produkt kan bli; en modell lar deg se hvordan klær ser ut uten å måtte prøve dem på deg selv; et dataspill lar deg gjøre ting du ikke kunne gjort (eller hatt lov til) i virkeligheten; lek lar barn bygge “romskip” og utføre medisinsk behandling på “spedbarn” uten å svi av plenen eller skade lillebror).
     * ha et eksempel som vi kan bruke når vi skal lage flere ting  (f.eks.: [kilogramprototypen](https://en.wikipedia.org/wiki/Kilogram#International_prototype_kilogram), arkitekttegninger, 3D designmodeller (CAD/CAM))
