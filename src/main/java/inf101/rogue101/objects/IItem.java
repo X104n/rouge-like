@@ -166,6 +166,8 @@ public interface IItem {
 	 * An item can never take more damage than the health points the item has available.
 	 * Also an item may never take less than 0 damage.
 	 * 
+	 * The current health points should decrease by the amount of damage taken.
+	 * @see #isDestroyed()
 	 * 
 	 * @param amount - How much damage the item should take
 	 *
@@ -174,7 +176,9 @@ public interface IItem {
 	int handleDamage(int amount);
 
 	/**
-	 * @return True if this item has been destroyed, and should be removed from the
+	 * Items may stay on the board with health 0 (as dead remains).
+	 * 
+	 * @return True if this item has been destroyed and should be removed from the
 	 *         map
 	 */
 	default boolean isDestroyed() {
