@@ -72,6 +72,7 @@ public class Game implements IGame {
 	public Game(GameGraphics graphics,IGrid<IItem> inputGrid) {
 		this.graphics = graphics;
 		this.map = new GameMap(inputGrid);
+		nextPlayer();
 	}
 
 	static IGrid<IItem> getDefaultMap() {
@@ -165,6 +166,17 @@ public class Game implements IGame {
 		}
 	}
 
+	private void nextPlayer() {
+		if (actors.isEmpty()) {
+			// no one in the queue, we're starting a new turn!
+			// first collect all the actors:
+			beginTurn();
+		}
+		// get the next player or non-player in the queue
+		currentActor = actors.remove(0);
+		currentLocation = map.getLocation(currentActor);		
+	}
+	
 	/**
 	 * Begin a new game turn, or continue to the previous turn
 	 *
@@ -172,67 +184,55 @@ public class Game implements IGame {
 	 */
 	public boolean doTurn() {
 		do {
-			if (actors.isEmpty()) {
-				// System.err.println("new turn: " + turnCount++);
-
-				// no one in the queue, we're starting a new turn!
-				// first collect all the actors:
-				beginTurn();
+			nextPlayer();
+			graphics.reportChange(currentLocation);
+			if (currentActor.isDestroyed()) { // skip if it's dead
+				continue;
 			}
 
-			// process actors one by one; for the IPlayer, we return and wait for keypresses
-			while (!actors.isEmpty()) {
-				// get the next player or non-player in the queue
-				currentActor = actors.remove(0);
-				currentLocation = map.getLocation(currentActor);
-				graphics.reportChange(currentLocation);
-				if (currentActor.isDestroyed()) { // skip if it's dead
-					continue;
-				}
+			if (currentLocation == null) {
+				graphics.displayDebug("doTurn(): Whoops! Actor has disappeared from the map: " + currentActor);
+			}
+			movePoints = 1; // everyone gets to do one thing
 
-				if (currentLocation == null) {
-					graphics.displayDebug("doTurn(): Whoops! Actor has disappeared from the map: " + currentActor);
-				}
-				movePoints = 1; // everyone gets to do one thing
-
-				if (currentActor instanceof IPlayer) {
-					if (currentActor.getCurrentHealth() <= 0) {
-						// a dead human player gets removed from the game
-						// TODO: you might want to be more clever here
-						graphics.displayStatus(currentActor.getShortName() + " died.");
-					} else {
-						currentActor.doTurn(new GameView(this, currentActor));
-						Location newLocation = map.getLocation(currentActor);
-						graphics.reportChange(newLocation);
-					}
-					// For the human player, we need to wait for input, so we just return.
-					// Further keypresses will cause keyPressed() to be called, and once the human
-					// makes a move, it'll lose its movement point and doTurn() will be called again
-					//
-					// NOTE: currentActor and currentLocation are set to the IPlayer (above),
-					// so the game remembers who the player is whenever new keypresses occur. This
-					// is also how e.g., getLocalItems() work – the game always keeps track of
-					// whose turn it is.
-					return true;
-				} else if (currentActor instanceof IActor) {
-
-					try {
-						// computer-controlled players do their stuff right away
-						currentActor.doTurn(new GameView(this, currentActor));
-					} catch (Exception e) {
-						// actor did something wrong
-						// do nothing, leave this IActor
-					}
+			if (currentActor instanceof IPlayer) {
+				if (currentActor.getCurrentHealth() <= 0) {
+					// a dead human player gets removed from the game
+					// TODO: you might want to be more clever here
+					graphics.displayStatus(currentActor.getShortName() + " died.");
+				} else {
+					currentActor.doTurn(new GameView(this, currentActor));
 					Location newLocation = map.getLocation(currentActor);
 					graphics.reportChange(newLocation);
-					
-					// remove any dead items from current location
-					map.clean(currentLocation);
-					map.clean(newLocation);
-				} else {
-					graphics.displayDebug("doTurn(): Hmm, this is a very strange actor: " + currentActor);
 				}
+				// For the human player, we need to wait for input, so we just return.
+				// Further keypresses will cause keyPressed() to be called, and once the human
+				// makes a move, it'll lose its movement point and doTurn() will be called again
+				//
+				// NOTE: currentActor and currentLocation are set to the IPlayer (above),
+				// so the game remembers who the player is whenever new keypresses occur. This
+				// is also how e.g., getLocalItems() work – the game always keeps track of
+				// whose turn it is.
+				return true;
+			} else if (currentActor instanceof IActor) {
+
+				try {
+					// computer-controlled players do their stuff right away
+					currentActor.doTurn(new GameView(this, currentActor));
+				} catch (Exception e) {
+					// actor did something wrong
+					// do nothing, leave this IActor
+				}
+				Location newLocation = map.getLocation(currentActor);
+				graphics.reportChange(newLocation);
+
+				// remove any dead items from current location
+				map.clean(currentLocation);
+				map.clean(newLocation);
+			} else {
+				graphics.displayDebug("doTurn(): Hmm, this is a very strange actor: " + currentActor);
 			}
+
 
 		} while (numPlayers > 0); // we can safely repeat if we have players, since we'll return (and break out of
 		// the loop) once we hit the player
@@ -303,6 +303,8 @@ public class Game implements IGame {
 
 	@Override
 	public Location getCurrentLocation() {
+		if(currentActor==null)
+			beginTurn();
 		return currentLocation;
 	}
 
@@ -382,6 +384,8 @@ public class Game implements IGame {
 
 	@Override
 	public IActor getCurrentActor() {
+		if(currentActor==null)
+			beginTurn();
 		return currentActor;
 	}
 

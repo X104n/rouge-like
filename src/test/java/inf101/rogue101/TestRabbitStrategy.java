@@ -39,10 +39,11 @@ class TestRabbitStrategy {
 
 	private void runSimulation() {
 		Game game = new Game(MapReader.CARROT_HUNT);
-		game.doTurn();
 		Rabbit rabbit = (Rabbit) game.getCurrentActor();
 		Location previous = game.getCurrentLocation();
+		int previousHP = rabbit.getCurrentHealth();
 		int carrots = 0;
+		int eaten = 0;
 		int moves = 0;
 		int turnsLeft = 1000;
 		while (rabbit.getCurrentHealth() > 0 && turnsLeft>0) {
@@ -56,6 +57,13 @@ class TestRabbitStrategy {
 					moves++;
 					previous = game.getCurrentLocation();
 				}
+				else {
+					if(previousHP>=rabbit.getCurrentHealth())
+						System.err.println("Move from "+previous+" to "+game.getCurrentLocation()+" does not count.");
+					else
+						eaten += previousHP-rabbit.getCurrentHealth();
+				}
+				previousHP = rabbit.getCurrentHealth();
 
 			} else {
 				System.err.println("Strange, how has other actors entered the game?");
@@ -66,63 +74,59 @@ class TestRabbitStrategy {
 		movesTotal += moves;
 	}
 
+	private void checkLevel(int target) {
+		assertTrue(movesAvg > target,"Rabbit made "+movesAvg+" moves but needed i to pass.");
+	}
+
 	@Test
 	void level1() {
-		assertTrue(movesAvg > 10,"Rabbit made "+movesAvg+" moves.");
+		checkLevel(10);
 	}
 
 	@Test
 	void level2() {
-		assertTrue(movesAvg > 20,"Rabbit made "+movesAvg+" moves.");
+		checkLevel(15);
 	}
 
 	@Test
 	void level3() {
-		assertTrue(movesAvg > 30,"Rabbit made "+movesAvg+" moves.");
+		checkLevel(20);
 	}
 
 	@Test
 	void level4() {
-		assertTrue(movesAvg > 40,"Rabbit made "+movesAvg+" moves.");
+		checkLevel(25);
 	}
 
 	@Test
 	void level5() {
-		assertTrue(movesAvg > 50,"Rabbit made "+movesAvg+" moves.");
+		checkLevel(30);
 	}
 
 	@Test
 	void level6() {
-		assertTrue(movesAvg > 60,"Rabbit made "+movesAvg+" moves.");
+		checkLevel(40);
 	}
 
 	@Test
 	void level7() {
-		assertTrue(movesAvg > 70,"Rabbit made "+movesAvg+" moves.");
+		checkLevel(60);
 	}
 
 	@Test
 	void level8() {
-		assertTrue(movesAvg > 80,"Rabbit made "+movesAvg+" moves.");
+		checkLevel(80);
 	}
 
 	@Test
 	void level9() {
-		assertTrue(movesAvg > 90,"Rabbit made "+movesAvg+" moves.");
+		checkLevel(100);
+		System.out.println("Congratulations! You made "+movesAvg+" moves.");
 	}
 
 	@Test
-	void level10() {
-		assertTrue(movesAvg > 100,"Rabbit made "+movesAvg+" moves.");
-	}
-
-	@Test
-	void level11() {
-		assertTrue(movesAvg > 200);
-	}
-	@Test
-	void level12() {
-		assertTrue(movesAvg > 300,"Num moves was "+movesAvg);
+	void checkRabbitTooSmart() {
+		assertTrue(movesAvg<200,"Rabbit is too smart, makes game unrealistic!");
 	}
 
 }
