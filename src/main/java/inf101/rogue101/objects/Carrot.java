@@ -68,7 +68,10 @@ public class Carrot implements IItem {
 
 	@Override
 	public int handleDamage(int amount) {
-		return amount;
+
+		int damage = Math.min(amount, hp);
+		hp -= damage;
+		return damage;
 	}
 	
 	@Override

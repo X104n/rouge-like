@@ -1,14 +1,12 @@
 package inf101.rogue101.map;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import inf101.grid.GridDirection;
-import inf101.grid.IGrid;
-import inf101.grid.IMultiGrid;
-import inf101.grid.Location;
-import inf101.grid.MultiGrid;
+import inf101.GetStarted;
+import inf101.grid.*;
 import inf101.rogue101.objects.IActor;
 import inf101.rogue101.objects.IItem;
 import inf101.rogue101.objects.IItemComparator;
@@ -37,9 +35,9 @@ public class GameMap implements IGameMap {
 	 * This method adds an IItem to the given location.
 	 * Since the draw method only draws one element in each cell,
 	 * the first element is the one drawn
-	 * In this implementation of IGameMap IItem's at same location 
+	 * In this implementation of IGameMap IItem's at same location
 	 * should be sorted such that the IItem with largest size() is first.
-	 * 
+	 *
 	 */
 	@Override
 	public void add(Location loc, IItem item) {
@@ -51,7 +49,7 @@ public class GameMap implements IGameMap {
 	}
 
 	/**
-	 * In this implementation of IGame an IActor can not go through Walls 
+	 * In this implementation of IGame an IActor can not go through Walls
 	 * and only one IActor can be at each cell
 	 */
 	@Override
@@ -176,11 +174,22 @@ public class GameMap implements IGameMap {
 
 		throw new UnsupportedOperationException();
 	}
-	
+
 
 	@Override
 	public List<GridDirection> getPossibleMoves(Location currentLocation) {
-		return List.of(GridDirection.EAST); // TODO: Improve this
+
+		int length1 = GridDirection.EIGHT_DIRECTIONS.size();
+
+		ArrayList<GridDirection> output = new ArrayList<GridDirection>();
+
+		for (int i = 0; i < length1; i++){
+			if (canGo(currentLocation, GridDirection.EIGHT_DIRECTIONS.get(i))){
+				output.add(GridDirection.EIGHT_DIRECTIONS.get(i));
+			}
+		}
+
+		return output;
 	}
 
 	@Override
@@ -202,7 +211,7 @@ public class GameMap implements IGameMap {
 	/**
 	 * This is a helper method that searches through a list to see if there are any
 	 * instances of a particular type.
-	 * 
+	 *
 	 * @param items the list to search through
 	 * @param c the type to search for
 	 * @return true if an instance was found, false otherwise

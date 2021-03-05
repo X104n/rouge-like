@@ -11,11 +11,11 @@
 
 ### 1.1) 
 
-1. (svar her) 
-2. (svar her) 
-3. (svar her) 
-4. (svar her) 
-5. (svar her) 
+1. HP - Very important if you want to die
+2. Cash 
+3. Level (XP)
+4. Active item
+5. Floor level
 
 ### 1.2) 
 1. (svar her) 
@@ -33,7 +33,7 @@
 5. (svar her) 
 
 ### 1.4)
-(svar her)
+Wall, Rabbit, Portal, Spider, Player, Carrot, Dust, Amulet
 
 ### 1.4)
 (svar her)
