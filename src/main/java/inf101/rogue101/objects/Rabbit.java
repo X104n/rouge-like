@@ -1,5 +1,6 @@
 package inf101.rogue101.objects;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,12 +32,11 @@ public class Rabbit implements IActor {
 		boolean isHungry = getMaxHealth()-getCurrentHealth()>2;
 		if(isHungry) {
 			boolean gotFood = eatIfPossible(game);
-			if(gotFood) {
+			if (gotFood) {
 				//Rabbit is full and prefers to rest
 				return;
 			}
 		}
-
 		GridDirection dir = selectMove(game);
 		performMove(game,dir);
 	}
@@ -46,6 +46,20 @@ public class Rabbit implements IActor {
 	 */
 	private GridDirection selectMove(IGameView game) {
 		List<GridDirection> possibleMoves = game.getPossibleMoves();
+		List<GridDirection> CarrotMoves = new ArrayList<>();
+		boolean carrotBool = false;
+
+		for (GridDirection direction : GridDirection.EIGHT_DIRECTIONS){
+			if (game.containsItem(direction, Carrot.class)){
+				CarrotMoves.add(direction);
+				carrotBool = true;
+			}
+		}
+
+		if (carrotBool){
+			Collections.shuffle(CarrotMoves);
+			return CarrotMoves.get(0);
+		}
 		Collections.shuffle(possibleMoves);
 		return possibleMoves.get(0);
 	}

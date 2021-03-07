@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
  *
  */
 public class Carrot implements IItem {
+
 	/**
 	 * char representation of this type 
 	 */
