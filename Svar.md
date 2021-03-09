@@ -55,10 +55,13 @@ Wall, Rabbit, Portal, Spider, Player, Carrot, Dust, Amulet
 ## Oppgave 3 - Objektfabrikken
 
 ### 3.1)
-(svar her)
+Player-objectet blir prepresentert ved en "@". Det fant jeg i ItemFactory.java classen og i metoden createItem. 
+"Dust" har enda ikke blit implementert i ItemFactory.java klassen så svaret fant jeg i Dust.java i "objects" pakken. Symbolet til dust er ".".
 
 ### 3.2)
-(svar her)
+Man må endre 'R' til 'r' i flere klasser fordi symbolet blir definert i en klasse og brukt i andre klasser.
+
+Problemet med Single Responsibility er nå fikset fordi hvis noen skal endre symbol på et object trenger man kun og endre det i en klasse, og ikke i f.eks. ItemFactory hvor objectene blir lagd.
 
 ### 3.3)
 (svar her)
