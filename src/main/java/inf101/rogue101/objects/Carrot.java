@@ -34,6 +34,9 @@ public class Carrot implements IItem {
 
 	@Override
 	public int getCurrentHealth() {
+		if (hp == 0){
+			return -1;
+		}
 		return hp;
 	}
 
@@ -69,7 +72,7 @@ public class Carrot implements IItem {
 
 	@Override
 	public int handleDamage(int amount) {
-
+		amount -= Math.min(amount, getDefence());
 		int damage = Math.min(amount, hp);
 		hp -= damage;
 		return damage;

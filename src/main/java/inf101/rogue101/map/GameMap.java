@@ -173,15 +173,12 @@ public class GameMap implements IGameMap {
 		else if (dist == 0)
 			return new ArrayList<>(); // empty!
 		else if (dist > 0){
-
 			List<Location> positions = new ArrayList<>();
 			positions.add(loc);
 
 			for (int i = 0; i < dist; i++) {
 
 				List<Location> temporary = new ArrayList<>();
-
-				//System.out.println("Listen er " + positions);
 
 				for (Location position : positions){
 
@@ -192,9 +189,6 @@ public class GameMap implements IGameMap {
 					}
 
 				}
-
-
-
 				for (Location temp : temporary){
 
 					if(positions.contains(temp)){
@@ -216,29 +210,9 @@ public class GameMap implements IGameMap {
 
 			}
 
-			//System.out.println("FINAL! er " + positions);
-
 			positions.remove(loc);
-
-
-
+			Collections.sort(positions, new LocationComparator(loc));
 			return positions;
-//			System.out.println(loc);
-//			System.out.println(loc.getNeighbor(GridDirection.EAST));
-//
-//			List<Location> tmep = new ArrayList<>();
-//
-//			tmep.add(loc);
-//
-//			for(Location location : loc.allNeighbors()){
-//				tmep.add(location);
-//			}
-//
-//			return tmep;
-//
-//
-//			// Shit goes inn here
-
 		}
 
 
@@ -264,7 +238,77 @@ public class GameMap implements IGameMap {
 
 	@Override
 	public List<Location> getReachable(Location loc, int dist) {
-		return new ArrayList<>();
+		List<Location> reachable = new ArrayList<>();
+
+		for (Location location : getNeighbourhood(loc, dist)){
+			if (!containsItem(location, IItem.class)){
+				reachable.add(location);
+			}
+		}
+		return reachable;
+/***
+		if (dist < 0 || loc == null)
+			throw new IllegalArgumentException();
+		else if (dist == 0)
+			return new ArrayList<>(); // empty!
+		else if (dist > 0){
+
+			List<Location> positions = new ArrayList<>();
+			positions.add(loc);
+
+			for (int i = 0; i < dist; i++) {
+
+				List<Location> temporary = new ArrayList<>();
+
+				//System.out.println("Listen er " + positions);
+
+				for (Location position : positions){
+
+					for (GridDirection dir : GridDirection.EIGHT_DIRECTIONS) {
+
+						if (!containsItem(position, IItem.class)){
+
+							temporary.add(position.getNeighbor(dir));
+						}
+
+					}
+
+				}
+				for (Location temp : temporary){
+
+					if(positions.contains(temp)){
+						continue;
+					}
+					else if (Math.abs(temp.col) != temp.col){
+						continue;
+					}
+					else if (Math.abs(temp.row) != temp.row){
+						continue;
+					}
+					else if (hasWall(temp)) {
+						continue;
+					}
+					else{
+						positions.add(temp);
+					}
+				}
+
+			}
+
+			positions.remove(loc);
+
+
+			Collections.sort(positions, new LocationComparator(loc));
+
+			System.out.println(loc);
+
+			return positions;
+
+		}
+
+
+		throw new UnsupportedOperationException();
+ */
 	}
 
 	@Override

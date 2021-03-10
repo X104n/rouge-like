@@ -1,5 +1,8 @@
 package inf101.grid;
 
+import inf101.rogue101.game.IGameView;
+import inf101.rogue101.objects.IItem;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -80,7 +83,7 @@ public class Location {
 	 * @return The direction to go in.
 	 */
 	public GridDirection directionTo(Location loc) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 }

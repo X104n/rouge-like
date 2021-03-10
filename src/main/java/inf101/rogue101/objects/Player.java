@@ -166,6 +166,7 @@ public class Player implements IPlayer {
 
 	@Override
 	public boolean hasItem(IItem item) {
+
 		return false;
 	}
 	
