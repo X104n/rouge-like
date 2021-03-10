@@ -64,9 +64,9 @@ public class Rabbit implements IActor {
 
                 if (NearbyCarrots instanceof Carrot) {
 
-                    GridDirection temp = game.getDirectionTo(NearbyCarrots);
+                    GridDirection directionToCarrot = game.getDirectionTo(NearbyCarrots);
 
-                    return temp;
+                    return directionToCarrot;
 
                 }
 

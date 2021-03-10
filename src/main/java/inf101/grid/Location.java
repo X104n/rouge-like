@@ -87,23 +87,38 @@ public class Location {
      */
     public GridDirection directionTo(Location loc) {
 
-        Location ActorLocation = new Location(row, col);
-
-        int distanceToLoc = ActorLocation.gridDistanceTo(loc);
-
-        for (GridDirection direction : GridDirection.EIGHT_DIRECTIONS){
-
-            Location locationAround = getNeighbor(direction);
-
-            int temporaryInt = locationAround.gridDistanceTo(loc);
-
-            if (temporaryInt < distanceToLoc){
-
-                return direction;
-
+        int originalDist = gridDistanceTo(loc);
+        for(GridDirection directionToGo : GridDirection.EIGHT_DIRECTIONS) {
+            Location newloc = getNeighbor(directionToGo);
+            int newDist = newloc.gridDistanceTo(loc);
+            if(newDist<originalDist) {
+                return directionToGo;
             }
         }
-
         return null;
     }
+
+
+
+
+
+//        Location ActorLocation = new Location(row, col);
+//
+//        int distanceToLoc = ActorLocation.gridDistanceTo(loc);
+//
+//        for (GridDirection direction : GridDirection.EIGHT_DIRECTIONS){
+//
+//            Location locationAround = getNeighbor(direction);
+//
+//            int temporaryInt = locationAround.gridDistanceTo(loc);
+//
+//            if (temporaryInt < distanceToLoc){
+//
+//                return direction;
+//
+//            }
+//        }
+//
+//        return null;
+//    }
 }

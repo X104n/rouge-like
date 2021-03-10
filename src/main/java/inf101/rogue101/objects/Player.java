@@ -1,27 +1,25 @@
 package inf101.rogue101.objects;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import inf101.grid.GridDirection;
 import inf101.rogue101.game.IGameView;
 import javafx.scene.input.KeyCode;
 /**
- * En spiller i Rogue 101 
- * 
- * Spilleren navigerer labyrinten og slåss med monster. For å komme seg ut 
- * og vinne spille må spilleren gå gjennom portalen; for å åpne portalen 
- * må den finne amuletten og bære den med seg. 
- * 
+ * En spiller i Rogue 101
+ *
+ * Spilleren navigerer labyrinten og slåss med monster. For å komme seg ut
+ * og vinne spille må spilleren gå gjennom portalen; for å åpne portalen
+ * må den finne amuletten og bære den med seg.
+ *
  * På veien kan den plukke opp gull og slåss med monster
- * 
+ *
  * @author Anna Eilertsen - anna.eilertsen@uib.no
  *
  */
 public class Player implements IPlayer {
 	/**
-	 * char representation of this type 
+	 * char representation of this type
 	 */
 	public static final char SYMBOL = '@';
 	private static final int MAXHEALTH = 100;
@@ -38,6 +36,8 @@ public class Player implements IPlayer {
 		hp = Player.MAXHEALTH;
 		name = System.getProperty("user.name");
 	}
+
+	private List<IItem> inventory = new ArrayList<>();
 
 	@Override
 	public int getAttack() {
@@ -68,7 +68,7 @@ public class Player implements IPlayer {
 	public String getShortName() {
 		return getLongName();
 	}
-	
+
 	@Override
 	public String getLongName() {
 		return name;
@@ -83,7 +83,7 @@ public class Player implements IPlayer {
 	public String getGraphicTextSymbol() {
 			return "" + SYMBOL;
 	}
-	
+
 	@Override
 	public String getEmoji() {
 		return hp > 0 ? "👸" : "⚱️"; // 🤴  ⚰️
@@ -129,7 +129,7 @@ public class Player implements IPlayer {
 		if (game.canGo(dir)) {
 			game.displayDebug("Moving.");
 			game.move(dir);
-		} 
+		}
 		else {
 			if(game.attack(dir))
 				game.displayDebug("Victory!");
@@ -139,7 +139,28 @@ public class Player implements IPlayer {
 	}
 
 	private void showStatus(IGameView game) {
-		game.displayMessage("Player has " + this.hp + " hp left");
+
+        if (!inventory.isEmpty()) {
+
+            String outputString = " ";
+
+            for (IItem itemInInventory : inventory){
+
+                String temp = itemInInventory.getLongName();
+                outputString.concat(temp);
+
+            }
+
+            //System.out.println("This is the output " + outputString);
+
+            game.displayMessage("Player has " + this.hp + " hp left holding items(s) " + outputString);
+
+        }
+        else{
+            game.displayMessage("Player has " + this.hp + " hp left");
+        }
+
+
 	}
 
 	private void pickUp(IGameView game) {
@@ -148,28 +169,44 @@ public class Player implements IPlayer {
 			Collections.sort(items,new IItemComparator());
 			Optional<IItem> found = game.pickUp(items.get(items.size()-1));
 			if(found.isPresent())
-				game.displayMessage("Picked up"+found.get().getLongName());
+				System.out.println(items.get(items.size()-1));
+				game.displayMessage("Picked up "+found.get().getLongName());
+				inventory.add(items.get(items.size()-1));
 		}
 	}
 
 	private void drop(IGameView game) {
+		List<IItem> items = game.getLocalNonActorItems();
+		if(!inventory.isEmpty()){
+			if (items.isEmpty()){
+				game.drop(inventory.get(0));
+				inventory.remove(0);
+
+			}
+
+		}
+
 	}
 
 	@Override
 	public void doTurn(IGameView game) {
 	}
-	
-	@Override 
+
+	@Override
 	public boolean isDestroyed() {
 		return false; //Even when dead, the player should remain on the map
 	}
 
 	@Override
 	public boolean hasItem(IItem item) {
-
+		for (IItem inventoryItem : inventory){
+			if (inventoryItem == item){
+				return true;
+			}
+		}
 		return false;
 	}
-	
+
 	@Override
 	public char getSymbol() {
 		return SYMBOL;
