@@ -37,7 +37,7 @@ public class PlayerTest {
 
     @Test
     void PlayerDoesMoves() {
-        player.keyPressed(board, KeyCode.UP);
+        player.keyPressed(board, KeyCode.W);
         assertEquals(loc.getNeighbor(GridDirection.NORTH), game.getCurrentLocation());
     }
 
@@ -54,15 +54,15 @@ public class PlayerTest {
         assertEquals(1, game.getMap().getAll(loc).size());
 
         game.setCurrent(player);
-        player.keyPressed(board, KeyCode.UP);
+        player.keyPressed(board, KeyCode.W);
         assertEquals(2, game.getMap().getAll(loc).size());
 
         game.setCurrent(player);
-        player.keyPressed(board, KeyCode.P);
+        player.keyPressed(board, KeyCode.E);
         assertEquals(1, game.getMap().getAll(loc).size());
 
         game.setCurrent(player);
-        player.keyPressed(board, KeyCode.D);
+        player.keyPressed(board, KeyCode.Q);
         assertEquals(2, game.getMap().getAll(loc).size());
     }
     
@@ -71,7 +71,7 @@ public class PlayerTest {
         loc = this.loc.getNeighbor(GridDirection.NORTH);
         assertEquals(1, game.getMap().getAll(loc).size());
 
-        player.keyPressed(board, KeyCode.UP);
+        player.keyPressed(board, KeyCode.W);
         assertEquals(2, game.getMap().getAll(loc).size());
 
         List<IItem> localNonActorItemList = board.getLocalNonActorItems();
@@ -80,7 +80,7 @@ public class PlayerTest {
 		IItem localItem = localNonActorItemList.get(0);
 		
 		game.setCurrent(player);
-        player.keyPressed(board, KeyCode.P);
+        player.keyPressed(board, KeyCode.E);
         assertTrue(player.hasItem(localItem), "Player should have picked up the item: " + localItem);
     }
 
@@ -89,7 +89,7 @@ public class PlayerTest {
         Location neighbor = this.loc.getNeighbor(GridDirection.NORTH);
         assertEquals(1, game.getMap().getAll(neighbor).size());
 
-        player.keyPressed(board, KeyCode.UP);
+        player.keyPressed(board, KeyCode.W);
         assertEquals(2, game.getMap().getAll(neighbor).size());
 
         List<IItem> localNonActorItemList = board.getLocalNonActorItems();
@@ -98,11 +98,11 @@ public class PlayerTest {
 		IItem localItem = localNonActorItemList.get(0);
 		
 		game.setCurrent(player);
-        player.keyPressed(board, KeyCode.P);
+        player.keyPressed(board, KeyCode.E);
         assertTrue(player.hasItem(localItem), "Player should have picked up the item: " + localItem);
         
         game.setCurrent(player);
-        player.keyPressed(board, KeyCode.D);
+        player.keyPressed(board, KeyCode.Q);
         assertFalse(player.hasItem(localItem), "Player should have dropped the item: " + localItem);
     }
     
@@ -111,7 +111,7 @@ public class PlayerTest {
         loc = this.loc.getNeighbor(GridDirection.NORTH);
         assertEquals(1, game.getMap().getAll(loc).size());
 
-        player.keyPressed(board, KeyCode.UP);
+        player.keyPressed(board, KeyCode.W);
         assertEquals(2, game.getMap().getAll(loc).size());
 
         List<IItem> localNonActorItemList = board.getLocalNonActorItems();
@@ -120,7 +120,7 @@ public class PlayerTest {
 		IItem localItem = localNonActorItemList.get(0);
 		IItem notLocalItem = ItemFactory.createItem(localItem.getSymbol());
 		game.setCurrent(player);
-        player.keyPressed(board, KeyCode.P);
+        player.keyPressed(board, KeyCode.E);
         assertTrue(player.hasItem(localItem), "Player should have picked up the item: " + localItem);
         assertFalse(player.hasItem(notLocalItem), "Wrong item equality.");
     }
@@ -131,28 +131,28 @@ public class PlayerTest {
 
         assertEquals(1, game.getMap().getAll(loc).size());
 
-        player.keyPressed(board, KeyCode.UP);
+        player.keyPressed(board, KeyCode.W);
         assertEquals(2, game.getMap().getAll(loc).size());
 
         game.setCurrent(player);
-        player.keyPressed(board, KeyCode.P);
+        player.keyPressed(board, KeyCode.E);
         assertEquals(1, game.getMap().getAll(loc).size());
 
         game.setCurrent(player);
-        player.keyPressed(board, KeyCode.RIGHT);
+        player.keyPressed(board, KeyCode.D);
         loc = game.getCurrentLocation();
         assertEquals(2, game.getMap().getAll(loc).size());
 
         game.setCurrent(player);
-        player.keyPressed(board, KeyCode.P);
+        player.keyPressed(board, KeyCode.E);
         assertEquals(1, game.getMap().getAll(loc).size());
 
         game.setCurrent(player);
-        player.keyPressed(board, KeyCode.D);
+        player.keyPressed(board, KeyCode.Q);
         assertEquals(2, game.getMap().getAll(loc).size());
 
         game.setCurrent(player);
-        player.keyPressed(board, KeyCode.D);
+        player.keyPressed(board, KeyCode.Q);
         assertEquals(3, game.getMap().getAll(loc).size());
     }
 }

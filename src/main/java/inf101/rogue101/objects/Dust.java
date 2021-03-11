@@ -1,6 +1,7 @@
 package inf101.rogue101.objects;
 
 import inf101.gfx.textmode.BlocksAndBoxes;
+import inf101.grid.GridDirection;
 
 /**
  * Støv i Rogue101-spillet. 
@@ -17,13 +18,15 @@ public class Dust implements IItem {
 	/**
 	 * char representation of this type 
 	 */
+
+
 	public static final char SYMBOL = '.';
 
 	@Override
 	public String getArticle() {
 		return "";
 	}
-	
+
 	@Override
 	public int getCurrentHealth() {
 		return 1;

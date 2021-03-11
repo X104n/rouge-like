@@ -11,46 +11,47 @@
 
 ### 1.1) 
 
-1. HP - Very important if you want to die
-2. Cash 
-3. Level (XP)
-4. Active item
-5. Floor level
+1. HP - En "ting" trenger en måte og holde styr på om den nesten er borte fra spillverdenen
+2. Cash - En verdi som man kan bruke til å gjøre fremskritt i spillet
+3. Level (XP) - En visuell oversikt over hvor langt man har kommet
+4. Damage - En metode som sier hvor mye skade en "ting" tar
+5. Name - For å kunne gi "tingen" et navn
 
 ### 1.2) 
-1. (svar her) 
-2. (svar her) 
-3. (svar her) 
-4. (svar her) 
-5. (svar her) 
+
+Under er det 5 metoder i IItem:
+
+1. getMaxHealth()
+2. getDefence()
+3. getLongName()
+4. handleDamage()
+5. isDestroyed()
+
+Alle disse metodene er velidg essensielle for alle spill-elementer av typen "ting". Ved å bruke disse metodene kan man generalisere "ting".
 
 
 ### 1.3)
-1. (svar her) 
-2. (svar her) 
-3. (svar her) 
-4. (svar her) 
-5. (svar her) 
+
+Her er 3 metoder fra 1.2 som carrot klassen implementerer:
+
+1. getMaxHealth() - Denne implementeres ved å returnere verdien 5 som er gulerotens maxHealth.
+2. handleDamage(int) - Denne implementeres ved å trekke fra et tall som den får inn slik at gulerotens liv blir oppdatert
+3. getLongName() - Denne implementeres ved å returnere en string "carrot" som er navnet på guleroten.
+
+En ekte egenskap ved en gulerot som blir implementert er at den hetter carrot, en egenskap som ikke er ekte er at gulleroten har "defence".
+
 
 ### 1.4)
+
 Wall, Rabbit, Portal, Spider, Player, Carrot, Dust, Amulet
-
-### 1.4)
-(svar her)
 
 ## Oppgave 2 - The Rabbit
 
 ### 2.1)
-(Svar her)
+IActor utvider IItems. Dette betyr at alle klasser som implementerer IActor kan bruke dens metoder inkludert IItems metoder.
 
 ### 2.2)
-(Svar her)
-
-### 2.3)
-(Svar her)
-
-### 2.4)
-(Svar her)
+Kanninen bruker doTurn() og denne funksjonen kaller på selectMove() som gir kaninen den retningen den skal gå. Retningen den gir er østover.
 
 ## Oppgave 3 - Objektfabrikken
 
@@ -63,55 +64,18 @@ Man må endre 'R' til 'r' i flere klasser fordi symbolet blir definert i en klas
 
 Problemet med Single Responsibility er nå fikset fordi hvis noen skal endre symbol på et object trenger man kun og endre det i en klasse, og ikke i f.eks. ItemFactory hvor objectene blir lagd.
 
-### 3.3)
-(svar her)
-
-## Oppgave 4 - Et smartere kart
-
-### 4.1)
-(svar her)
-
-### 4.2)
-(svar her)
-
-### 4.3)
-(svar her)
-
 ## Oppgave 5
 
-### 5.1)
-(svar her)
-
-### 5.2)
-(svar her)
-
 ### 5.3)
-(svar her)
-
-### 5.4)
-(svar her)
-
-### 5.5)
-(svar her)
-
-## Oppgave 6
-
-### 6.1)
-(Svar her)
-
-### 6.2)
-(Svar her)
-
-### 6.3)
-(Svar her)
+Det jeg gjorde på denne oppgaven var å bruke metoden canGo(); for at kaninen ikke ble sittende fast i en vegg.
 
 ## Fri oppgave (Oppg. 7)
 
 ### Plan
-(Skriv planen her)
+Det første jeg planla var og skifte måten du beveger deg til "wasd" og at man kan gå utav programmet ved å trykke på "ESC".
 
 ### Utførelse
-(Forklar i korte trekk hva du har gjort)
+Det var nokså enkelt og skifte til "WASD" styremåte, jeg la også til "ESC" og at man plukker opp med "E" og dropper med "Q". (Fikset også på alle testene for å sjekke om alt virket som det skulle)
 
 ### Flere utvidelser
 (Legg inn eventuelle flere utvidelser du har gjort her)

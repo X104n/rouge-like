@@ -29,7 +29,7 @@ public class Gold implements IItem{
 
     @Override
     public String getShortName() {
-        return "GØLD";
+        return "Gold";
     }
 
     @Override

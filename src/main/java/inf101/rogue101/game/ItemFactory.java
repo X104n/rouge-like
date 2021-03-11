@@ -22,6 +22,8 @@ public class ItemFactory {
                 return new Gold();
             case Dust.SYMBOL:
                 return new Dust();
+            case FaceMask.SYMBOL:
+                return new FaceMask();
             case Portal.SYMBOL:
                 return new Portal();
             case ' ':

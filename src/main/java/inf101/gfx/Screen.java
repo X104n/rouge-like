@@ -332,7 +332,7 @@ public class Screen {
 	private final Map<IPaintLayer, Canvas> layerCanvases = new IdentityHashMap<>();
 	private final Canvas background;
 	private final Group root;
-	private Paint bgColor = Color.CORNFLOWERBLUE;
+	private Paint bgColor = Color.GRAY;
 	private int aspect = 0;
 	private double scaling = 0;
 	private double currentScale = 1.0;
@@ -351,7 +351,7 @@ public class Screen {
 
 	private List<Double> aspects;
 
-	private boolean hideFullScreenMouseCursor = true;
+	private boolean hideFullScreenMouseCursor = false;
 
 	private Cursor oldCursor;
 

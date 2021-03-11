@@ -52,6 +52,7 @@ public class Rabbit implements IActor {
         List<IItem> NearbyItems = game.getNearbyItems(5);
         boolean carrotBool = false;
 
+        // If there is a carrot right next to the rabbit, this code executes
         for (GridDirection direction : GridDirection.EIGHT_DIRECTIONS) {
             if (game.containsItem(direction, Carrot.class)) {
                 CarrotMoves.add(direction);
@@ -59,6 +60,7 @@ public class Rabbit implements IActor {
             }
         }
 
+        // if there isn't a carrot next to the rabbit, this code executes to look for any carrots in a distance of 5
         if (!carrotBool) {
             for (IItem NearbyCarrots : NearbyItems) {
 
@@ -66,7 +68,12 @@ public class Rabbit implements IActor {
 
                     GridDirection directionToCarrot = game.getDirectionTo(NearbyCarrots);
 
-                    return directionToCarrot;
+                    // We just go for the first and best carrot here
+                    // Here i also implemented that the rabbit doesn't jump in the wall
+                    if (game.canGo(directionToCarrot)){
+                        return directionToCarrot;
+                    }
+
 
                 }
 
@@ -75,13 +82,28 @@ public class Rabbit implements IActor {
 
         }
 
-
+        // if the first for loop executes we will pick a random carrot that is beside the rabbit if there is multiple
         if (carrotBool) {
             Collections.shuffle(CarrotMoves);
+
             return CarrotMoves.get(0);
         }
-        Collections.shuffle(possibleMoves);
-        return possibleMoves.get(0);
+
+        // if the rabbit cannot go anywhere he just stay in the place (very unlikely)
+        if (possibleMoves.isEmpty()) {
+            return GridDirection.CENTER;
+        }
+
+        // Here I also implements that the rabbit doesn't jump in the wall
+        List<GridDirection> dirReturn = new ArrayList<>();
+        for (GridDirection direction : possibleMoves){
+            if (game.canGo(direction)){
+                dirReturn.add(direction);
+            }
+        }
+        Collections.shuffle(dirReturn);
+
+        return dirReturn.get(0);
     }
 
     /**
@@ -115,6 +137,7 @@ public class Rabbit implements IActor {
      * @param game The game the object exists in
      * @return true if it spend the turn eating
      */
+
     private boolean eatIfPossible(IGameView game) {
         for (IItem item : game.getLocalNonActorItems()) {
             if (item instanceof Carrot) {
@@ -193,4 +216,5 @@ public class Rabbit implements IActor {
     public char getSymbol() {
         return SYMBOL;
     }
+
 }

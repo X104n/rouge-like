@@ -32,10 +32,10 @@ public class Spider implements IActor {
 	private GridDirection lastDir;
 
 	public Spider() {
+		attack = 5; //they sneak in so almost impossible to resist attack
+		defence = 0; //they are easy to kill
+		damage = 10;
 		hp = Spider.MAXHEALTH;
-		defence = 1; //they are easy to kill
-		damage = 1;
-		attack = 50; //they sneak in so almost impossible to resist attack
 		lastDir = GridDirection.NORTHEAST;
 	}
 
@@ -78,7 +78,7 @@ public class Spider implements IActor {
 	public int handleDamage(int amount) {
 		amount -= Math.min(amount, getDefence());
 		int damage = Math.min(amount, hp);
-		hp -= damage;
+		hp -= amount;
 		return damage;
 	}
 
