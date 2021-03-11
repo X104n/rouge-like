@@ -144,10 +144,18 @@ public class Player implements IPlayer {
 
             String outputString = " ";
 
+            boolean randomBool = false;
+
             for (IItem itemInInventory : inventory){
 
+				if (randomBool){
+					outputString = outputString.concat(",");
+				}
+
                 String temp = itemInInventory.getLongName();
-                outputString.concat(temp);
+                outputString = outputString.concat(" " + temp);
+
+                randomBool = true;
 
             }
 
