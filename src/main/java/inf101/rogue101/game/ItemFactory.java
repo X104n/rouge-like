@@ -12,6 +12,8 @@ public class ItemFactory {
                 return new Rabbit();
             case Carrot.SYMBOL:
                 return new Carrot();
+            case Sword.SYMBOL:
+                return new Sword();
             case Player.SYMBOL:
                 return new Player();
             case Spider.SYMBOL:

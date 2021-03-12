@@ -146,8 +146,7 @@ public class Rabbit implements IActor {
                 if (eaten > 0) {
                     System.out.println("ate carrot worth " + eaten + "!");
                     hp += eaten;
-                    game.displayMessage("You hear a faint crunching (" + getLongName() + " eats " + item.getArticle()
-                            + " " + item.getLongName() + ")");
+                    //game.displayMessage("You hear a faint crunching (" + getLongName() + " eats " + item.getArticle() + " " + item.getLongName() + ")");
                     return true;
                 }
             }

@@ -171,26 +171,27 @@ public class GameMap implements IGameMap {
             throw new IllegalArgumentException();
         else if (dist == 0)
             return new ArrayList<>(); // empty!
+
+        // If the distance is greater than zero this code runs:
         else if (dist > 0) {
             List<Location> positions = new ArrayList<>();
             positions.add(loc);
-
+            // this loop runs as many times as the int specified in the method.
             for (int i = 0; i < dist; i++) {
-
                 List<Location> temporary = new ArrayList<>();
+                //Then we loop through all the positions we have so far in the "positions" list, so all the positions we have scanned to now
                 for (Location position : positions) {
-
                     for (GridDirection dir : GridDirection.EIGHT_DIRECTIONS) {
-
+                        //Then for all the neighboring locations we have around the one location we have chosen in the one for loop. we get their positions
+                        //We get their positions and add them to the temporary list.
                         temporary.add(position.getNeighbor(dir));
-
                     }
-
                 }
+                //Then we see if the locations we have in the temporary list is viable for the "OG (Original Gangster)" list "positions"
                 for (Location temp : temporary) {
-
                     if (positions.contains(temp)) {
                         continue;
+                        //The reason i had to take thees math parts was because hasWall wouldn't accept negative integers
                     } else if (Math.abs(temp.col) != temp.col) {
                         continue;
                     } else if (Math.abs(temp.row) != temp.row) {
@@ -201,108 +202,32 @@ public class GameMap implements IGameMap {
                         positions.add(temp);
                     }
                 }
-
             }
-
+            //At the end I remove the staring location, then shuffles everything nice and easy, and there you have it!!! A list of every neighboring targets 0_0
             positions.remove(loc);
             Collections.sort(positions, new LocationComparator(loc));
             return positions;
         }
-
-
         throw new UnsupportedOperationException();
     }
 
 
     @Override
     public List<GridDirection> getPossibleMoves(Location currentLocation) {
-
-        int length1 = GridDirection.EIGHT_DIRECTIONS.size();
-
-        ArrayList<GridDirection> output = new ArrayList<GridDirection>();
-
-        for (int i = 0; i < length1; i++) {
-            if (canGo(currentLocation, GridDirection.EIGHT_DIRECTIONS.get(i))) {
-                output.add(GridDirection.EIGHT_DIRECTIONS.get(i));
+        ArrayList<GridDirection> directionOutput = new ArrayList<>();
+        //We scan every direction around the "currentLocation" for possible directions to move, then add every direction to a list
+        for (GridDirection direction : GridDirection.EIGHT_DIRECTIONS) {
+            if (canGo(currentLocation, direction)) {
+                directionOutput.add(direction);
             }
         }
-
-        return output;
+        return directionOutput;
     }
 
     @Override
     public List<Location> getReachable(Location loc, int dist) {
-        List<Location> reachable = new ArrayList<>();
-
-        for (Location location : getNeighbourhood(loc, dist)) {
-            if (!containsItem(location, IItem.class)) {
-                reachable.add(location);
-            }
-        }
-        return reachable;
-/***
- if (dist < 0 || loc == null)
- throw new IllegalArgumentException();
- else if (dist == 0)
- return new ArrayList<>(); // empty!
- else if (dist > 0){
-
- List<Location> positions = new ArrayList<>();
- positions.add(loc);
-
- for (int i = 0; i < dist; i++) {
-
- List<Location> temporary = new ArrayList<>();
-
- //System.out.println("Listen er " + positions);
-
- for (Location position : positions){
-
- for (GridDirection dir : GridDirection.EIGHT_DIRECTIONS) {
-
- if (!containsItem(position, IItem.class)){
-
- temporary.add(position.getNeighbor(dir));
- }
-
- }
-
- }
- for (Location temp : temporary){
-
- if(positions.contains(temp)){
- continue;
- }
- else if (Math.abs(temp.col) != temp.col){
- continue;
- }
- else if (Math.abs(temp.row) != temp.row){
- continue;
- }
- else if (hasWall(temp)) {
- continue;
- }
- else{
- positions.add(temp);
- }
- }
-
- }
-
- positions.remove(loc);
-
-
- Collections.sort(positions, new LocationComparator(loc));
-
- System.out.println(loc);
-
- return positions;
-
- }
-
-
- throw new UnsupportedOperationException();
- */
+        // My getNeighbourhood code seem to already pass the test, so i just return that method.
+        return getNeighbourhood(loc, dist);
     }
 
     @Override

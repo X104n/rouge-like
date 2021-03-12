@@ -1,5 +1,6 @@
 package inf101.rogue101.objects;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -32,8 +33,8 @@ public class Spider implements IActor {
 	private GridDirection lastDir;
 
 	public Spider() {
-		attack = 5; //they sneak in so almost impossible to resist attack
-		defence = 0; //they are easy to kill
+		attack = 10; //they sneak in so almost impossible to resist attack
+		defence = 2; //they are easy to kill
 		damage = 10;
 		hp = Spider.MAXHEALTH;
 		lastDir = GridDirection.NORTHEAST;
@@ -94,16 +95,21 @@ public class Spider implements IActor {
 
 	@Override
 	public void doTurn(IGameView game) {
-		
+
+		// Looking for a player in a distance of one if it finds one it attacks it
 		for(GridDirection dir : GridDirection.EIGHT_DIRECTIONS) {
 			if(dir.equals(GridDirection.CENTER))
 				continue;
-			if(game.containsItem(dir, IActor.class)) {
+			if(game.containsItem(dir, IPlayer.class)) {
 				game.attack(dir);
 				return;
 			}
 		}
-		
+
+		List<IActor> temp = new ArrayList<>();
+
+
+		// if it doesn't have anywhere it wants to go it continues in the same direction
 		List<GridDirection> moves = game.getPossibleMoves();
 		if (game.canGo(lastDir)) {
 			game.move(lastDir);

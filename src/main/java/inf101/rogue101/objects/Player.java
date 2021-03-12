@@ -29,6 +29,7 @@ public class Player implements IPlayer {
     private int damage;
     private int hp;
     private String name;
+    private List<IItem> inventory = new ArrayList<>();
 
     public Player() {
         attack = 5;
@@ -37,8 +38,6 @@ public class Player implements IPlayer {
         hp = Player.MAXHEALTH;
         name = System.getProperty("user.name");
     }
-
-    private List<IItem> inventory = new ArrayList<>();
 
     @Override
     public int getAttack() {
@@ -125,6 +124,7 @@ public class Player implements IPlayer {
             default:
                 System.err.printf("Illegal key pressed. Key: %s", key);
         }
+        actions(game);
         showStatus(game);
     }
 
@@ -138,26 +138,36 @@ public class Player implements IPlayer {
             // Makes so that the player doesn't see the wall as an enemy and displays Victory!
             if (game.getPossibleMoves().contains(game.attack(dir))) {
                 game.displayDebug("Combat victory!");
-            }
-            else
+            } else
                 game.displayDebug("Ouch! Can't go there.");
         }
     }
 
-    private void showStatus(IGameView game) {
-
-        if (game.containsItem(GridDirection.CENTER, Dust.class)){
+    private void actions(IGameView game) {
+        if (game.containsItem(GridDirection.CENTER, Dust.class)) {
             boolean takeDamage = true;
             for (IItem ting : inventory) {
-                if (ting instanceof FaceMask){
+                if (ting instanceof FaceMask) {
                     takeDamage = false;
                 }
             }
-            if (takeDamage){
+            if (takeDamage) {
                 hp -= 1;
-                game.displayMessage("You choked on some fucking dust you looser. Man actually lost a HP! LMFAO!");
+                game.displayMessage("You chocked on some dust, and lost some HP! A face mask (M) would probably be useful in this situation");
             }
         }
+        for (IItem searchForSword : inventory) {
+            if (searchForSword instanceof Sword) {
+                attack = Sword.attack;
+                defence = Sword.defence;
+                damage = Sword.damage;
+            }
+        }
+
+    }
+
+    private void showStatus(IGameView game) {
+
 
         //As long as there is an item in the inventory it executes this code, if not it just shows the "HP" of the player
         if (!inventory.isEmpty()) {
@@ -201,8 +211,16 @@ public class Player implements IPlayer {
                 System.out.println(items.get(items.size() - 1));
             game.displayMessage("Picked up " + found.get().getLongName());
 
-            // The only code i added here was to add the item that is picked up to an inventory.
+            //Adding whatever we picked up to the inventory
             inventory.add(items.get(items.size() - 1));
+
+            //if the item is a carrot, we eat it and remove it from the inventory.
+            for (IItem item :items){
+                if (item instanceof Carrot){
+                    hp += 20;
+                    inventory.remove(items.get(items.size() - 1));
+                }
+            }
         }
     }
 
@@ -219,6 +237,7 @@ public class Player implements IPlayer {
 
     @Override
     public void doTurn(IGameView game) {
+
     }
 
     @Override

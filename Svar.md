@@ -72,10 +72,21 @@ Det jeg gjorde på denne oppgaven var å bruke metoden canGo(); for at kaninen i
 ## Fri oppgave (Oppg. 7)
 
 ### Plan
-Det første jeg planla var og skifte måten du beveger deg til "wasd" og at man kan gå utav programmet ved å trykke på "ESC".
+Det første jeg planla var og skifte måten du beveger deg til "wasd" og at man kan gå utav programmet ved å trykke på "ESC". 
+
+Jeg tenker også å implementere det slik at hvis man står i en røyk sky så mister man litt "HP"
+
+Og kansje til slutt implementere et bar objekter. 
 
 ### Utførelse
 Det var nokså enkelt og skifte til "WASD" styremåte, jeg la også til "ESC" og at man plukker opp med "E" og dropper med "Q". (Fikset også på alle testene for å sjekke om alt virket som det skulle)
 
-### Flere utvidelser
-(Legg inn eventuelle flere utvidelser du har gjort her)
+Jeg fikk implementert dødlig støv, også får å unngå at du ikke mister liv hele tiden la jeg også til et nytt object - "FaceMask" som man kan ta på seg.
+
+Jeg lagde en "Sword" class som gjør det mulig for at sverd er med i spillet, og satt et sverd ut på kartet
+
+Jeg modifiserte også litt på kartet for å gjøre det passe vanseklig nok.
+
+Etterpå fikset jeg slik at man spiste gulleroten hvis man plukket den opp.
+
+Til slutt gjorde jeg ederkoppen litt smarere slik at den kan angripe spileren, og at de ikke angripe hverandre og sitter fast i hverandre.

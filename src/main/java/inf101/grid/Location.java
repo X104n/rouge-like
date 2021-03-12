@@ -87,38 +87,21 @@ public class Location {
      */
     public GridDirection directionTo(Location loc) {
 
+        // We begin to measure the distance to the target from "the one who is asking"
         int originalDist = gridDistanceTo(loc);
-        for(GridDirection directionToGo : GridDirection.EIGHT_DIRECTIONS) {
-            Location newloc = getNeighbor(directionToGo);
-            int newDist = newloc.gridDistanceTo(loc);
-            if(newDist<originalDist) {
+
+        //Then from the start location we scan every direction for their location.
+        //Then we compare the distance from the neighboring location to the target location if the distance is smaller
+        for (GridDirection directionToGo : GridDirection.EIGHT_DIRECTIONS) {
+            Location newLocation = getNeighbor(directionToGo);
+            int newDist = newLocation.gridDistanceTo(loc);
+
+            //So if the distance is smaller we return that
+            if (newDist < originalDist) {
                 return directionToGo;
             }
         }
+        //I tilfelle tellus
         return null;
     }
-
-
-
-
-
-//        Location ActorLocation = new Location(row, col);
-//
-//        int distanceToLoc = ActorLocation.gridDistanceTo(loc);
-//
-//        for (GridDirection direction : GridDirection.EIGHT_DIRECTIONS){
-//
-//            Location locationAround = getNeighbor(direction);
-//
-//            int temporaryInt = locationAround.gridDistanceTo(loc);
-//
-//            if (temporaryInt < distanceToLoc){
-//
-//                return direction;
-//
-//            }
-//        }
-//
-//        return null;
-//    }
 }
